@@ -1,0 +1,61 @@
+{
+  "name": "majun-admin",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "prisma db seed",
+    "prisma:studio": "prisma studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@reduxjs/toolkit": "^2.12.0",
+    "bcryptjs": "^3.0.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "iron-session": "^8.0.4",
+    "lucide-react": "^1.16.0",
+    "mysql2": "^3.22.3",
+    "next": "^16.1.7",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-redux": "^9.3.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.1.7",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "postcss": "^8.5.8",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^4.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

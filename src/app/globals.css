@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --sidebar-width: 18rem;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-zinc-200;
+  }
+
+  html {
+    @apply bg-zinc-50;
+  }
+
+  body {
+    @apply bg-zinc-50 text-zinc-950 antialiased selection:bg-zinc-900 selection:text-white;
+    background-image:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.85), rgba(250, 250, 250, 0.92)),
+      linear-gradient(to bottom, rgba(244, 244, 245, 0.65), rgba(250, 250, 250, 1));
+  }
+
+  html.dark body {
+    @apply bg-zinc-950 text-zinc-100 selection:bg-zinc-100 selection:text-zinc-950;
+    background-image:
+      radial-gradient(circle at top, rgba(39, 39, 42, 0.7), rgba(9, 9, 11, 0.95)),
+      linear-gradient(to bottom, rgba(24, 24, 27, 0.95), rgba(9, 9, 11, 1));
+  }
+}
+
+@layer components {
+  .admin-main {
+    @apply mx-auto px-4 py-6 lg:px-8;
+    margin-left: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .admin-main {
+      margin-left: var(--sidebar-width);
+    }
+  }
+
+  /* Mobile: add safe padding at the bottom so bottom nav doesn't cover content */
+  @media (max-width: 1023px) {
+    .admin-main {
+      padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+@layer utilities {
+  html.dark .bg-white {
+    background-color: rgb(24 24 27) !important;
+  }
+
+  html.dark .bg-zinc-50 {
+    background-color: rgb(9 9 11) !important;
+  }
+
+  html.dark .bg-zinc-100 {
+    background-color: rgb(39 39 42) !important;
+  }
+
+  html.dark .text-zinc-950 {
+    color: rgb(244 244 245) !important;
+  }
+
+  html.dark .text-zinc-900 {
+    color: rgb(228 228 231) !important;
+  }
+
+  html.dark .text-zinc-800 {
+    color: rgb(228 228 231) !important;
+  }
+
+  html.dark .text-zinc-700 {
+    color: rgb(212 212 216) !important;
+  }
+
+  html.dark .text-zinc-600 {
+    color: rgb(212 212 216) !important;
+  }
+
+  html.dark .text-zinc-500 {
+    color: rgb(161 161 170) !important;
+  }
+
+  html.dark .text-zinc-400 {
+    color: rgb(161 161 170) !important;
+  }
+
+  html.dark .border-zinc-200 {
+    border-color: rgb(63 63 70) !important;
+  }
+
+  html.dark .hover\:bg-zinc-100:hover {
+    background-color: rgb(39 39 42) !important;
+  }
+
+  html.dark .hover\:text-zinc-950:hover {
+    color: rgb(244 244 245) !important;
+  }
+
+  html.dark .bg-white\/90 {
+    background-color: rgba(9, 9, 11, 0.9) !important;
+  }
+
+  html.dark .bg-white\/95 {
+    background-color: rgba(9, 9, 11, 0.95) !important;
+  }
+
+  html.dark .hover\:bg-transparent:hover {
+    background-color: transparent !important;
+  }
+
+  html.dark ::-webkit-scrollbar-track {
+    background: #18181b;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
