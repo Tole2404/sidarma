@@ -12,6 +12,10 @@ export function notFound(message: string) {
 export function serverError(error: unknown, fallbackMessage = "Internal server error") {
   console.error(error);
 
+  if (error instanceof Error && error.message === "Unauthorized") {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
       return NextResponse.json(

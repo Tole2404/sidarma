@@ -9,10 +9,15 @@ import {
   X,
   HandCoins,
   LayoutDashboard,
+  Layout,
   LogOut,
   Menu,
   Moon,
   Package,
+  PackageOpen,
+  Palette,
+  Scissors,
+  Search,
   ShoppingBag,
   Sun,
   Truck,
@@ -20,6 +25,10 @@ import {
   Wallet,
   Settings,
   Globe,
+  Building2,
+  BookOpen,
+  Briefcase,
+  FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -33,19 +42,26 @@ interface SidebarProps {
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Pembelian", href: "/purchases", icon: ShoppingBag },
+  { name: "Bongkaran", href: "/bongkaran", icon: PackageOpen },
   { name: "Penjualan", href: "/sales", icon: HandCoins },
   { name: "Pengeluaran", href: "/expenses", icon: Wallet },
   { name: "Stok", href: "/stock", icon: Package },
   { name: "Harga Bal", href: "/bale-prices", icon: Tags },
   { name: "Customer", href: "/customers", icon: Users },
   { name: "Supplier", href: "/suppliers", icon: Truck },
+  { name: "Konveksi", href: "/konveksi", icon: Building2 },
 ];
 
 const settingsGroup = {
   name: "Pengaturan",
   icon: Settings,
   children: [
-    { name: "Landing Page", href: "/dashboard/landing" },
+    { name: "Landing Page", href: "/dashboard/landing", icon: Globe },
+    { name: "Footer", href: "/dashboard/footer", icon: Layout },
+    { name: "Tema & Warna", href: "/dashboard/theme", icon: Palette },
+    { name: "SEO", href: "/dashboard/seo", icon: Search },
+    { name: "Artikel & Blog", href: "/dashboard/articles", icon: BookOpen },
+    { name: "Karir & Pelamar", href: "/dashboard/careers", icon: Briefcase },
   ],
 };
 
@@ -106,7 +122,14 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
   }, [ready, theme]);
 
   useEffect(() => {
-    if (pathname?.startsWith("/dashboard/landing")) {
+    if (
+      pathname?.startsWith("/dashboard/landing") ||
+      pathname?.startsWith("/dashboard/footer") ||
+      pathname?.startsWith("/dashboard/theme") ||
+      pathname?.startsWith("/dashboard/seo") ||
+      pathname?.startsWith("/dashboard/articles") ||
+      pathname?.startsWith("/dashboard/careers")
+    ) {
       setSettingsOpen(true);
     }
   }, [pathname]);
@@ -188,7 +211,12 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
         ) : null}
       </div>
 
-      <nav className={cn("flex-1 space-y-1 py-4", collapsed ? "px-2" : "px-3")}>
+      <nav
+        className={cn(
+          "flex-1 min-h-0 space-y-1 overflow-y-auto py-4",
+          collapsed ? "px-2" : "px-3",
+        )}
+      >
         {links.map((link) => {
           const isActive =
             pathname === link.href ||
@@ -229,7 +257,8 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
             {settingsOpen && (
               <div className="ml-4 mt-1 space-y-1 border-l-2 border-zinc-200 pl-3 dark:border-zinc-800">
                 {settingsGroup.children.map((child) => {
-                  const isActive = pathname === child.href;
+                  const isActive = pathname === child.href || pathname?.startsWith(child.href + "/");
+                  const ChildIcon = child.icon;
                   return (
                     <Link
                       key={child.href}
@@ -241,7 +270,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
                           : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                       )}
                     >
-                      <Globe className="h-4 w-4" />
+                      <ChildIcon className="h-4 w-4" />
                       {child.name}
                     </Link>
                   );
@@ -255,7 +284,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
             title={settingsGroup.name}
             className={cn(
               "flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-              pathname?.startsWith("/dashboard/landing")
+              settingsGroup.children.some((c) => pathname?.startsWith(c.href))
                 ? "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"
                 : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
             )}

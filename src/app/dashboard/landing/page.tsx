@@ -21,6 +21,7 @@ const SECTIONS = [
   { value: "cta", label: "CTA / Call to Action" },
   { value: "footer", label: "Footer" },
   { value: "maps", label: "Maps & Lokasi" },
+  { value: "jual_bongkaran", label: "Jual Bongkaran (Konveksi)" },
 ];
 
 const SECTION_FIELDS: Record<string, { key: string; label: string; multiline?: boolean }[]> = {
@@ -84,6 +85,13 @@ const SECTION_FIELDS: Record<string, { key: string; label: string; multiline?: b
     { key: "maps_link", label: "Link Google Maps (buka di Maps app)" },
     { key: "location_name", label: "Nama Lokasi" },
     { key: "location_subtitle", label: "Subtitle Lokasi" },
+  ],
+  jual_bongkaran: [
+    { key: "badge", label: "Badge (atas judul)" },
+    { key: "title", label: "Judul Utama" },
+    { key: "subtitle", label: "Subtitle" },
+    { key: "description", label: "Deskripsi", multiline: true },
+    { key: "wa_text", label: "Pesan WhatsApp Default", multiline: true },
   ],
 };
 

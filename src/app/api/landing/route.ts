@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
+import {
+  ALLOWED_SETTING_SECTIONS,
+  invalidateSiteSettingsCache,
+} from "@/lib/site-settings";
 
 export async function GET() {
   try {
@@ -37,13 +41,13 @@ export async function PUT(req: NextRequest) {
     }
 
     // Validate allowed sections
-    const allowedSections = ["hero", "stats", "about", "order", "cta", "footer", "maps"];
     for (const s of settings) {
-      if (!allowedSections.includes(s.section)) {
+      if (!ALLOWED_SETTING_SECTIONS.includes(s.section as typeof ALLOWED_SETTING_SECTIONS[number])) {
         return NextResponse.json({ error: `Invalid section: ${s.section}` }, { status: 400 });
       }
-      // Sanitize value - strip HTML/script tags
-      s.value = s.value.replace(/<[^>]*>/g, "").trim();
+      // Sanitize value - strip HTML/script tags untuk konten teks biasa.
+      // Untuk theme/seo, value adalah hex/string sederhana, jadi tetap aman.
+      s.value = String(s.value ?? "").replace(/<[^>]*>/g, "").trim();
     }
 
     // Use upsert for each setting
@@ -66,8 +70,13 @@ export async function PUT(req: NextRequest) {
       )
     );
 
+    invalidateSiteSettingsCache();
+
     return NextResponse.json({ success: true });
   } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     console.error("Error saving landing settings:", error);
     return NextResponse.json({ error: "Failed to save settings" }, { status: 500 });
   }

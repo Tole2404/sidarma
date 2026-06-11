@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 
+type SessionUser = { id: string; email: string; name: string; role: string };
+
 export default function DashboardLayout({
   children,
 }: {
@@ -11,6 +13,7 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<SessionUser | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/me")
@@ -18,9 +21,19 @@ export default function DashboardLayout({
         if (!res.ok) throw new Error("Not authenticated");
         return res.json();
       })
-      .then(() => setLoading(false))
+      .then((data) => {
+        setUser(data?.user ?? null);
+        setLoading(false);
+      })
       .catch(() => router.push("/login"));
   }, [router]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {}
+    router.push("/login");
+  };
 
   if (loading) {
     return (
@@ -31,10 +44,13 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50">
-      <Sidebar />
-      <main className="flex-1 overflow-auto">
-        <div className="p-6">{children}</div>
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+      <Sidebar
+        user={user ? { name: user.name ?? user.email, email: user.email, role: user.role } : null}
+        onLogout={handleLogout}
+      />
+      <main className="admin-main max-w-7xl">
+        <div className="space-y-6">{children}</div>
       </main>
     </div>
   );
