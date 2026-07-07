@@ -33,8 +33,8 @@ const TOKEN_GROUPS: { title: string; description: string; keys: string[] }[] = [
   },
   {
     title: "Brand & Aksen",
-    description: "Warna brand utama (mis. Safety Amber).",
-    keys: ["amber-500", "amber-600", "amber-700"],
+    description: "Warna brand utama dan aksen (mis. Digital Blue & Safety Amber).",
+    keys: ["primary", "primary-hover", "amber-500", "amber-600", "amber-700"],
   },
   {
     title: "Status",
@@ -165,7 +165,7 @@ export default function ThemeAdminPage() {
           <Label className="text-xs font-medium uppercase tracking-wider text-zinc-500">
             Preset Palet
           </Label>
-          <div className="space-y-2 rounded-xl border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 rounded-xl border border-zinc-200 bg-white p-2 dark:border-zinc-800 dark:bg-zinc-900">
             {data
               ? Object.entries(data.presets).map(([key, preset]) => (
                   <button
@@ -190,7 +190,7 @@ export default function ThemeAdminPage() {
         </div>
 
         <div className="flex-1 space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
             <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
               <Palette className="h-4 w-4" />
               {Object.keys(dirtyTokens).length > 0 ? (
@@ -204,10 +204,10 @@ export default function ThemeAdminPage() {
                 <span>Tidak ada perubahan</span>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
               {message ? (
                 <span
-                  className={`text-xs font-medium ${
+                  className={`text-xs font-medium w-full sm:w-auto ${
                     message.type === "ok" ? "text-emerald-600" : "text-rose-600"
                   }`}
                 >
@@ -219,7 +219,7 @@ export default function ThemeAdminPage() {
                 size="sm"
                 onClick={load}
                 disabled={loading}
-                className="gap-2"
+                className="gap-2 flex-1 sm:flex-none"
               >
                 <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
                 Refresh
@@ -229,16 +229,16 @@ export default function ThemeAdminPage() {
                 size="sm"
                 onClick={handleResetAll}
                 disabled={resetting}
-                className="gap-2"
+                className="gap-2 flex-1 sm:flex-none"
               >
                 <Undo2 className="h-3.5 w-3.5" />
-                {resetting ? "Mereset..." : "Reset ke default"}
+                {resetting ? "Mereset..." : "Reset"}
               </Button>
               <Button
                 size="sm"
                 onClick={handleSave}
                 disabled={saving || Object.keys(dirtyTokens).length === 0}
-                className="gap-2"
+                className="gap-2 flex-1 sm:flex-none"
               >
                 <Save className="h-3.5 w-3.5" />
                 {saving ? "Menyimpan..." : "Simpan"}
@@ -312,7 +312,7 @@ export default function ThemeAdminPage() {
                                 onBlur={(e) =>
                                   setTokens((prev) => ({ ...prev, [key]: normalizeHex(e.target.value) }))
                                 }
-                                className="h-8 font-mono text-xs"
+                                className="h-8 font-mono text-base sm:text-xs"
                                 placeholder="#000000"
                               />
                             </div>

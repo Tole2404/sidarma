@@ -64,7 +64,7 @@ export default function SuppliersPage() {
         const userResponse = await fetch("/api/auth/me");
 
         if (!userResponse.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
 
@@ -85,7 +85,7 @@ export default function SuppliersPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -200,7 +200,7 @@ export default function SuppliersPage() {
             title="Supplier"
             description="Kelola pemasok kain majun beserta kontak dan histori pembeliannya."
             action={
-              <Button onClick={openCreateDialog}>
+              <Button onClick={openCreateDialog} className="gap-2 w-full sm:w-auto h-9 px-3 text-xs sm:text-sm">
                 <Plus className="h-4 w-4" />
                 Tambah supplier
               </Button>
@@ -212,8 +212,8 @@ export default function SuppliersPage() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <div>
-                    <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Daftar Supplier</CardTitle>
-                    <CardDescription className="text-xs md:text-sm text-zinc-500">
+                    <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Daftar Supplier</CardTitle>
+                    <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">
                       Data supplier dipakai langsung saat membuat pembelian baru.
                     </CardDescription>
                   </div>

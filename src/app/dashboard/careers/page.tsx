@@ -21,7 +21,9 @@ export default function DashboardCareersPage() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: "", department: "", location: "Bandung, Jawa Barat", jobType: "Full-time", description: "", requirements: "" });
   const [saving, setSaving] = useState(false);
-
+  const [careerActive, setCareerActive] = useState(true);
+  const [toggling, setToggling] = useState(false);
+ 
   const loadPosts = async () => {
     setLoading(true);
     try {
@@ -30,32 +32,84 @@ export default function DashboardCareersPage() {
     } catch {}
     setLoading(false);
   };
-
+ 
+  const loadSettings = async () => {
+    try {
+      const res = await fetch("/api/landing");
+      if (res.ok) {
+        const settings = await res.json();
+        if (settings?.karir?.active !== undefined) {
+          setCareerActive(settings.karir.active === "true");
+        }
+      }
+    } catch {}
+  };
+ 
   const loadApplications = async (postId: string) => {
     try {
       const data = await fetch(`/api/careers/${postId}/applications`).then(r => r.json());
       if (Array.isArray(data)) setApplications(data);
     } catch {}
   };
-
-  useEffect(() => { loadPosts(); }, []);
+ 
+  useEffect(() => { loadPosts(); loadSettings(); }, []);
   useEffect(() => { if (selectedPost) loadApplications(selectedPost.id); else setApplications([]); }, [selectedPost]);
-
+ 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true);
     await fetch("/api/careers", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) }).catch(() => {});
     setSaving(false); setShowForm(false); setForm({ title: "", department: "", location: "Bandung, Jawa Barat", jobType: "Full-time", description: "", requirements: "" }); loadPosts();
   };
-
+ 
+  const handleToggleActive = async (checked: boolean) => {
+    setCareerActive(checked);
+    setToggling(true);
+    try {
+      await fetch("/api/landing", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          settings: [
+            { section: "karir", key: "active", value: checked ? "true" : "false" }
+          ]
+        })
+      });
+    } catch {}
+    setToggling(false);
+  };
+ 
   return (
     <div>
       <PageHeader title="Karir & Pelamar" description="Kelola lowongan kerja dan lihat daftar pelamar masuk" />
-
+ 
       <div className="grid gap-8 lg:grid-cols-5">
         {/* Left: Posts */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-zinc-700">Lowongan Aktif ({posts.length})</p>
+          
+          {/* Toggle Status Halaman Karir */}
+          <div className="flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/35">
+            <div>
+              <p className="text-xs font-bold text-zinc-950 dark:text-zinc-50">Status Halaman Karir</p>
+              <p className="text-[10px] text-zinc-500 leading-normal">Aktifkan untuk menampilkan halaman rekrutmen di situs utama</p>
+            </div>
+            <button
+              type="button"
+              disabled={toggling}
+              onClick={() => handleToggleActive(!careerActive)}
+              className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                careerActive ? "bg-emerald-600" : "bg-zinc-200 dark:bg-zinc-700"
+              } disabled:opacity-50`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  careerActive ? "translate-x-4" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
+ 
+          <div className="flex items-center justify-between pt-2">
+            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-400">Lowongan Aktif ({posts.length})</p>
             <Button size="sm" onClick={() => setShowForm(true)} className="gap-1.5"><Plus className="h-3.5 w-3.5" />Tambah</Button>
           </div>
           {loading ? <div className="h-40 rounded-xl bg-zinc-100 animate-pulse" /> : posts.length === 0 ? (
@@ -121,16 +175,16 @@ export default function DashboardCareersPage() {
 
       <Modal open={showForm} onClose={() => setShowForm(false)} title="Tambah Lowongan Kerja">
         <form onSubmit={handleCreate} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1.5 col-span-2"><label className="text-xs font-medium text-zinc-700">Nama Posisi *</label><Input required value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="cth: Penjahit Kain Majun" /></div>
-            <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700">Departemen *</label><Input required value={form.department} onChange={e => setForm(f => ({ ...f, department: e.target.value }))} placeholder="cth: Produksi" /></div>
-            <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700">Lokasi</label><Input value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} /></div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5 col-span-1 sm:col-span-2"><label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Nama Posisi *</label><Input required value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="cth: Penjahit Kain Majun" /></div>
+            <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Departemen *</label><Input required value={form.department} onChange={e => setForm(f => ({ ...f, department: e.target.value }))} placeholder="cth: Produksi" /></div>
+            <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Lokasi</label><Input value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} /></div>
           </div>
-          <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700">Deskripsi Pekerjaan *</label><textarea required rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Jelaskan tugas dan tanggung jawab posisi ini..." className="w-full rounded-md border border-zinc-200 px-3 py-2 text-sm focus:border-zinc-400 focus:outline-none resize-none" /></div>
-          <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700">Persyaratan *</label><textarea required rows={3} value={form.requirements} onChange={e => setForm(f => ({ ...f, requirements: e.target.value }))} placeholder="- Pengalaman min. 1 tahun&#10;- Teliti dan rajin" className="w-full rounded-md border border-zinc-200 px-3 py-2 text-sm focus:border-zinc-400 focus:outline-none resize-none" /></div>
-          <div className="flex gap-3 pt-2">
-            <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)}>Batal</Button>
-            <Button type="submit" disabled={saving} className="flex-1">{saving ? "Menyimpan..." : "Simpan Lowongan"}</Button>
+          <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Deskripsi Pekerjaan *</label><textarea required rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Jelaskan tugas dan tanggung jawab posisi ini..." className="w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 px-3 py-2 text-base md:text-sm focus:border-zinc-400 focus:outline-none resize-none" /></div>
+          <div className="space-y-1.5"><label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Persyaratan *</label><textarea required rows={3} value={form.requirements} onChange={e => setForm(f => ({ ...f, requirements: e.target.value }))} placeholder="- Pengalaman min. 1 tahun&#10;- Teliti dan rajin" className="w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 px-3 py-2 text-base md:text-sm focus:border-zinc-400 focus:outline-none resize-none" /></div>
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <Button type="button" variant="outline" className="w-full sm:flex-1" onClick={() => setShowForm(false)}>Batal</Button>
+            <Button type="submit" disabled={saving} className="w-full sm:flex-1">{saving ? "Menyimpan..." : "Simpan Lowongan"}</Button>
           </div>
         </form>
       </Modal>

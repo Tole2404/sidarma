@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 import Link from "next/link";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import SiteNavbar from "@/components/SiteNavbar";
@@ -11,7 +14,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const article = await prisma.article.findUnique({ where: { slug, isPublished: true } });
+    const article = await prisma.article.findFirst({ where: { slug, isPublished: true } });
     if (!article) return { title: "Artikel Tidak Ditemukan" };
     return {
       title: article.title,
@@ -53,7 +56,7 @@ export default async function ArticleDetailPage({ params }: Props) {
 
   let article = null;
   try {
-    article = await prisma.article.findUnique({ where: { slug, isPublished: true } });
+    article = await prisma.article.findFirst({ where: { slug, isPublished: true } });
   } catch {}
 
   // Fallback to placeholder
@@ -79,42 +82,65 @@ export default async function ArticleDetailPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <SiteNavbar />
-
-      <main className="mx-auto max-w-3xl px-6 py-12">
-        <div className="mb-4 flex flex-wrap items-center gap-3">
-          <span className="flex items-center gap-1 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600">
+ 
+      <main className="mx-auto max-w-4xl px-4 py-10 sm:py-16">
+        {/* Back link */}
+        <Link href="/artikel" className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-zinc-500 hover:text-zinc-955 dark:hover:text-zinc-100 transition-colors mb-6 sm:mb-8 group">
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Kembali ke Artikel
+        </Link>
+ 
+        {/* Metadata */}
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="flex items-center gap-1 rounded-full bg-primary/10 px-3.5 py-0.5 text-[10px] sm:text-xs font-semibold text-primary border border-primary/20">
             <Tag className="h-3 w-3" /> {category}
           </span>
           {publishedAt && (
-            <span className="flex items-center gap-1 text-xs text-zinc-400">
+            <span className="flex items-center gap-1.5 text-[10px] sm:text-xs font-medium text-zinc-400">
               <Calendar className="h-3 w-3" />
               {new Date(publishedAt).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
             </span>
           )}
         </div>
-
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-950 sm:text-4xl leading-tight">{title}</h1>
-
-        <div className="mt-4 flex items-center gap-2 border-t border-b border-zinc-200/60 py-4">
-          <div className="h-8 w-8 rounded-full bg-zinc-950 flex items-center justify-center text-white text-xs font-bold">SD</div>
+ 
+        {/* Title */}
+        <h1 className="mt-4 text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50 leading-[1.2] sm:leading-[1.15]">{title}</h1>
+ 
+        {/* Author details card */}
+        <div className="mt-5 flex items-center gap-3 border border-zinc-200/50 dark:border-zinc-800 rounded-2xl bg-zinc-50/50 dark:bg-zinc-900/35 px-4 py-3 sm:px-5 sm:py-4">
+          <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-xs sm:text-sm font-extrabold shadow-sm">SD</div>
           <div>
-            <p className="text-sm font-medium text-zinc-950">CV. SIDARMA MAJUN</p>
-            <p className="text-xs text-zinc-400">Distributor Kain Majun Terpercaya</p>
+            <p className="text-xs sm:text-sm font-bold text-zinc-955 dark:text-zinc-50">CV. SIDARMA MAJUN</p>
+            <p className="text-[10px] sm:text-xs text-zinc-400 font-medium">Distributor Kain Majun Terpercaya</p>
           </div>
         </div>
-
+ 
+        {/* Cover Image */}
+        {article?.thumbnail && (
+          <div className="my-6 sm:my-10 overflow-hidden rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-md bg-zinc-100/50 dark:bg-zinc-900/30 flex items-center justify-center">
+            <img src={article.thumbnail} alt={title} className="w-full h-auto max-h-[500px] object-contain" />
+          </div>
+        )}
+ 
+        {/* Article Body */}
         <div
-          className="prose prose-zinc mt-8 max-w-none prose-headings:font-semibold prose-h2:text-xl prose-p:text-zinc-600 prose-li:text-zinc-600"
+          className="prose prose-sm sm:prose-base prose-zinc dark:prose-invert mt-6 sm:mt-10 max-w-none prose-headings:font-bold prose-h2:text-xl sm:prose-h2:text-2xl prose-h3:text-lg sm:prose-h3:text-xl prose-p:text-zinc-650 dark:prose-p:text-zinc-300 prose-li:text-zinc-650 dark:prose-li:text-zinc-300 prose-strong:text-zinc-900 dark:prose-strong:text-zinc-100"
           dangerouslySetInnerHTML={{ __html: content }}
         />
-
-        <div className="mt-12 rounded-2xl border border-zinc-200 bg-white p-6 text-center">
-          <p className="text-sm font-medium text-zinc-950">Tertarik dengan produk kami?</p>
-          <p className="mt-1 text-sm text-zinc-500">Dapatkan penawaran harga terbaik kain majun langsung dari distributor.</p>
-          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-500 transition-colors">
-            Chat WhatsApp Sekarang
-          </a>
+ 
+        {/* CTA Button Block */}
+        <div className="mt-12 sm:mt-16 relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-955 p-6 sm:p-12 text-center shadow-xl">
+          {/* Ambient glow behind card */}
+          <div className="pointer-events-none absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
+          
+          <div className="relative z-10 flex flex-col items-center max-w-lg mx-auto">
+            <h3 className="text-lg sm:text-2xl font-extrabold text-white tracking-tight">Tertarik dengan produk kami?</h3>
+            <p className="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed font-medium">Dapatkan penawaran harga terbaik kain majun berkualitas langsung dari distributor resmi.</p>
+            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 sm:px-6 sm:py-3 text-xs sm:text-sm font-bold text-white hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-950/40 h-9 sm:h-11">
+              Chat WhatsApp Sekarang
+            </a>
+          </div>
         </div>
       </main>
       <SiteFooter />

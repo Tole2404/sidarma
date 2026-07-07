@@ -158,7 +158,7 @@ export default function SalesPage() {
         const userResponse = await fetch("/api/auth/me");
 
         if (!userResponse.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
 
@@ -191,7 +191,7 @@ export default function SalesPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -372,12 +372,12 @@ export default function SalesPage() {
             title="Penjualan"
             description="Catat penjualan ke customer. Sistem akan mengurangi stok, menghitung HPP snapshot, estimasi laba, dan status piutang."
             action={
-              <div className="flex items-center gap-2">
-                <Button variant="outline" className="gap-2" onClick={() => setReportDialogOpen(true)}>
+              <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap w-full sm:w-auto">
+                <Button variant="outline" className="gap-2 flex-1 sm:flex-none text-xs sm:text-sm h-9 px-3" onClick={() => setReportDialogOpen(true)}>
                   <FileText className="h-4 w-4 text-zinc-500" />
                   Rekap Laporan
                 </Button>
-                <Button onClick={openCreateDialog}>
+                <Button onClick={openCreateDialog} className="gap-2 flex-1 sm:flex-none text-xs sm:text-sm h-9 px-3">
                   <Plus className="h-4 w-4" />
                   Tambah penjualan
                 </Button>
@@ -388,14 +388,14 @@ export default function SalesPage() {
           <section className="grid grid-cols-2 gap-3 md:gap-4">
             <Card>
               <CardHeader className="p-4 md:pb-3">
-                <CardDescription className="text-xs md:text-sm">Total nilai penjualan</CardDescription>
-                <CardTitle className="text-xl md:text-3xl">{formatCurrency(totalSales)}</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total nilai penjualan</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">{formatCurrency(totalSales)}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader className="p-4 md:pb-3">
-                <CardDescription className="text-xs md:text-sm">Total outstanding piutang</CardDescription>
-                <CardTitle className="text-xl md:text-3xl text-rose-700">{formatCurrency(totalOutstanding)}</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total outstanding piutang</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight text-rose-700 dark:text-rose-400">{formatCurrency(totalOutstanding)}</CardTitle>
               </CardHeader>
             </Card>
           </section>
@@ -405,8 +405,8 @@ export default function SalesPage() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <div>
-                    <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Daftar Penjualan</CardTitle>
-                    <CardDescription className="text-xs md:text-sm text-zinc-500">Seluruh transaksi penjualan dan status pembayarannya.</CardDescription>
+                    <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Daftar Penjualan</CardTitle>
+                    <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Seluruh transaksi penjualan dan status pembayarannya.</CardDescription>
                   </div>
                 </div>
 

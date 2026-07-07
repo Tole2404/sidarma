@@ -146,8 +146,32 @@ export default function SeoAdminPage() {
       />
 
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-        {/* Sidebar list halaman */}
-        <div className="w-full lg:w-72 shrink-0 space-y-2">
+        {/* Mobile Page Selector Dropdown */}
+        <div className="block lg:hidden space-y-1.5 w-full">
+          <Label className="text-xs font-medium uppercase tracking-wider text-zinc-500">
+            Pilih Halaman
+          </Label>
+          <select
+            value={activePage}
+            onChange={(e) => setActivePage(e.target.value)}
+            className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-base focus:border-zinc-400 focus:outline-none dark:border-zinc-800 dark:bg-zinc-950 dark:text-white"
+          >
+            {pageList.map((page) => {
+              const meta = PAGE_LABELS[page] ?? { label: page, hint: "", preview: "/" };
+              return (
+                <option key={page} value={page}>
+                  {meta.label} ({meta.preview})
+                </option>
+              );
+            })}
+          </select>
+          <div className="rounded-lg border border-dashed border-zinc-200 bg-zinc-50 p-3 text-[11px] text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/40">
+            Field kosong otomatis fallback ke setting halaman <strong>Global</strong>.
+          </div>
+        </div>
+
+        {/* Desktop Sidebar list halaman */}
+        <div className="hidden lg:block w-72 shrink-0 space-y-2">
           <Label className="text-xs font-medium uppercase tracking-wider text-zinc-500">
             Pilih Halaman
           </Label>
@@ -188,7 +212,7 @@ export default function SeoAdminPage() {
         {/* Form */}
         <div className="flex-1 space-y-4">
           <div className="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
-            <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+            <div className="mb-5 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
               <div>
                 <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-100">
                   {PAGE_LABELS[activePage]?.label ?? activePage}
@@ -197,21 +221,21 @@ export default function SeoAdminPage() {
                   {PAGE_LABELS[activePage]?.hint ?? ""}
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                 {message ? (
                   <span
-                    className={`text-xs font-medium ${
+                    className={`text-xs font-medium w-full sm:w-auto ${
                       message.type === "ok" ? "text-emerald-600" : "text-rose-600"
                     }`}
                   >
                     {message.text}
                   </span>
                 ) : null}
-                <Button variant="ghost" size="sm" onClick={load} disabled={loading} className="gap-2">
+                <Button variant="ghost" size="sm" onClick={load} disabled={loading} className="gap-2 flex-1 sm:flex-none">
                   <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
                   Refresh
                 </Button>
-                <Button onClick={handleSave} disabled={saving || !draft} size="sm" className="gap-2">
+                <Button onClick={handleSave} disabled={saving || !draft} size="sm" className="gap-2 flex-1 sm:flex-none">
                   <Save className="h-3.5 w-3.5" />
                   {saving ? "Menyimpan..." : "Simpan"}
                 </Button>
@@ -264,7 +288,7 @@ export default function SeoAdminPage() {
                         onChange={(e) => handleChange(field.key, e.target.value)}
                         rows={3}
                         placeholder={field.placeholder}
-                        className="flex min-h-[80px] w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+                        className="flex min-h-[80px] w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-base md:text-sm placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
                       />
                     ) : (
                       <Input

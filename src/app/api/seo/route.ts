@@ -61,7 +61,13 @@ export async function PUT(req: NextRequest) {
     const updates: { key: string; value: string }[] = [];
     for (const [key, value] of Object.entries(data)) {
       if (!ALLOWED_KEYS.has(key as keyof (typeof DEFAULT_SEO)["default"])) continue;
-      const safe = String(value ?? "").replace(/<[^>]*>/g, "").trim();
+      
+      // Sanitize value - strip HTML/script tags secara rekursif.
+      let clean = String(value ?? "");
+      while (/<[^>]*>/g.test(clean)) {
+        clean = clean.replace(/<[^>]*>/g, "");
+      }
+      const safe = clean.trim();
       updates.push({ key, value: safe });
     }
 

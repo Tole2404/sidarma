@@ -162,7 +162,7 @@ export default function FooterAdminPage() {
             onChange={(e) => handleChange(section, field.key, e.target.value)}
             rows={3}
             placeholder={field.placeholder}
-            className="flex min-h-[80px] w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
+            className="flex min-h-[80px] w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-base md:text-sm placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
           />
         ) : (
           <Input
@@ -183,7 +183,7 @@ export default function FooterAdminPage() {
         description="Kelola konten footer halaman publik: identitas, kontak, jam operasional, sosial media, dan copyright."
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
           <Layout className="h-4 w-4" />
           {dirtyCount > 0 ? (
@@ -195,21 +195,21 @@ export default function FooterAdminPage() {
             <span>Tidak ada perubahan</span>
           )}
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {message ? (
             <span
-              className={`text-xs font-medium ${
+              className={`text-xs font-medium w-full sm:w-auto ${
                 message.type === "ok" ? "text-emerald-600" : "text-rose-600"
               }`}
             >
               {message.text}
             </span>
           ) : null}
-          <Button variant="ghost" size="sm" onClick={load} disabled={loading} className="gap-2">
+          <Button variant="ghost" size="sm" onClick={load} disabled={loading} className="gap-2 flex-1 sm:flex-none">
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
-          <Button onClick={handleSave} disabled={saving || dirtyCount === 0} size="sm" className="gap-2">
+          <Button onClick={handleSave} disabled={saving || dirtyCount === 0} size="sm" className="gap-2 flex-1 sm:flex-none">
             <Save className="h-3.5 w-3.5" />
             {saving ? "Menyimpan..." : "Simpan"}
           </Button>

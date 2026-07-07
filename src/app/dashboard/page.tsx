@@ -3,8 +3,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { BarChart3, HandCoins, Package, ShoppingBag, Wallet } from "lucide-react";
 import { useRouter } from "next/navigation";
-import PageHeader from "@/components/PageHeader";
-import Sidebar from "@/components/Sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -297,8 +295,8 @@ function DashboardCharts({
     <Card className="w-full">
       <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-100 p-4 md:p-6 pb-4">
         <div>
-          <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Grafik Kinerja Keuangan</CardTitle>
-          <CardDescription className="text-xs md:text-sm text-zinc-500">Perbandingan real-time penjualan, pembelian, dan biaya operasional.</CardDescription>
+          <CardTitle className="text-sm md:text-lg font-bold text-zinc-900">Grafik Kinerja Keuangan</CardTitle>
+          <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Perbandingan real-time penjualan, pembelian, dan biaya operasional.</CardDescription>
         </div>
         <div className="flex bg-zinc-100 p-0.5 rounded-lg w-fit">
           {(["weekly", "monthly", "yearly"] as const).map((p) => (
@@ -530,7 +528,7 @@ export default function DashboardPage() {
         const userResponse = await fetch("/api/auth/me");
 
         if (!userResponse.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
 
@@ -549,53 +547,43 @@ export default function DashboardPage() {
     loadData();
   }, [router]);
 
-  const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-    router.refresh();
-  };
-
   const totalStockKg = dashboard?.stockSummary.reduce((sum, product) => sum + product.currentStockKg, 0) ?? 0;
   const totalInventoryValue =
     dashboard?.stockSummary.reduce((sum, product) => sum + product.totalInventoryValue, 0) ?? 0;
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-        <Sidebar user={user} onLogout={handleLogout} />
-        <main className="admin-main max-w-7xl">
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <Skeleton className="h-8 w-48" />
-              <Skeleton className="h-4 w-72" />
-            </div>
-            <div className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
-              <Skeleton className="h-28 md:h-32" />
-              <Skeleton className="h-28 md:h-32" />
-              <Skeleton className="h-28 md:h-32" />
-              <Skeleton className="h-28 md:h-32" />
-            </div>
-            <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
-              <Skeleton className="h-80" />
-              <Skeleton className="h-80" />
-            </div>
-          </div>
-        </main>
+      <div className="space-y-6">
+        <div className="space-y-3">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-4 w-72" />
+        </div>
+        <div className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
+          <Skeleton className="h-28 md:h-32" />
+          <Skeleton className="h-28 md:h-32" />
+          <Skeleton className="h-28 md:h-32" />
+          <Skeleton className="h-28 md:h-32" />
+        </div>
+        <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+          <Skeleton className="h-80" />
+          <Skeleton className="h-80" />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <Sidebar user={user} onLogout={handleLogout} />
-
-      <main className="admin-main max-w-7xl">
-        <div className="space-y-6">
-          <PageHeader
-            eyebrow="Ringkasan bisnis"
-            title="Dashboard"
-            description={`Selamat datang${user?.name ? `, ${user.name}` : ""}. Pantau penjualan, pembelian, biaya, dan stok majun dari satu layar.`}
-          />
+    <div className="space-y-6">
+      <div className="space-y-6">
+        <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Dashboard</h1>
+            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
+              Selamat datang{user?.name ? `, ${user.name}` : ""}. Pantau penjualan, pembelian, biaya, dan stok majun dari satu layar.
+            </p>
+          </div>
+        </div>
+      </div>
 
           <section className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
             {summaryCards.map((card) => {
@@ -606,8 +594,8 @@ export default function DashboardPage() {
                 <Card key={card.key}>
                   <CardHeader className="flex flex-col md:flex-row items-start justify-between space-y-2 md:space-y-0 p-4 md:pb-3">
                     <div>
-                      <CardDescription className="text-xs md:text-sm truncate">{card.label}</CardDescription>
-                      <CardTitle className="mt-1 md:mt-2 text-lg md:text-2xl">{formatCurrency(amount)}</CardTitle>
+                      <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500 dark:text-zinc-400 truncate">{card.label}</CardDescription>
+                      <CardTitle className="mt-1 md:mt-2 text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{formatCurrency(amount)}</CardTitle>
                     </div>
                     <div className={cn("rounded-xl p-2 hidden md:block", card.tone)}>
                       <Icon className="h-4 w-4 md:h-5 md:w-5" />
@@ -719,24 +707,24 @@ export default function DashboardPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Ringkasan Stok</CardTitle>
-                <CardDescription>Posisi stok dan nilai persediaan per jenis produk.</CardDescription>
+                <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Ringkasan Stok</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Posisi stok dan nilai persediaan per jenis produk.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-lg border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50 p-4">
-                    <div className="mb-2 flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                    <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400">
                       <Package className="h-4 w-4" />
                       Total stok
                     </div>
-                    <p className="text-2xl font-semibold text-zinc-950 dark:text-white">{totalStockKg.toFixed(2)} kg</p>
+                    <p className="text-lg xs:text-xl sm:text-2xl font-semibold text-zinc-950 dark:text-white">{totalStockKg.toFixed(2)} kg</p>
                   </div>
                   <div className="rounded-lg border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50 p-4">
-                    <div className="mb-2 flex items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                    <div className="mb-2 flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400">
                       <Wallet className="h-4 w-4" />
                       Nilai persediaan
                     </div>
-                    <p className="text-2xl font-semibold text-zinc-950 dark:text-white">{formatCurrency(totalInventoryValue)}</p>
+                    <p className="text-lg xs:text-xl sm:text-2xl font-semibold text-zinc-950 dark:text-white">{formatCurrency(totalInventoryValue)}</p>
                   </div>
                 </div>
 
@@ -748,14 +736,14 @@ export default function DashboardPage() {
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="font-medium text-zinc-900 dark:text-zinc-100">{product.name}</p>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                          <p className="text-xs sm:text-sm font-medium text-zinc-900 dark:text-zinc-100">{product.name}</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400">
                             HPP rata-rata {formatCurrency(product.averageCostPerKg)}/kg
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-zinc-950 dark:text-white">{product.currentStockKg.toFixed(2)} kg</p>
-                          <p className="text-xs text-zinc-500 dark:text-zinc-400">{formatCurrency(product.totalInventoryValue)}</p>
+                          <p className="text-xs sm:text-sm font-semibold text-zinc-950 dark:text-white">{product.currentStockKg.toFixed(2)} kg</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400">{formatCurrency(product.totalInventoryValue)}</p>
                         </div>
                       </div>
                     </div>
@@ -764,8 +752,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </section>
-        </div>
-      </main>
     </div>
   );
 }

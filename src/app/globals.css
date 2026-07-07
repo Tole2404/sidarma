@@ -4,23 +4,28 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   
-  /* Palet Warna Kustom: Industrial Steel Works */
-  --color-zinc-50: #F5F7F8;     /* Off-White Bersih */
-  --color-zinc-100: #ECF0F1;    /* Silver Mist */
-  --color-zinc-200: #D8DDE1;    /* Slate Border Terang */
-  --color-zinc-300: #BDC3C7;    /* Slate Muted */
-  --color-zinc-400: #95A5A6;    /* Gray-Green Muted */
-  --color-zinc-500: #7F8C8D;    /* Gray-Green Text */
-  --color-zinc-600: #34495E;    /* Slate Steel Dark */
-  --color-zinc-700: #2C3E50;    /* Slate Steel Utama */
-  --color-zinc-800: #202D3B;    /* Slate Steel Card */
-  --color-zinc-900: #1A252F;    /* Deep Ink */
-  --color-zinc-950: #111820;    /* Slate Black */
+  /* Brand Primary Colors */
+  --color-primary: #3874FF;
+  --color-primary-hover: #1E56E3;
+  --color-primary-active: #0D42C7;
+
+  /* Palet Warna Kustom: Modern Slate SaaS */
+  --color-zinc-50: #F8FAFC;     /* Slate-50: Off-White Bersih */
+  --color-zinc-100: #F1F5F9;    /* Slate-100: Silver Mist */
+  --color-zinc-200: #E2E8F0;    /* Slate-200: Border Terang */
+  --color-zinc-300: #CBD5E1;    /* Slate-300: Slate Muted */
+  --color-zinc-400: #94A3B8;    /* Slate-400: Gray Muted */
+  --color-zinc-500: #64748B;    /* Slate-500: Gray Text */
+  --color-zinc-600: #475569;    /* Slate-600: Slate Dark Text */
+  --color-zinc-700: #334155;    /* Slate-700: Slate Steel Utama */
+  --color-zinc-800: #1E293B;    /* Slate-800: Slate Card Background */
+  --color-zinc-900: #0F172A;    /* Slate-900: Deep Ink / Dark Mode Card */
+  --color-zinc-950: #090D1F;    /* Slate-950: Slate Black / Dark Mode BG */
 
   /* Palet Warna Kustom: Safety Amber/Orange */
-  --color-amber-500: #F39C12;   /* Amber Utama */
-  --color-amber-600: #E67E22;   /* Deep Amber / Safety Orange */
-  --color-amber-700: #D35400;   /* Dark Orange */
+  --color-amber-500: #F59E0B;   /* Amber Utama */
+  --color-amber-600: #D97706;   /* Deep Amber / Safety Orange */
+  --color-amber-700: #B45309;   /* Dark Orange */
 }
 
 @layer base {
@@ -42,18 +47,19 @@
   }
 
   body {
-    @apply bg-zinc-50 text-zinc-950 antialiased selection:bg-zinc-900 selection:text-white;
+    @apply bg-zinc-50 text-zinc-950 antialiased selection:bg-primary selection:text-white;
     background-image:
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.85), rgba(250, 250, 250, 0.92)),
-      linear-gradient(to bottom, rgba(244, 244, 245, 0.65), rgba(250, 250, 250, 1));
+      radial-gradient(circle at top, rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.92)),
+      linear-gradient(to bottom, rgba(226, 232, 240, 0.65), rgba(241, 245, 249, 1));
   }
 
   html.dark body {
-    @apply bg-zinc-950 text-zinc-100 selection:bg-zinc-100 selection:text-zinc-950;
+    @apply bg-zinc-950 text-zinc-100 selection:bg-primary selection:text-white;
     background-image:
-      radial-gradient(circle at top, rgba(39, 39, 42, 0.7), rgba(9, 9, 11, 0.95)),
-      linear-gradient(to bottom, rgba(24, 24, 27, 0.95), rgba(9, 9, 11, 1));
+      radial-gradient(circle at top, rgba(30, 41, 59, 0.4), rgba(9, 13, 31, 0.98)),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.98), rgba(9, 13, 31, 1));
   }
+
 }
 
 @layer components {
@@ -68,12 +74,7 @@
     }
   }
 
-  /* Mobile: add safe padding at the bottom so bottom nav doesn't cover content */
-  @media (max-width: 1023px) {
-    .admin-main {
-      padding-bottom: calc(5rem + env(safe-area-inset-bottom));
-    }
-  }
+
 }
 
 @layer utilities {

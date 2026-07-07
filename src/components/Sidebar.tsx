@@ -122,6 +122,10 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
   }, [ready, theme]);
 
   useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     if (
       pathname?.startsWith("/dashboard/landing") ||
       pathname?.startsWith("/dashboard/footer") ||
@@ -135,14 +139,14 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
   }, [pathname]);
 
   const navContent = (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-full lg:h-full flex-col">
       <div
         className={cn(
-          "flex items-center border-b border-zinc-200 px-4 py-5",
+          "hidden lg:flex items-center border-b border-zinc-200 px-4 py-5",
           collapsed ? "flex-col justify-center gap-3" : "gap-3",
         )}
       >
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
           <Package className="h-5 w-5" />
         </div>
         {!collapsed ? (
@@ -213,7 +217,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
 
       <nav
         className={cn(
-          "flex-1 min-h-0 space-y-1 overflow-y-auto py-4",
+          "space-y-1 py-4 lg:flex-1 lg:min-h-0 lg:overflow-y-auto",
           collapsed ? "px-2" : "px-3",
         )}
       >
@@ -233,7 +237,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 collapsed && "justify-center",
                 isActive
-                  ? "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"
+                  ? "bg-primary text-white"
                   : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100",
               )}
             >
@@ -266,7 +270,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
                       className={cn(
                         "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"
+                          ? "bg-primary text-white"
                           : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                       )}
                     >
@@ -285,7 +289,7 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
             className={cn(
               "flex items-center justify-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
               settingsGroup.children.some((c) => pathname?.startsWith(c.href))
-                ? "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"
+                ? "bg-primary text-white"
                 : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
             )}
           >
@@ -295,15 +299,15 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
       </nav>
 
       {user ? (
-        <div className={cn("border-t border-zinc-200 p-3", collapsed && "px-2")}>
+        <div className={cn("border-t border-zinc-200 dark:border-zinc-800 p-3", collapsed && "px-2")}>
           <div
             className={cn(
-              "rounded-lg border border-zinc-200 bg-zinc-50 p-3",
+              "rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-3",
               collapsed && "flex flex-col items-center px-2",
             )}
           >
-            {!collapsed ? <p className="text-sm font-medium text-zinc-950">{user.name}</p> : null}
-            {!collapsed ? <p className="truncate text-xs text-zinc-500">{user.email}</p> : null}
+            {!collapsed ? <p className="text-sm font-medium text-zinc-950 dark:text-zinc-250">{user.name}</p> : null}
+            {!collapsed ? <p className="truncate text-xs text-zinc-500 dark:text-zinc-450">{user.email}</p> : null}
             <Button
               variant="ghost"
               title={collapsed ? "Keluar" : undefined}
@@ -324,10 +328,10 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/90 dark:border-zinc-800 dark:bg-zinc-950/90 backdrop-blur lg:hidden">
+      <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/95 dark:border-zinc-800 dark:bg-zinc-950/95 backdrop-blur lg:hidden">
         <div className="flex h-16 items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-white">
               <Package className="h-4 w-4" />
             </div>
             <div>
@@ -350,48 +354,22 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
               size="icon"
               onClick={() => {
                 setCollapsed(false);
-                setOpen(true);
+                setOpen(!open);
               }}
             >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Buka navigasi</span>
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <span className="sr-only">Toggle navigasi</span>
             </Button>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around border-t border-zinc-200 bg-white/95 dark:border-zinc-800 dark:bg-zinc-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
-        {[
-          { name: "Home", href: "/dashboard", icon: LayoutDashboard },
-          { name: "Beli", href: "/purchases", icon: ShoppingBag },
-          { name: "Jual", href: "/sales", icon: HandCoins },
-          { name: "Stok", href: "/stock", icon: Package },
-        ].map((item) => {
-          const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-1 py-2 text-xs font-medium transition-colors",
-                isActive ? "text-zinc-950 dark:text-zinc-100" : "text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-100"
-              )}
-            >
-              <Icon className={cn("h-5 w-5", isActive && "text-emerald-600 dark:text-emerald-400")} />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
-        <button
-          onClick={() => setOpen(true)}
-          className="flex flex-1 flex-col items-center justify-center gap-1 py-2 text-xs font-medium text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-100"
-        >
-          <Menu className="h-5 w-5" />
-          <span>Menu</span>
-        </button>
-      </nav>
+        {/* Mobile slide-down menu */}
+        {open && (
+          <div className="border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto pb-8 backdrop-blur">
+            {navContent}
+          </div>
+        )}
+      </header>
 
       <aside
         className={cn(
@@ -401,20 +379,6 @@ export default function Sidebar({ user, onLogout }: SidebarProps) {
       >
         {navContent}
       </aside>
-
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent
-          side="left"
-          className="w-[86vw] max-w-sm border-r border-zinc-200 bg-white p-0 dark:border-zinc-800 dark:bg-zinc-900"
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Navigasi</SheetTitle>
-          </SheetHeader>
-          <div className="h-full overflow-y-auto pb-[max(1rem,env(safe-area-inset-bottom))]">
-            {navContent}
-          </div>
-        </SheetContent>
-      </Sheet>
     </>
   );
 }

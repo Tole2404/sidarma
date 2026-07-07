@@ -25,14 +25,14 @@ export default function DashboardLayout({
         setUser(data?.user ?? null);
         setLoading(false);
       })
-      .catch(() => router.push("/login"));
+      .catch(() => router.push("/portal-admin"));
   }, [router]);
 
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
     } catch {}
-    router.push("/login");
+    router.push("/portal-admin");
   };
 
   if (loading) {

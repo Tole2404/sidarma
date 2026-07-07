@@ -73,7 +73,7 @@ export default function BongkaranPage() {
       try {
         const r = await fetch("/api/auth/me");
         if (!r.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
         const { user } = (await r.json()) as { user: SessionUser };
@@ -87,7 +87,7 @@ export default function BongkaranPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -205,7 +205,7 @@ export default function BongkaranPage() {
             title="Bongkaran Kain"
             description="Catat pembelian kain bongkaran dari konveksi sebelum disortir menjadi majun."
             action={
-              <Button onClick={openCreate} className="gap-2" disabled={konveksis.length === 0}>
+              <Button onClick={openCreate} className="gap-2 w-full sm:w-auto h-9 px-3 text-xs sm:text-sm" disabled={konveksis.length === 0}>
                 <Plus className="h-4 w-4" /> Tambah Bongkaran
               </Button>
             }
@@ -225,39 +225,39 @@ export default function BongkaranPage() {
             </Card>
           ) : null}
 
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Sisa Belum Sortir</CardDescription>
-                <CardTitle className="text-2xl">{stats.totalRemaining.toLocaleString("id-ID")} kg</CardTitle>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Sisa Belum Sortir</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{stats.totalRemaining.toLocaleString("id-ID")} kg</CardTitle>
               </CardHeader>
             </Card>
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Pending Sortir</CardDescription>
-                <CardTitle className="text-2xl">{stats.pendingCount}</CardTitle>
-                <p className="text-xs text-zinc-500">{stats.pendingKg.toLocaleString("id-ID")} kg menunggu</p>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Pending Sortir</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{stats.pendingCount}</CardTitle>
+                <p className="text-[10px] sm:text-xs text-zinc-500">{stats.pendingKg.toLocaleString("id-ID")} kg menunggu</p>
               </CardHeader>
             </Card>
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Bulan Ini (Kg)</CardDescription>
-                <CardTitle className="text-2xl">{stats.monthQty.toLocaleString("id-ID")} kg</CardTitle>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Bulan Ini (Kg)</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{stats.monthQty.toLocaleString("id-ID")} kg</CardTitle>
               </CardHeader>
             </Card>
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Bulan Ini (Rp)</CardDescription>
-                <CardTitle className="text-2xl">{formatCurrency(stats.monthValue)}</CardTitle>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Bulan Ini (Rp)</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{formatCurrency(stats.monthValue)}</CardTitle>
               </CardHeader>
             </Card>
           </div>
 
           <Card>
-            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 md:p-6">
               <div>
-                <CardTitle>Transaksi Bongkaran</CardTitle>
-                <CardDescription>Klik baris untuk masuk ke proses sortir.</CardDescription>
+                <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Transaksi Bongkaran</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Klik baris untuk masuk ke proses sortir.</CardDescription>
               </div>
               <div className="relative w-full sm:w-72">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />

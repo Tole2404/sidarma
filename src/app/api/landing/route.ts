@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 import {
   ALLOWED_SETTING_SECTIONS,
   invalidateSiteSettingsCache,
@@ -36,7 +39,7 @@ export async function PUT(req: NextRequest) {
       settings: { section: string; key: string; value: string }[];
     };
 
-    if (!Array.isArray(settings)) {
+    if (!body || !Array.isArray(settings)) {
       return NextResponse.json({ error: "Invalid settings format" }, { status: 400 });
     }
 
@@ -45,9 +48,96 @@ export async function PUT(req: NextRequest) {
       if (!ALLOWED_SETTING_SECTIONS.includes(s.section as typeof ALLOWED_SETTING_SECTIONS[number])) {
         return NextResponse.json({ error: `Invalid section: ${s.section}` }, { status: 400 });
       }
-      // Sanitize value - strip HTML/script tags untuk konten teks biasa.
-      // Untuk theme/seo, value adalah hex/string sederhana, jadi tetap aman.
-      s.value = String(s.value ?? "").replace(/<[^>]*>/g, "").trim();
+      
+      if (s.section === "products" && s.key === "list") {
+        try {
+          const parsed = JSON.parse(s.value);
+          if (Array.isArray(parsed)) {
+            // Sanitize each field inside each product object
+            const sanitized = parsed.map((p: any) => {
+              const name = String(p.name ?? "").replace(/<[^>]*>/g, "").trim();
+              const category = String(p.category ?? "").replace(/<[^>]*>/g, "").trim();
+              const desc = String(p.desc ?? "").replace(/<[^>]*>/g, "").trim();
+              const image = String(p.image ?? "").trim();
+              
+              // Validate image URL format
+              const safeImage = (image.startsWith("http://") || image.startsWith("https://") || image.startsWith("/"))
+                ? image
+                : "";
+
+              const uses = Array.isArray(p.uses)
+                ? p.uses.map((u: any) => String(u ?? "").replace(/<[^>]*>/g, "").trim())
+                : [];
+
+              return { name, category, desc, image: safeImage, uses };
+            });
+            s.value = JSON.stringify(sanitized);
+          } else {
+            return NextResponse.json({ error: "Format daftar produk harus berupa array" }, { status: 400 });
+          }
+        } catch {
+          return NextResponse.json({ error: "Format JSON tidak valid untuk daftar produk" }, { status: 400 });
+        }
+      } else if (s.section === "testimonials" && s.key === "list") {
+        try {
+          const parsed = JSON.parse(s.value);
+          if (Array.isArray(parsed)) {
+            // Sanitize each field inside each testimonial object
+            const sanitized = parsed.map((t: any) => {
+              const name = String(t.name ?? "").replace(/<[^>]*>/g, "").trim();
+              const company = String(t.company ?? "").replace(/<[^>]*>/g, "").trim();
+              const role = String(t.role ?? "").replace(/<[^>]*>/g, "").trim();
+              const content = String(t.content ?? "").replace(/<[^>]*>/g, "").trim();
+              const rating = Number(t.rating) || 5;
+              const avatar = String(t.avatar ?? "").trim();
+              
+              // Validate avatar URL format
+              const safeAvatar = (avatar.startsWith("http://") || avatar.startsWith("https://") || avatar.startsWith("/"))
+                ? avatar
+                : "";
+
+              return { name, company, role, content, rating, avatar: safeAvatar };
+            });
+            s.value = JSON.stringify(sanitized);
+          } else {
+            return NextResponse.json({ error: "Format testimoni harus berupa array" }, { status: 400 });
+          }
+        } catch {
+          return NextResponse.json({ error: "Format JSON tidak valid untuk testimoni" }, { status: 400 });
+        }
+      } else {
+        // Sanitize value - strip HTML/script tags untuk konten teks biasa secara rekursif.
+        let clean = String(s.value ?? "");
+        while (/<[^>]*>/g.test(clean)) {
+          clean = clean.replace(/<[^>]*>/g, "");
+        }
+        s.value = clean.trim();
+
+        // Validasi URL untuk Google Maps Embed & Link
+        if (s.section === "maps" && (s.key === "embed_url" || s.key === "maps_link")) {
+          if (s.value && !s.value.startsWith("http://") && !s.value.startsWith("https://")) {
+            return NextResponse.json(
+              { error: `Format URL tidak valid untuk ${s.key}. Harus dimulai dengan http:// atau https://` },
+              { status: 400 }
+            );
+          }
+        }
+
+        // Validasi URL untuk Gambar (hero image dll)
+        if (s.key === "image" || s.key === "thumbnail" || s.key === "avatar") {
+          if (s.value && !s.value.startsWith("http://") && !s.value.startsWith("https://") && !s.value.startsWith("/")) {
+            return NextResponse.json(
+              { error: `Format URL gambar tidak valid untuk ${s.key}.` },
+              { status: 400 }
+            );
+          }
+        }
+
+        // Bersihkan nomor WhatsApp dari karakter berbahaya
+        if (s.key === "wa_number") {
+          s.value = s.value.replace(/[^0-9+]/g, "");
+        }
+      }
     }
 
     // Use upsert for each setting

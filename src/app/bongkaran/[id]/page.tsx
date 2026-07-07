@@ -66,7 +66,7 @@ export default function BongkaranDetailPage() {
       try {
         const r = await fetch("/api/auth/me");
         if (!r.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
         const { user } = (await r.json()) as { user: SessionUser };
@@ -80,7 +80,7 @@ export default function BongkaranDetailPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 

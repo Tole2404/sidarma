@@ -93,7 +93,7 @@ export default function LandingPage() {
             <a href="#cara-order" className="text-sm text-zinc-600 hover:text-zinc-950 transition-colors">Cara Order</a>
             <a href="#kontak" className="text-sm text-zinc-600 hover:text-zinc-950 transition-colors">Kontak</a>
             <Button asChild size="sm" className="gap-2">
-              <Link href="/login">
+              <Link href="/portal-admin">
                 Masuk Admin <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -119,7 +119,7 @@ export default function LandingPage() {
               <a href="#kontak" className="rounded-lg px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-100" onClick={() => setMobileOpen(false)}>Kontak</a>
               <div className="mt-2 border-t border-zinc-200 pt-3">
                 <Button asChild size="sm" className="w-full gap-2">
-                  <Link href="/login" onClick={() => setMobileOpen(false)}>
+                  <Link href="/portal-admin" onClick={() => setMobileOpen(false)}>
                     Masuk Admin <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -164,7 +164,7 @@ export default function LandingPage() {
                     </a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="gap-2">
-                    <Link href="/login">
+                    <Link href="/portal-admin">
                       Masuk Sistem <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
@@ -383,7 +383,7 @@ export default function LandingPage() {
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="gap-2 border-zinc-700 bg-transparent text-white hover:bg-zinc-800 hover:text-white">
-                <Link href="/login">
+                <Link href="/portal-admin">
                   Masuk Sistem Admin <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -421,7 +421,7 @@ export default function LandingPage() {
             <div>
               <h4 className="text-sm font-semibold text-zinc-950">Navigasi</h4>
               <ul className="mt-4 space-y-2">
-                {[["#produk", "Produk"], ["#tentang", "Tentang"], ["#cara-order", "Cara Order"], ["/login", "Masuk Admin"]].map(([href, label]) => (
+                {[["#produk", "Produk"], ["#tentang", "Tentang"], ["#cara-order", "Cara Order"], ["/portal-admin", "Masuk Admin"]].map(([href, label]) => (
                   <li key={href}>
                     <a href={href} className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors">{label}</a>
                   </li>

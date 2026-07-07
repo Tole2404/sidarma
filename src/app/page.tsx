@@ -1,7 +1,6 @@
-import { prisma } from "@/lib/db";
 import type { Metadata } from "next";
 import LandingClient from "./LandingClient";
-import { csvToArray, getSeoSettings } from "@/lib/site-settings";
+import { csvToArray, getSeoSettings, getAllSettings } from "@/lib/site-settings";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sidarmamajun.com";
 
@@ -49,6 +48,7 @@ const localBusinessSchema = {
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" },
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "08:00", closes: "14:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], opens: "00:00", closes: "00:00" },
   ],
   sameAs: [
     "https://instagram.com/sidarmamajun",
@@ -66,26 +66,11 @@ const localBusinessSchema = {
   },
 };
 
-async function getLandingData() {
-  try {
-    const settings = await prisma.landingSetting.findMany({
-      orderBy: [{ section: "asc" }, { key: "asc" }],
-    });
-
-    const grouped = settings.reduce((acc, s) => {
-      if (!acc[s.section]) acc[s.section] = {};
-      acc[s.section][s.key] = s.value;
-      return acc;
-    }, {} as Record<string, Record<string, string>>);
-
-    return grouped;
-  } catch {
-    return {};
-  }
-}
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function LandingPage() {
-  const data = await getLandingData();
+  const data = await getAllSettings();
   return (
     <>
       <script

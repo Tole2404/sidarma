@@ -84,10 +84,10 @@ export default function LandingPage() {
       if (res.ok) {
         router.push("/dashboard");
       } else {
-        router.push("/login");
+        router.push("/portal-admin");
       }
     } catch {
-      router.push("/login");
+      router.push("/portal-admin");
     } finally {
       setLoading(false);
     }
@@ -432,7 +432,7 @@ export default function LandingPage() {
             <div>
               <h4 className="text-sm font-semibold text-zinc-950">Navigasi</h4>
               <ul className="mt-4 space-y-2">
-                {[["#produk", "Produk"], ["#tentang", "Tentang"], ["#cara-order", "Cara Order"], ["/login", "Masuk Admin"]].map(([href, label]) => (
+                {[["#produk", "Produk"], ["#tentang", "Tentang"], ["#cara-order", "Cara Order"], ["/portal-admin", "Masuk Admin"]].map(([href, label]) => (
                   <li key={href}>
                     <a href={href} className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors">{label}</a>
                   </li>

@@ -51,7 +51,7 @@ export default function StockPage() {
         const userResponse = await fetch("/api/auth/me");
 
         if (!userResponse.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
 
@@ -73,7 +73,7 @@ export default function StockPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -138,37 +138,37 @@ export default function StockPage() {
           <section className="grid grid-cols-2 gap-3 md:gap-4">
             <Card>
               <CardHeader className="p-4 md:pb-3">
-                <CardDescription className="text-xs md:text-sm">Total stok semua produk</CardDescription>
-                <CardTitle className="text-xl md:text-3xl">{totalStockKg.toFixed(2)} kg</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total stok semua produk</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">{totalStockKg.toFixed(2)} kg</CardTitle>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader className="p-4 md:pb-3">
-                <CardDescription className="text-xs md:text-sm">Total nilai persediaan</CardDescription>
-                <CardTitle className="text-xl md:text-3xl">{formatCurrency(totalInventoryValue)}</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total nilai persediaan</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl lg:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">{formatCurrency(totalInventoryValue)}</CardTitle>
               </CardHeader>
             </Card>
           </section>
 
           <section className="grid gap-4 xl:grid-cols-[0.95fr_1.05fr]">
             <Card>
-              <CardHeader>
-                <CardTitle>Posisi stok per produk</CardTitle>
-                <CardDescription>Stok saat ini dipisahkan berdasarkan jenis majun aktif.</CardDescription>
+              <CardHeader className="p-4 md:p-6 pb-2">
+                <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Posisi stok per produk</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Stok saat ini dipisahkan berdasarkan jenis majun aktif.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3 p-4 pt-0">
                 {products.map((product) => (
                   <div key={product.id} className="rounded-lg border border-zinc-200 bg-zinc-50 p-4">
                     <div className="flex items-center justify-between gap-3">
                       <div>
-                        <p className="font-medium text-zinc-900">{product.name}</p>
-                        <p className="text-xs text-zinc-500">
+                        <p className="text-xs sm:text-sm font-medium text-zinc-900">{product.name}</p>
+                        <p className="text-[10px] sm:text-xs text-zinc-500">
                           HPP rata-rata {formatCurrency(product.averageCostPerKg)}/kg
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-semibold text-zinc-950">{product.currentStockKg.toFixed(2)} kg</p>
-                        <p className="text-xs text-zinc-500">{formatCurrency(product.totalInventoryValue)}</p>
+                        <p className="text-xs sm:text-sm font-semibold text-zinc-950">{product.currentStockKg.toFixed(2)} kg</p>
+                        <p className="text-[10px] sm:text-xs text-zinc-500">{formatCurrency(product.totalInventoryValue)}</p>
                       </div>
                     </div>
                   </div>
@@ -181,8 +181,8 @@ export default function StockPage() {
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <div>
-                      <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Riwayat Pergerakan Stok</CardTitle>
-                      <CardDescription className="text-xs md:text-sm text-zinc-500">Riwayat masuk dan keluarnya barang dari gudang.</CardDescription>
+                      <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Riwayat Pergerakan Stok</CardTitle>
+                      <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Riwayat masuk dan keluarnya barang dari gudang.</CardDescription>
                     </div>
                   </div>
 

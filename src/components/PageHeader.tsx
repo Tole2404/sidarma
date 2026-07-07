@@ -17,8 +17,8 @@ export default function PageHeader({ eyebrow, title, description, action }: Page
             {eyebrow}
           </Badge>
         )}
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-950">{title}</h1>
-        <p className="mt-2 text-sm text-zinc-500">{description}</p>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-zinc-950">{title}</h1>
+        <p className="mt-1.5 text-xs sm:text-sm text-zinc-500">{description}</p>
       </div>
       {action}
     </section>

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { unstable_cache, revalidateTag } from "next/cache";
+import { unstable_cache, revalidateTag, revalidatePath } from "next/cache";
 
 /**
  * Default theme tokens. Hex value harus konsisten dengan globals.css default.
@@ -7,22 +7,26 @@ import { unstable_cache, revalidateTag } from "next/cache";
  */
 export const DEFAULT_THEME: Record<string, string> = {
   // Netral / Slate (background, border, surface, text)
-  "zinc-50": "#F5F7F8",
-  "zinc-100": "#ECF0F1",
-  "zinc-200": "#D8DDE1",
-  "zinc-300": "#BDC3C7",
-  "zinc-400": "#95A5A6",
-  "zinc-500": "#7F8C8D",
-  "zinc-600": "#34495E",
-  "zinc-700": "#2C3E50",
-  "zinc-800": "#202D3B",
-  "zinc-900": "#1A252F",
-  "zinc-950": "#111820",
+  "zinc-50": "#F8FAFC",
+  "zinc-100": "#F1F5F9",
+  "zinc-200": "#E2E8F0",
+  "zinc-300": "#CBD5E1",
+  "zinc-400": "#94A3B8",
+  "zinc-500": "#64748B",
+  "zinc-600": "#475569",
+  "zinc-700": "#334155",
+  "zinc-800": "#1E293B",
+  "zinc-900": "#0F172A",
+  "zinc-950": "#090D1F",
+
+  // Brand / Primary Action
+  "primary": "#3874FF",
+  "primary-hover": "#1E56E3",
 
   // Aksen / Brand (Safety Amber)
-  "amber-500": "#F39C12",
-  "amber-600": "#E67E22",
-  "amber-700": "#D35400",
+  "amber-500": "#F59E0B",
+  "amber-600": "#D97706",
+  "amber-700": "#B45309",
 
   // Status
   "emerald-500": "#10B981",
@@ -231,6 +235,7 @@ function seoSection(page: string) {
 
 export const ALLOWED_SETTING_SECTIONS = [
   // Landing CMS sections (existing)
+  "catalog_banner",
   "hero",
   "stats",
   "products",
@@ -241,9 +246,17 @@ export const ALLOWED_SETTING_SECTIONS = [
   "maps",
   "social",
   "jual_bongkaran",
+  "testimonials",
+  "karir",
   // New: theme + SEO
   "theme",
-  ...SEO_PAGES.map(seoSection),
+  "seo_default",
+  "seo_home",
+  "seo_artikel",
+  "seo_karir",
+  "seo_kalkulator",
+  "seo_jualBongkaran",
+  "seo_lacak",
 ] as const;
 
 async function loadSettingsRaw(): Promise<Record<string, Record<string, string>>> {
@@ -313,12 +326,8 @@ export function buildThemeCss(tokens: Record<string, string>): string {
 /** Util untuk admin route: panggil setelah save agar cache di-invalidate. */
 export function invalidateSiteSettingsCache() {
   try {
-    // Next.js 16+ memerlukan signature (tag, type). Cast agar aman jika versi runtime
-    // memakai signature lama (tag) saja.
-    (revalidateTag as unknown as (tag: string, type?: string) => void)(
-      SITE_SETTINGS_TAG,
-      "page",
-    );
+    revalidateTag(SITE_SETTINGS_TAG, "max");
+    revalidatePath("/");
   } catch {
     // best-effort, abaikan kalau di luar konteks request
   }

@@ -4,6 +4,16 @@ import { requireAuth } from "@/lib/auth";
 
 export async function GET() {
   try {
+    // Check if careers page is active in settings
+    const setting = await prisma.landingSetting.findFirst({
+      where: { section: "karir", key: "active" },
+    });
+    const isPageActive = setting ? setting.value === "true" : true; // default to true
+ 
+    if (!isPageActive) {
+      return NextResponse.json([]);
+    }
+ 
     const posts = await prisma.careerPost.findMany({
       where: { isActive: true },
       orderBy: { createdAt: "desc" },

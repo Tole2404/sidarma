@@ -60,28 +60,28 @@ export default function SiteFooter({
     ["/kalkulator", "Kalkulator"],
     ["/lacak-pesanan", "Lacak Pesanan"],
   ];
-
   return (
     <footer
       id="kontak"
-      className="border-t border-zinc-200/80 bg-white/80 px-6 py-14 lg:px-8 dark:border-zinc-800 dark:bg-zinc-950/80"
+      className="border-t border-zinc-900 bg-zinc-950 px-6 py-10 sm:py-16 lg:px-8 text-zinc-400"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand column */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-950 text-white shadow-lg shadow-zinc-950/20 dark:bg-zinc-100 dark:text-zinc-950">
-                <Factory className="h-4 w-4" />
+          <div className="lg:col-span-2 space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-zinc-950 font-bold shadow-lg shadow-emerald-500/20">
+                <Factory className="h-3.5 w-3.5" />
               </div>
-              <span className="text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-100">
+              <span className="text-sm sm:text-base font-extrabold tracking-tight text-white">
                 {companyName}
               </span>
             </div>
-            <p className="mt-4 text-sm leading-6 text-zinc-500 dark:text-zinc-400 max-w-sm">
-              {footerDesc}
-            </p>
-            <div className="mt-5 flex gap-3">
+            <div 
+              className="text-xs sm:text-sm leading-relaxed text-zinc-400 max-w-sm prose prose-invert"
+              dangerouslySetInnerHTML={{ __html: footerDesc }}
+            />
+            <div className="flex gap-2">
               {SOCIAL_LINKS.map((s) => (
                 <a
                   key={s.label}
@@ -89,33 +89,33 @@ export default function SiteFooter({
                   target="_blank"
                   rel="noopener noreferrer"
                   title={s.label}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 hover:border-zinc-300 hover:text-zinc-950 transition-colors dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-100"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/50 text-zinc-450 hover:border-emerald-500/30 hover:text-emerald-400 hover:bg-zinc-900 transition-all duration-300"
                 >
                   {s.svg}
                 </a>
               ))}
             </div>
-            <div className="mt-6 flex gap-8">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 pt-1">
               <div>
-                <p className="text-xs font-medium text-zinc-400 dark:text-zinc-500">WhatsApp</p>
-                <p className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-200">{phone}</p>
+                <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-zinc-500">WhatsApp</p>
+                <p className="mt-0.5 text-xs sm:text-sm font-semibold text-zinc-200">{phone}</p>
               </div>
               <div>
-                <p className="text-xs font-medium text-zinc-400 dark:text-zinc-500">Email</p>
-                <p className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-200">{email}</p>
+                <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-zinc-500">Email</p>
+                <p className="mt-0.5 text-xs sm:text-sm font-semibold text-zinc-200">{email}</p>
               </div>
             </div>
           </div>
-
+ 
           {/* Navigation column */}
           <div>
-            <h4 className="text-sm font-semibold text-zinc-950 dark:text-zinc-100">Navigasi</h4>
-            <ul className="mt-4 space-y-2.5">
+            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">Navigasi</h4>
+            <ul className="mt-3 sm:mt-5 space-y-2">
               {navLinks.map(([href, label]) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-zinc-500 hover:text-zinc-950 transition-colors duration-200 dark:text-zinc-400 dark:hover:text-zinc-100"
+                    className="text-xs sm:text-sm text-zinc-400 hover:text-emerald-400 transition-colors duration-200 font-medium"
                   >
                     {label}
                   </Link>
@@ -123,23 +123,32 @@ export default function SiteFooter({
               ))}
             </ul>
           </div>
-
+ 
           {/* Hours column */}
           <div>
-            <h4 className="text-sm font-semibold text-zinc-950 dark:text-zinc-100">Jam Operasional</h4>
-            <ul className="mt-4 space-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-              <li>{hoursWeekday}</li>
-              <li>{hoursSaturday}</li>
-              <li>{hoursSunday}</li>
+            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">Jam Operasional</h4>
+            <ul className="mt-3 sm:mt-5 space-y-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              <li className="flex justify-between border-b border-zinc-900 pb-1">
+                <span className="text-zinc-500">Weekday</span>
+                <span className="font-medium text-zinc-350">{hoursWeekday.replace("Senin — Jumat: ", "")}</span>
+              </li>
+              <li className="flex justify-between border-b border-zinc-900 pb-1">
+                <span className="text-zinc-500">Sabtu</span>
+                <span className="font-medium text-zinc-350">{hoursSaturday.replace("Sabtu: ", "")}</span>
+              </li>
+              <li className="flex justify-between pb-1">
+                <span className="text-zinc-500">Minggu</span>
+                <span className="font-medium text-rose-400">{hoursSunday.replace("Minggu: ", "")}</span>
+              </li>
             </ul>
-            <div className="mt-5 rounded-xl bg-zinc-50/80 border border-zinc-200/60 px-4 py-3 dark:bg-zinc-900/60 dark:border-zinc-700/60">
-              <p className="text-xs text-zinc-400 dark:text-zinc-500">Alamat</p>
-              <p className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-200">{address}</p>
+            <div className="mt-4 rounded-xl bg-zinc-900/30 border border-zinc-900 px-3 py-2.5">
+              <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-zinc-500">Alamat Kantor</p>
+              <p className="mt-0.5 text-[11px] sm:text-xs leading-relaxed text-zinc-450">{address}</p>
             </div>
           </div>
         </div>
-
-        <div className="mt-12 border-t border-zinc-100/80 pt-8 text-center text-xs text-zinc-400 dark:border-zinc-800 dark:text-zinc-500">
+ 
+        <div className="mt-10 sm:mt-16 border-t border-zinc-900 pt-6 text-center text-[10px] sm:text-xs text-zinc-600">
           © {new Date().getFullYear()} {companyName}. Seluruh hak cipta dilindungi.
         </div>
       </div>

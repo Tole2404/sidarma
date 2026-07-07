@@ -6,22 +6,17 @@ import {
   ArrowRight,
   CheckCircle2,
   Clock,
-  Factory,
-  Gem,
   Handshake,
-  Layers,
   MapPin,
-  Moon,
   Phone,
   Recycle,
-  Shield,
   Star,
-  Sun,
-  Quote,
   Calculator,
-  Briefcase,
-  BookOpen,
   Truck,
+  ChevronDown,
+  Search,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SiteNavbar from "@/components/SiteNavbar";
@@ -33,41 +28,41 @@ interface LandingData {
   };
 }
 
-const products = [
+const defaultProducts = [
   {
     name: "Majun Lembaran (Tanpa Jahit)",
-    desc: "Kain potongan utuh tanpa sambungan. Daya serap tinggi, tidak meninggalkan serat. Ideal untuk mesin presisi dan permukaan kaca.",
+    category: "Kain Majun",
+    desc: "Kain potongan utuh tanpa sambungan. Daya serap tinggi, tidak meninggalkan serat. Ideal untuk mesin presisi & permukaan kaca.",
     uses: ["Mesin presisi & optik", "Lab & farmasi", "Elektronik & semikonduktor", "Kaca & cermin"],
-    color: "bg-zinc-100",
-    icon: Factory,
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Majun Jahit Sambung",
+    category: "Kain Majun",
     desc: "Potongan perca dijahit menyambung memanjang. Ekonomis, berdaya serap optimal. Pilihan hemat untuk kebutuhan volume tinggi.",
     uses: ["Pabrik & gudang", "Bengkel otomotif", "Cleaning service", "Pertanian & perikanan"],
-    color: "bg-amber-50",
-    icon: Gem,
+    image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Majun Jahit Tumpuk",
+    category: "Kain Majun",
     desc: "Beberapa lapis kain perca dijahit bertumpuk. Tebal, kuat, dan sangat efektif untuk membersihkan oli dan kotoran berat.",
     uses: ["Bengkel berat & kapal", "Industri minyak & gas", "Pabrik baja & logam", "Konstruksi"],
-    color: "bg-orange-50",
-    icon: Layers,
+    image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Sarung Tangan Industri",
+    category: "Alat Pelindung",
     desc: "Sarung tangan benang katun untuk perlindungan tangan pekerja. Nyaman dipakai seharian, daya cengkeram optimal.",
     uses: ["Pabrik manufaktur", "Gudang & logistik", "Konstruksi", "Pertanian"],
-    color: "bg-blue-50",
-    icon: Shield,
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
   },
   {
     name: "Alat Pelindung Diri (APD)",
+    category: "Alat Pelindung",
     desc: "Masker, kacamata safety, dan perlengkapan APD standar industri sebagai pelengkap keamanan kerja.",
     uses: ["Semua sektor industri", "Rumah sakit & klinik", "Laboratorium", "Pabrik kimia"],
-    color: "bg-emerald-50",
-    icon: Truck,
+    image: "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -109,9 +104,9 @@ const defaultSteps = [
 ];
 
 const defaultTestimonials = [
-  { name: "Bapak Hendra", company: "CV. Maju Jaya Bengkel", role: "Owner", content: "Sudah 3 tahun langganan SIDARMA. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.", rating: 5 },
-  { name: "Ibu Sari", company: "PT. Bersih Semesta", role: "Purchasing Manager", content: "Sebagai cleaning service yang butuh stok rutin, SIDARMA jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.", rating: 5 },
-  { name: "Pak Doni", company: "Galangan Kapal Nusantara", role: "Site Manager", content: "Majun jahit tumpuknya sangat kuat dan tahan lama. Kami pakai untuk pembersihan mesin kapal yang penuh oli berat, hasilnya memuaskan.", rating: 5 },
+  { name: "Bapak Hendra", company: "CV. Maju Jaya Bengkel", role: "Owner", content: "Sudah 3 tahun langganan SIDARMA. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.", rating: 5, avatar: "" },
+  { name: "Ibu Sari", company: "PT. Bersih Semesta", role: "Purchasing Manager", content: "Sebagai cleaning service yang butuh stok rutin, SIDARMA jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.", rating: 5, avatar: "" },
+  { name: "Pak Doni", company: "Galangan Kapal Nusantara", role: "Site Manager", content: "Majun jahit tumpuknya sangat kuat dan tahan lama. Kami pakai untuk pembersihan mesin kapal yang penuh oli berat, hasilnya memuaskan.", rating: 5, avatar: "" },
 ];
 
 const SOCIAL_LINKS = [
@@ -161,44 +156,172 @@ function getVal(data: LandingData, section: string, key: string, fallback: strin
   return data[section]?.[key] || fallback;
 }
 
+function StatCounter({ value }: { value: string }) {
+  const { ref, isVisible } = useInView({ threshold: 0.1 });
+  const match = value.match(/^([\d.,]+)\s*(.*)$/);
+  const targetNumber = match ? parseFloat(match[1].replace(/,/g, "")) || 0 : 0;
+  const suffix = match ? match[2] || "" : value;
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const duration = 1800; // 1.8 seconds animation
+    const steps = 45;
+    const stepTime = duration / steps;
+    const increment = targetNumber / steps;
+    
+    const runAnimation = () => {
+      let currentStep = 0;
+      setCount(0);
+      
+      const interval = setInterval(() => {
+        currentStep++;
+        if (currentStep >= steps) {
+          setCount(targetNumber);
+          clearInterval(interval);
+        } else {
+          setCount(Math.floor(increment * currentStep));
+        }
+      }, stepTime);
+      
+      return interval;
+    };
+
+    let animationInterval = runAnimation();
+
+    // Loop animation every 10 seconds
+    const loopInterval = setInterval(() => {
+      clearInterval(animationInterval);
+      animationInterval = runAnimation();
+    }, 10000);
+
+    return () => {
+      clearInterval(animationInterval);
+      clearInterval(loopInterval);
+    };
+  }, [targetNumber, isVisible]);
+
+  const space = suffix && suffix !== "+" && suffix !== "%" ? " " : "";
+  return (
+    <span ref={ref as any}>
+      {count}
+      {space}
+      {suffix}
+    </span>
+  );
+}
+
 interface LandingClientProps {
   data: LandingData;
 }
 
 export default function LandingClient({ data }: LandingClientProps) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [themeReady, setThemeReady] = useState(false);
-
+  const [selectedCategory, setSelectedCategory] = useState("Semua");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(3);
+  
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [visibleTestimonialCount, setVisibleTestimonialCount] = useState(3);
+  const [testimonialFilter, setTestimonialFilter] = useState("Semua");
+ 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem("majun-theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const nextTheme =
-      storedTheme === "dark" || storedTheme === "light"
-        ? storedTheme
-        : prefersDark
-          ? "dark"
-          : "light";
-    setTheme(nextTheme);
-    setThemeReady(true);
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setVisibleItems(1);
+        setVisibleTestimonialCount(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleItems(2);
+        setVisibleTestimonialCount(2);
+      } else {
+        setVisibleItems(3);
+        setVisibleTestimonialCount(3);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+ 
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [selectedCategory, searchQuery]);
+ 
+  useEffect(() => {
+    setTestimonialIndex(0);
+  }, [testimonialFilter]);
+
+  const [loadMap, setLoadMap] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setLoadMap(true), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!themeReady) return;
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    window.localStorage.setItem("majun-theme", theme);
-  }, [theme, themeReady]);
+  const categories = ["Semua", "Kain Majun", "Alat Pelindung"];
 
-  const toggleTheme = () => setTheme((current) => (current === "dark" ? "light" : "dark"));
+  let productsList = defaultProducts;
+  try {
+    const rawProductsJson = getVal(data, "products", "list", "");
+    if (rawProductsJson) {
+      const parsed = JSON.parse(rawProductsJson);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        productsList = parsed;
+      }
+    }
+  } catch (e) {
+    console.error("Failed to parse dynamic products:", e);
+  }
 
-  // Get dynamic content
+  let testimonialsList = defaultTestimonials;
+  try {
+    const rawTestimonialsJson = getVal(data, "testimonials", "list", "");
+    if (rawTestimonialsJson) {
+      const parsed = JSON.parse(rawTestimonialsJson);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        testimonialsList = parsed;
+      }
+    }
+  } catch (e) {
+    console.error("Failed to parse dynamic testimonials:", e);
+  }
+
+  const filteredTestimonialsList = testimonialFilter === "Semua"
+    ? testimonialsList
+    : testimonialsList.filter((t) => t.rating === Number(testimonialFilter));
+
+  const availableRatings = ["Semua", ...Array.from(new Set(testimonialsList.map((t) => String(t.rating)))).sort((a, b) => Number(b) - Number(a))];
+
+  const filteredProducts = productsList.filter((p) => {
+    const matchesCategory = selectedCategory === "Semua" || p.category === selectedCategory;
+    const matchesSearch =
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.uses.some((u) => u.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
+  const nextSlide = () => {
+    setCurrentIndex((prev) =>
+      prev < filteredProducts.length - visibleItems ? prev + 1 : prev
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+  };
   const heroBadge = getVal(data, "hero", "badge", "Supplier kain majun terpercaya sejak 2019");
   const heroTitle = getVal(data, "hero", "title", "Kain Majun Berkualitas");
   const heroSubtitle = getVal(data, "hero", "subtitle", "untuk Semua Kebutuhan");
   const heroDesc = getVal(data, "hero", "description", "Majun putih & warna siap kirim dalam quantity besar. Harga distributor, kualitas premium, pengiriman cepat ke seluruh Jawa.");
+  const rawHeroImage = getVal(data, "hero", "image", "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80");
+  const heroImage = (rawHeroImage.startsWith("http://") || rawHeroImage.startsWith("https://") || rawHeroImage.startsWith("/"))
+    ? rawHeroImage
+    : "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80";
   const heroTrust1 = getVal(data, "hero", "trust1", "Bebas ongkir Jabodetabek");
   const heroTrust2 = getVal(data, "hero", "trust2", "Stock siap kirim");
-  const waNumber = getVal(data, "hero", "wa_number", "6281234567890");
+  const rawWaNumber = getVal(data, "hero", "wa_number", "6281234567890");
+  const waNumber = rawWaNumber.replace(/[^0-9+]/g, "");
 
   const stats = [
     { value: getVal(data, "stats", "exp_years", "5+"), label: "Tahun Pengalaman" },
@@ -229,9 +352,13 @@ export default function LandingClient({ data }: LandingClientProps) {
   const hours = getVal(data, "about", "hours", "08.00 — 17.00 WIB");
   const phone = getVal(data, "about", "phone", "0812-3456-7890");
   const stock = getVal(data, "about", "stock", "± 10 Ton");
+  
+  const bongkaranBadge = getVal(data, "jual_bongkaran", "badge", "Kemitraan Konveksi & Garment");
+  const bongkaranTitle = getVal(data, "jual_bongkaran", "title", "Punya Limbah atau Sisa Kain Konveksi? Kami Beli Tunai.");
+  const bongkaranDesc = getVal(data, "jual_bongkaran", "description", "Kami menerima sisa potongan kain, reject produksi, sample lama, atau stok gudang mati dari garment Anda. Kami bantu bersihkan gudang Anda: tim kami datang menjemput, menimbang di lokasi, dan langsung bayar tunai.");
 
   const ctaTitle = getVal(data, "cta", "title", "Siap memesan kain majun?");
-  const ctaSubtitle = getVal(data, "cta", "subtitle", "Hubungi kami sekarang via WhatsApp untuk konsultasi dan penawaran harga terbaik.");
+  const ctaSubtitle = getVal(data, "cta", "subtitle", "Hubungi kami sekarang via WhatsApp untuk konsultasi & penawaran harga terbaik.");
 
   const companyName = getVal(data, "footer", "company_name", "CV. SIDARMA MAJUN");
   const footerDesc = getVal(data, "footer", "description", "Penyedia kain majun putih dan warna berkualitas untuk kebutuhan industri, bengkel, rumah sakit, dan cleaning service.");
@@ -260,8 +387,17 @@ export default function LandingClient({ data }: LandingClientProps) {
     }))
     .filter((s) => Boolean(s.href));
 
-  const mapsEmbed = getVal(data, "maps", "embed_url", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5!2d106.7419172!3d-6.2416776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTQnMjAuMCJTIDEwNsKwNDQnMzAuOSJF!5e0!3m2!1sid!2sid");
-  const mapsLink = getVal(data, "maps", "maps_link", "https://maps.app.goo.gl/aJDEdUZwJ8M3wnEP9?g_st=ic");
+  // Validasi URL secara defensif untuk mencegah XSS berbasis protokol (misal: javascript:)
+  const rawMapsEmbed = getVal(data, "maps", "embed_url", "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5!2d106.7419172!3d-6.2416776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTQnMjAuMCJTIDEwNsKwNDQnMzAuOSJF!5e0!3m2!1sid!2sid");
+  const mapsEmbed = (rawMapsEmbed.startsWith("http://") || rawMapsEmbed.startsWith("https://")) 
+    ? rawMapsEmbed 
+    : "about:blank";
+
+  const rawMapsLink = getVal(data, "maps", "maps_link", "https://maps.app.goo.gl/aJDEdUZwJ8M3wnEP9?g_st=ic");
+  const mapsLink = (rawMapsLink.startsWith("http://") || rawMapsLink.startsWith("https://"))
+    ? rawMapsLink
+    : "#";
+
   const locationName = getVal(data, "maps", "location_name", "Lokasi Gudang Kami");
   const locationSubtitle = getVal(data, "maps", "location_subtitle", "Area pergudangan & industri");
 
@@ -270,11 +406,6 @@ export default function LandingClient({ data }: LandingClientProps) {
       <style>{`
         html { scroll-behavior: smooth; }
         ::selection { background: zinc-200; color: zinc-900; }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-        }
-        .float-anim { animation: float 6s ease-in-out infinite; }
       `}</style>
 
       {/* Nav */}
@@ -282,10 +413,19 @@ export default function LandingClient({ data }: LandingClientProps) {
 
       <main>
         {/* Hero */}
-        <section className="relative overflow-hidden px-6 pt-24 pb-32 lg:px-8">
+        <section className="relative overflow-hidden px-6 pt-12 pb-14 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-32 lg:px-8 bg-zinc-950 sm:bg-transparent">
+          {/* Mobile Full Background Image Cover */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat block sm:hidden z-0"
+            style={{ backgroundImage: `url(${heroImage})` }}
+          />
+          {/* Mobile Dark Overlay Mask */}
+          <div className="absolute inset-0 bg-zinc-950/80 block sm:hidden z-0" />
+
+          {/* Grid points background (only for sm+) */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 opacity-60"
+            className="pointer-events-none absolute inset-0 z-0 opacity-60 hidden sm:block"
             style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0)`,
               backgroundSize: "32px 32px",
@@ -293,88 +433,101 @@ export default function LandingClient({ data }: LandingClientProps) {
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-zinc-200/40 via-zinc-100/20 to-transparent blur-3xl"
+            className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-zinc-200/40 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-amber-100/30 via-zinc-100/20 to-transparent blur-3xl"
+            className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-amber-100/30 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
           />
 
           <div className="relative z-10 mx-auto max-w-6xl">
-            <div className="grid gap-16 lg:grid-cols-2 lg:gap-20 lg:items-center">
+            <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 sm:items-center lg:gap-20">
               <div>
                 <FadeIn>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/80 px-3.5 py-1.5 text-xs font-medium text-zinc-600 shadow-sm backdrop-blur-sm">
-                    <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                  <span className="text-[10px] sm:text-xs font-bold tracking-wider text-primary uppercase">
                     {heroBadge}
-                  </div>
+                  </span>
                 </FadeIn>
 
                 <FadeIn delay={100}>
-                  <h1 className="mt-6 text-4xl font-bold tracking-tight text-zinc-950 sm:text-5xl lg:text-[3rem] leading-[1.1]">
+                  <h1 className="mt-4 text-2xl xs:text-3xl sm:text-4xl lg:text-[3rem] font-bold tracking-tight text-white sm:text-zinc-950 dark:sm:text-zinc-50 sm:leading-[1.1]">
                     {heroTitle}
                     <br />
-                    <span className="text-zinc-400">{heroSubtitle}</span>
+                    <span className="text-zinc-300 sm:text-zinc-500 dark:sm:text-zinc-400">{heroSubtitle}</span>
                   </h1>
                 </FadeIn>
 
                 <FadeIn delay={200}>
-                  <p className="mt-5 text-base leading-7 text-zinc-500 dark:text-zinc-400 sm:text-lg max-w-md">
-                    {heroDesc}
-                  </p>
+                  <div
+                    className="mt-4 text-xs sm:text-sm lg:text-base leading-relaxed text-zinc-200 sm:text-zinc-600 dark:sm:text-zinc-400 max-w-md prose prose-invert sm:prose-normal dark:sm:prose-invert"
+                    dangerouslySetInnerHTML={{ __html: heroDesc }}
+                  />
                 </FadeIn>
 
                 <FadeIn delay={300}>
-                  <div className="mt-8 flex flex-wrap items-center gap-4">
-                    <Button asChild size="lg" className="gap-2 bg-zinc-950 hover:bg-zinc-900 text-white shadow-lg shadow-zinc-950/20">
+                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                    <Button asChild size="sm" className="sm:size-lg gap-2 bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/20 rounded-xl font-bold">
                       <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
                         <Phone className="h-4 w-4" /> Chat WhatsApp
                       </a>
-                    </Button>
-                    <Button asChild size="lg" variant="outline" className="gap-2">
-                      <Link href="/login">
-                        Masuk Sistem <ArrowRight className="h-4 w-4" />
-                      </Link>
                     </Button>
                   </div>
                 </FadeIn>
 
                 <FadeIn delay={400}>
-                  <div className="mt-10 flex items-center gap-8">
+                  <div className="mt-8 flex flex-wrap items-center gap-4 text-xs sm:text-sm">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm text-zinc-500 dark:text-zinc-400">{heroTrust1}</span>
+                      <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust1}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm text-zinc-500 dark:text-zinc-400">{heroTrust2}</span>
+                      <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust2}</span>
                     </div>
                   </div>
                 </FadeIn>
               </div>
 
-              <FadeIn delay={200} className="hidden lg:block">
-                <div className="relative float-anim">
-                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-zinc-200 via-zinc-100 to-amber-50 dark:from-zinc-800 dark:via-zinc-900 dark:to-zinc-800 opacity-70 blur-2xl" />
-                  <div className="relative rounded-2xl border border-zinc-200/60 dark:border-zinc-700 bg-white/90 dark:bg-zinc-900/90 p-8 shadow-xl shadow-zinc-200/50 dark:shadow-zinc-950/50 backdrop-blur-sm">
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { label: "Majun Putih", val: "Tersedia" },
-                        { label: "Majun Warna", val: "Tersedia" },
-                        { label: "Min. Order", val: "20 kg" },
-                        { label: "Pengiriman", val: "1-3 Hari" },
-                        { label: "Harga", val: "Distributor" },
-                        { label: "Kualitas", val: "Grade A" },
-                      ].map((item) => (
-                        <div key={item.label} className="rounded-xl bg-zinc-50/80 dark:bg-zinc-800/80 p-4">
-                          <p className="text-xs text-zinc-400 dark:text-zinc-500">{item.label}</p>
-                          <p className={`mt-0.5 text-sm font-semibold ${item.label === "Harga" ? "text-emerald-600 dark:text-emerald-400" : item.label === "Kualitas" ? "text-amber-600 dark:text-amber-400" : "text-zinc-700 dark:text-zinc-200"}`}>{item.val}</p>
-                        </div>
-                      ))}
+              {/* Tablet/Desktop Side-by-side Image (shown from sm screens) */}
+              <FadeIn delay={200} className="hidden sm:block">
+                <div className="relative">
+                  {/* Decorative background blur shapes */}
+                  <div className="absolute -top-12 -left-12 h-72 w-72 rounded-full bg-gradient-to-tr from-primary/10 to-amber-100/10 blur-3xl opacity-60" />
+                  <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-gradient-to-br from-zinc-200 to-amber-100/15 blur-3xl opacity-50" />
+
+                  {/* Main Image Frame */}
+                  <div className="relative rounded-3xl border border-zinc-200/50 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+                      <img
+                        src={heroImage}
+                        alt="Kain Majun Premium"
+                        className="h-full w-full object-cover"
+                        {...{ fetchPriority: "high" }}
+                      />
+                      {/* Dark overlay on bottom of the image for contrast */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>
-                    <div className="mt-5 rounded-xl bg-zinc-950 px-4 py-3.5 text-center">
-                      <p className="text-xs text-zinc-400">Rekomendasi untuk pertama kali</p>
-                      <p className="mt-1 text-sm font-semibold text-white">Majun Putih Grade A — 50 kg</p>
+
+                    {/* Floating Glass Badge 1: Stock Capacity */}
+                    <div className="absolute -top-4 -right-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <Truck className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Kapasitas Stok</p>
+                        <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">± 10 Ton Ready</p>
+                      </div>
+                    </div>
+
+                    {/* Floating Glass Badge 2: Quality trust */}
+                    <div className="absolute -bottom-4 -left-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Garansi Mutu</p>
+                        <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">100% Serat Katun</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -384,121 +537,31 @@ export default function LandingClient({ data }: LandingClientProps) {
         </section>
 
         {/* Stats band */}
-        <section className="border-y border-zinc-200/80 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm px-6 py-12 lg:px-8">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-4">
-            {stats.map((s, i) => (
-              <FadeIn key={s.label} delay={i * 80}>
-                <div className="text-center">
-                  <p className="text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 sm:text-4xl">{s.value}</p>
-                  <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{s.label}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-
-        {/* Products */}
-        <section id="produk" className="px-6 py-24 lg:px-8 scroll-mt-20">
-          <div className="mx-auto max-w-6xl">
-            <FadeIn>
-              <div className="text-center">
-                <h2 className="text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 sm:text-4xl">Produk Kami</h2>
-                <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400">Dua jenis kain majun untuk berbagai kebutuhan cleaning & industri</p>
-              </div>
-            </FadeIn>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {products.map((p, i) => {
-                const Icon = p.icon;
-                return (
-                  <FadeIn key={p.name} delay={i * 120}>
-                    <div className="group relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-700 p-7 shadow-sm transition-all duration-300 hover:shadow-md hover:border-zinc-300/80 dark:hover:border-zinc-600 hover:-translate-y-1">
-                      <div className="flex items-start justify-between">
-                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${p.color} dark:bg-zinc-800 transition-transform duration-300 group-hover:scale-105`}>
-                          <Icon className="h-5 w-5 text-zinc-600 dark:text-zinc-300" />
-                        </div>
-                        <span className="rounded-full bg-emerald-50 dark:bg-emerald-900/50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800">
-                          Siap Kirim
-                        </span>
-                      </div>
-                      <h3 className="mt-6 text-xl font-semibold text-zinc-950 dark:text-zinc-50">{p.name}</h3>
-                      <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{p.desc}</p>
-                      <div className="mt-5">
-                        <p className="text-xs font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Cocok untuk:</p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {p.uses.map((u) => (
-                            <span
-                              key={u}
-                              className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100/80 dark:bg-zinc-800 px-3 py-1 text-xs text-zinc-600 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700"
-                            >
-                              <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                              {u}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="mt-6 flex items-center gap-4 border-t border-zinc-100/80 dark:border-zinc-800 pt-5">
-                        <Button asChild size="sm" variant="outline" className="gap-2">
-                          <a href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`} target="_blank" rel="noopener noreferrer">
-                            Tanya Harga <ArrowRight className="h-3 w-3" />
-                          </a>
-                        </Button>
-                        <span className="text-xs text-zinc-400 dark:text-zinc-500">Respon &lt; 30 menit</span>
-                      </div>
-                    </div>
+        <section className="px-4 py-3 sm:px-6 sm:py-6 lg:px-8 bg-zinc-950 sm:bg-transparent transition-colors">
+          <div className="mx-auto max-w-6xl bg-zinc-900/50 border border-zinc-800/80 text-white sm:bg-white sm:dark:bg-zinc-900 sm:border-zinc-200/80 sm:dark:border-zinc-800 sm:text-zinc-950 sm:dark:text-zinc-50 rounded-3xl p-4 sm:p-8 shadow-sm transition-colors">
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 items-center">
+              {stats.map((s, i) => (
+                <div key={s.label} className="relative flex flex-col items-center text-center">
+                  <FadeIn delay={i * 80}>
+                    <p className="text-lg xs:text-xl sm:text-4xl font-extrabold tracking-tight text-primary">
+                      <StatCounter value={s.value} />
+                    </p>
+                    <p className="mt-1 text-[8px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                      {s.label}
+                    </p>
                   </FadeIn>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* Banner: Jual Bongkaran (untuk konveksi) */}
-        <section className="px-6 py-14 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <div className="relative overflow-hidden rounded-3xl border border-emerald-200/80 bg-gradient-to-br from-emerald-50 via-white to-amber-50/40 p-8 shadow-sm dark:border-emerald-900/60 dark:from-emerald-950/40 dark:via-zinc-900 dark:to-amber-950/20 sm:p-10">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-emerald-200/40 blur-3xl dark:bg-emerald-900/30"
-              />
-              <div className="relative grid gap-6 lg:grid-cols-3 lg:items-center lg:gap-10">
-                <div className="lg:col-span-2">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-white/70 px-3 py-1 text-xs font-medium text-emerald-700 backdrop-blur dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
-                    <Recycle className="h-3 w-3" /> Khusus Konveksi & Garment
-                  </div>
-                  <h2 className="mt-4 text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl dark:text-zinc-50">
-                    Punya bongkaran kain di gudang? Kami beli.
-                  </h2>
-                  <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-600 sm:text-base dark:text-zinc-300">
-                    Sisa potongan, kain reject, sample lama, atau stok mati di konveksi Anda — semuanya kami terima dengan harga terbaik. Tim kami yang jemput, bayar tunai di tempat.
-                  </p>
-                  <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-zinc-600 dark:text-zinc-300">
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Jemput gratis
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Bayar tunai
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" /> Respon &lt; 30 menit
-                    </span>
-                  </div>
+                  {/* Vertical dividers for desktop and mobile */}
+                  {i < stats.length - 1 && (
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 h-6 sm:h-10 w-px bg-zinc-800 sm:bg-zinc-200 sm:dark:bg-zinc-800" />
+                  )}
                 </div>
-                <div className="flex flex-col gap-3 lg:items-end">
-                  <Button asChild size="lg" className="gap-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500">
-                    <Link href="/jual-bongkaran">
-                      Pelajari & Hubungi Kami <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400">Mulai dari 100 kg per pickup</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* About */}
-        <section id="tentang" className="bg-zinc-950 px-6 py-24 lg:px-8 scroll-mt-20">
+        <section id="tentang" className="bg-zinc-950 px-6 py-12 sm:py-20 lg:py-24 lg:px-8 scroll-mt-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-14 lg:grid-cols-2 lg:gap-16 items-center">
               <div>
@@ -509,22 +572,23 @@ export default function LandingClient({ data }: LandingClientProps) {
                 </FadeIn>
 
                 <FadeIn delay={100}>
-                  <h2 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl leading-tight">
+                  <h2 className="mt-4 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
                     {aboutTitle}
                   </h2>
                 </FadeIn>
 
                 <FadeIn delay={200}>
-                  <p className="mt-5 text-base leading-7 text-zinc-400">
-                    {aboutDesc}
-                  </p>
+                  <div
+                    className="mt-4 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert"
+                    dangerouslySetInnerHTML={{ __html: aboutDesc }}
+                  />
                 </FadeIn>
 
                 <FadeIn delay={300}>
-                  <ul className="mt-8 space-y-4">
+                  <ul className="mt-6 space-y-3">
                     {trust.map((t) => (
-                      <li key={t} className="flex items-start gap-3 text-sm text-zinc-300">
-                        <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400 mt-0.5" />
+                      <li key={t} className="flex items-center gap-2.5 text-xs xs:text-sm text-zinc-300">
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400 sm:mt-0" />
                         {t}
                       </li>
                     ))}
@@ -534,14 +598,21 @@ export default function LandingClient({ data }: LandingClientProps) {
 
               <FadeIn delay={200}>
                 <div className="overflow-hidden rounded-2xl border border-zinc-800/60 bg-zinc-900/40">
-                  <div className="h-52 w-full overflow-hidden">
-                    <iframe
-                      src={mapsEmbed}
-                      className="h-full w-full border-0"
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
+                  <div className="h-52 w-full overflow-hidden bg-zinc-900/60 flex items-center justify-center">
+                    {loadMap ? (
+                      <iframe
+                        src={mapsEmbed}
+                        className="h-full w-full border-0"
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center gap-2 text-zinc-500">
+                        <MapPin className="h-5 w-5 animate-pulse text-zinc-500" />
+                        <span className="text-xs font-semibold">Memuat peta...</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-3 border-b border-zinc-800/60 pb-4">
@@ -578,137 +649,615 @@ export default function LandingClient({ data }: LandingClientProps) {
           </div>
         </section>
 
-        {/* How to order */}
-        <section id="cara-order" className="px-6 py-24 lg:px-8 scroll-mt-20">
+        {/* Products Section */}
+        <section id="produk" className="px-6 py-12 sm:py-20 lg:py-24 lg:px-8 scroll-mt-20 bg-zinc-50/50 dark:bg-zinc-950/10">
           <div className="mx-auto max-w-6xl">
             <FadeIn>
-              <div className="text-center">
-                <h2 className="text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 sm:text-4xl">Cara Pemesanan</h2>
-                <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400">Simpel dan cepat, cuma 3 langkah</p>
+              <div className="text-center max-w-3xl mx-auto mb-10">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary">
+                  Katalog Produk
+                </span>
+                <h2 className="mt-3 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-zinc-50">
+                  Pilihan Kain Majun & APD Industri
+                </h2>
+                <p className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 font-medium">
+                  <strong>Kain Majun (lap perca)</strong> merupakan kain lap pembersih sisa potongan industri garmen berkualitas tinggi. Dirancang khusus untuk menyerap ceceran oli, air, pelumas, zat kimia, serta kotoran mesin berat pada area manufaktur, perkapalan, bengkel, dan pabrik logam.
+                </p>
               </div>
             </FadeIn>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-3">
-              {steps.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <FadeIn key={s.n} delay={i * 120}>
-                    <div className="relative rounded-2xl border border-zinc-200/80 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-8 text-center shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                      {i < steps.length - 1 && (
-                        <div className="absolute -right-4 top-1/2 z-10 hidden -translate-y-1/2 lg:block">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800">
-                            <ArrowRight className="h-3.5 w-3.5 text-zinc-400" />
+            {/* Filter & Search Bar */}
+            <div className="mt-6 flex flex-row items-center gap-2 max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-2 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-sm">
+              {/* Search Box */}
+              <div className="relative flex-[1.6] sm:flex-1">
+                <Search className="absolute left-2.5 sm:left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-400 dark:text-zinc-500" />
+                <input
+                  type="text"
+                  placeholder="Cari kain majun atau APD..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg sm:rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all dark:text-white"
+                />
+              </div>
+
+              {/* Dropdown Filter */}
+              <div className="relative flex-1 sm:min-w-[200px] max-w-[140px] sm:max-w-none">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full pl-3 pr-7 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg sm:rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer dark:text-white"
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="absolute right-2 sm:right-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-400 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Carousel View */}
+            {filteredProducts.length > 0 ? (
+              <>
+                {/* Carousel View (Tablet/Desktop) */}
+                <div className="hidden sm:block relative mt-12 px-4 sm:px-12 max-w-6xl mx-auto group/carousel">
+                  {/* Carousel Window */}
+                  <div className="overflow-hidden">
+                    <div
+                      className="flex transition-transform duration-500 ease-out"
+                      style={{
+                        transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
+                      }}
+                    >
+                      {filteredProducts.map((p) => (
+                        <div
+                          key={p.name}
+                          className="shrink-0 px-3 flex"
+                          style={{ width: `${100 / visibleItems}%` }}
+                        >
+                          <div className="group/card flex flex-col w-full overflow-hidden rounded-2xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-700 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-zinc-300/80 dark:hover:border-zinc-650 hover:-translate-y-1">
+                            {/* Image */}
+                            <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                              <img
+                                src={p.image}
+                                alt={p.name}
+                                className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                                loading="lazy"
+                              />
+                              <div className="absolute top-4 right-4">
+                                <span className="rounded-full bg-emerald-500/90 dark:bg-emerald-600/90 backdrop-blur-sm px-3 py-1 text-xs font-semibold text-white shadow-sm border border-emerald-400/20">
+                                  Siap Kirim
+                                </span>
+                              </div>
+                            </div>
+                            {/* Content */}
+                            <div className="flex flex-col flex-1 p-5 sm:p-6">
+                              <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover/card:text-primary transition-colors line-clamp-1">
+                                {p.name}
+                              </h3>
+                              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-555 dark:text-zinc-400 flex-1 line-clamp-3">
+                                {p.desc}
+                              </p>
+                              
+                              <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
+                                <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1.5 font-mono">
+                                  Cocok untuk:
+                                </p>
+                                <div className="flex flex-wrap gap-1">
+                                  {p.uses.slice(0, 3).map((u) => (
+                                    <span
+                                      key={u}
+                                      className="inline-flex items-center gap-1 rounded-full bg-zinc-50 dark:bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-600 dark:text-zinc-350 border border-zinc-200/50 dark:border-zinc-700/60"
+                                    >
+                                      <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500" />
+                                      {u}
+                                    </span>
+                                  ))}
+                                  {p.uses.length > 3 && (
+                                    <span className="inline-flex items-center rounded-full bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-500 dark:text-zinc-400 font-medium">
+                                      +{p.uses.length - 3} lainnya
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="mt-5 flex items-center gap-2 border-t border-zinc-100 dark:border-zinc-800/80 pt-4">
+                                <Button asChild size="sm" variant="outline" className="flex-1 gap-1 rounded-xl border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-xs py-1.5 h-8 font-bold">
+                                  <Link href={`/produk/${p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-")}`}>
+                                    Detail <ArrowRight className="h-3 w-3" />
+                                  </Link>
+                                </Button>
+                                <Button asChild size="sm" className="flex-1 gap-1 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs py-1.5 h-8 font-bold">
+                                  <a href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`} target="_blank" rel="noopener noreferrer">
+                                    Tanya Harga
+                                  </a>
+                                </Button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      )}
-                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-950 text-white shadow-lg shadow-zinc-950/20">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <p className="mt-5 text-xs font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{s.n}</p>
-                      <h3 className="mt-2 text-base font-semibold text-zinc-950 dark:text-zinc-50">{s.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">{s.desc}</p>
+                      ))}
                     </div>
-                  </FadeIn>
-                );
-              })}
+                  </div>
+
+                  {/* Floating Glassmorphic Slide Arrows */}
+                  {filteredProducts.length > visibleItems && (
+                    <>
+                      {/* Left Button */}
+                      <button
+                        onClick={prevSlide}
+                        disabled={currentIndex === 0}
+                        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-6 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 text-zinc-600 dark:text-zinc-400 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 ${
+                          currentIndex === 0 ? "opacity-25 cursor-not-allowed" : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                        }`}
+                        aria-label="Previous slide"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+
+                      {/* Right Button */}
+                      <button
+                        onClick={nextSlide}
+                        disabled={currentIndex >= filteredProducts.length - visibleItems}
+                        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-6 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 text-zinc-600 dark:text-zinc-400 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 active:scale-95 ${
+                          currentIndex >= filteredProducts.length - visibleItems ? "opacity-25 cursor-not-allowed" : "opacity-100"
+                        }`}
+                        aria-label="Next slide"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Visual Dash/Dot Slide Indicator Indicators */}
+                  {filteredProducts.length > visibleItems && (
+                    <div className="mt-8 flex justify-center gap-1.5">
+                      {Array.from({ length: filteredProducts.length - visibleItems + 1 }).map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentIndex(idx)}
+                          className={`h-1.5 transition-all duration-300 ${
+                            currentIndex === idx
+                              ? "w-6 rounded-full bg-primary"
+                              : "w-1.5 rounded-full bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-350 dark:hover:bg-zinc-700"
+                          }`}
+                          aria-label={`Go to slide ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Mobile Compact Vertical Stack (up to 3 items) */}
+                <div className="block sm:hidden mt-8 space-y-3">
+                  {filteredProducts.slice(0, 3).map((p) => {
+                    const slug = p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
+                    return (
+                      <div
+                        key={p.name}
+                        className="flex items-center gap-3 p-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm"
+                      >
+                        {/* Image Left */}
+                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+                          <img
+                            src={p.image}
+                            alt={p.name}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                          <span className="absolute top-1 left-1 rounded-full bg-emerald-500/90 px-1.5 py-0.5 text-[8px] font-bold text-white shadow-sm">
+                            Ready
+                          </span>
+                        </div>
+
+                        {/* Content Right */}
+                        <div className="flex-1 min-w-0 flex flex-col justify-between h-20 py-0.5">
+                          <div>
+                            <h3 className="text-xs font-bold text-zinc-955 dark:text-zinc-50 leading-tight line-clamp-1">
+                              {p.name}
+                            </h3>
+                            <p className="mt-0.5 text-[10px] leading-snug text-zinc-500 dark:text-zinc-400 line-clamp-2">
+                              {p.desc}
+                            </p>
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex gap-2 mt-1.5">
+                            <Link
+                              href={`/produk/${slug}`}
+                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 text-[9px] font-bold text-zinc-750 dark:text-zinc-300 py-1 h-6 hover:bg-zinc-100"
+                            >
+                              Detail
+                            </Link>
+                            <a
+                              href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-primary text-white text-[9px] font-bold py-1 h-6 hover:bg-primary-hover shadow-sm"
+                            >
+                              Tanya Harga
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* View All Button */}
+                  <div className="pt-2">
+                    <Button asChild variant="outline" size="sm" className="w-full gap-2 rounded-xl text-xs py-1.5 h-8 font-bold border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">
+                      <Link href="/katalog">
+                        Lihat Semua Produk di Katalog <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl mt-12">
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium">Tidak ada produk yang cocok dengan pencarian Anda.</p>
+                <button
+                  onClick={() => {
+                    setSelectedCategory("Semua");
+                    setSearchQuery("");
+                  }}
+                  className="mt-3 text-xs font-bold text-primary hover:underline font-mono"
+                >
+                  Reset Filter & Pencarian
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Banner: Jual Bongkaran (untuk konveksi) */}
+        <section className="px-6 py-8 sm:py-14 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 p-8 shadow-2xl dark:border-zinc-800/80 sm:p-12">
+              {/* Decorative colored glow */}
+              <div className="pointer-events-none absolute -top-40 -right-40 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+              
+              <div className="relative grid gap-8 lg:grid-cols-3 lg:items-center lg:gap-12">
+                <div className="lg:col-span-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20">
+                    <Recycle className="h-3 w-3" /> {bongkaranBadge}
+                  </span>
+                  <h2 className="mt-3 text-lg xs:text-xl sm:text-3xl font-extrabold tracking-tight text-white">
+                    {bongkaranTitle}
+                  </h2>
+                  <div
+                    className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert"
+                    dangerouslySetInnerHTML={{ __html: bongkaranDesc }}
+                  />
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] xs:text-xs font-medium text-zinc-300">
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Layanan Jemput Gratis
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Timbangan Akurat & Transparan
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Pembayaran Cash/Transfer
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 lg:items-end">
+                  <Button asChild size="lg" className="gap-2 bg-emerald-500 text-zinc-950 font-bold hover:bg-emerald-400 shadow-lg shadow-emerald-500/20 transition-all rounded-xl">
+                    <Link href="/jual-bongkaran">
+                      Jual Sekarang <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <p className="text-[10px] text-zinc-500 tracking-wider uppercase font-semibold">Mulai dari 100 kg per penjemputan</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="px-6 py-20 lg:px-8">
-          <div className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/60 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 px-8 py-16 text-center shadow-xl sm:px-12 sm:py-20">
+        {/* How to order */}
+        <section id="cara-order" className="px-6 py-12 sm:py-20 lg:py-24 lg:px-8 scroll-mt-20 overflow-hidden">
+          <div className="mx-auto max-w-6xl">
             <FadeIn>
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <div className="text-center">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                  Proses Transaksi
+                </span>
+                <h2 className="mt-3 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Cara Pemesanan</h2>
+                <p className="mt-2 text-xs xs:text-sm text-zinc-500 dark:text-zinc-400">Simpel, cepat, dan transparan dalam 3 tahapan mudah</p>
+              </div>
+            </FadeIn>
+ 
+            <div className="mt-10 sm:mt-20 relative">
+              {/* Horizontal Line (shown behind circles) */}
+              <div className="absolute top-5 sm:top-8 left-[15%] right-[15%] h-0.5 border-t border-dashed border-zinc-200 dark:border-zinc-800 -z-0" />
+ 
+              <div className="grid grid-cols-3 gap-2 sm:gap-12 relative z-10">
+                {steps.map((s, i) => {
+                  const Icon = s.icon;
+                  return (
+                    <FadeIn key={s.n} delay={i * 120} className="relative">
+                      {/* Step Column Layout */}
+                      <div className="group flex flex-col items-center text-center">
+                        {/* Step Circle Indicator & Node */}
+                        <div className="flex flex-col items-center">
+                          {/* Number Node with hover pulse */}
+                          <div className="relative flex h-10 w-10 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white font-extrabold text-xs sm:text-lg shadow-md group-hover:border-primary group-hover:text-primary transition-all duration-300 shrink-0">
+                            {/* Inner circle background */}
+                            <div className="absolute inset-1 sm:inset-1.5 rounded-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-850 group-hover:border-primary/20 transition-all" />
+                            {/* Step number that hides on hover */}
+                            <span className="relative z-10 group-hover:scale-0 opacity-100 group-hover:opacity-0 transition-all duration-300 font-mono tracking-tighter">
+                              {s.n}
+                            </span>
+                            {/* Lucide icon that shows on hover */}
+                            <div className="absolute inset-0 flex items-center justify-center scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300">
+                              <Icon className="h-4 w-4 sm:h-6 sm:w-6 text-primary" />
+                            </div>
+                          </div>
+ 
+                          {/* Header text / status badge */}
+                          <div className="flex flex-col items-center gap-1 mt-3 sm:mt-6">
+                            <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[8px] sm:text-[10px] font-extrabold tracking-wider uppercase border ${
+                              i === 0 
+                                ? "bg-blue-50/70 text-blue-700 border-blue-200/50 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-800/30" 
+                                : i === 1 
+                                  ? "bg-amber-50/70 text-amber-700 border-amber-200/50 dark:bg-amber-950/20 dark:text-amber-450 dark:border-amber-800/30" 
+                                  : "bg-emerald-50/70 text-emerald-700 border-emerald-200/50 dark:bg-emerald-950/20 dark:text-emerald-450 dark:border-emerald-800/30"
+                            }`}>
+                              {i === 0 ? "Hubungi" : i === 1 ? "Negosiasi" : "Pengiriman"}
+                            </span>
+                            <h3 className="text-[10px] xs:text-xs sm:text-base font-extrabold text-zinc-955 dark:text-white tracking-tight leading-snug">
+                              {s.title}
+                            </h3>
+                          </div>
+                        </div>
+ 
+                        {/* Step Description Box */}
+                        <div className="pl-0 mt-1 sm:mt-2 max-w-sm">
+                          <div
+                            className="text-[9px] xs:text-[10px] sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 prose dark:prose-invert"
+                            dangerouslySetInnerHTML={{ __html: s.desc }}
+                          />
+                        </div>
+                      </div>
+                    </FadeIn>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="bg-white dark:bg-zinc-950 px-6 py-12 sm:py-20 lg:py-24 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <FadeIn>
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <div>
+                  <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Apa Kata Pelanggan Kami</h2>
+                  <p className="mt-2 text-xs xs:text-sm text-zinc-500 dark:text-zinc-400">Dipercaya oleh ratusan pabrik, bengkel, dan cleaning service di seluruh Jawa</p>
+                </div>
+
+                {/* Filter Dropdown */}
+                <div className="relative min-w-[180px] shrink-0">
+                  <Star className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-amber-400 fill-amber-400 pointer-events-none" />
+                  <select
+                    value={testimonialFilter}
+                    onChange={(e) => setTestimonialFilter(e.target.value)}
+                    className="w-full pl-9 pr-9 py-2.5 text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer dark:text-white"
+                  >
+                    {availableRatings.map((r) => (
+                      <option key={r} value={r} className="dark:bg-zinc-900 dark:text-white">
+                        {r === "Semua" ? "Semua Rating" : `${r} Bintang`}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Slider/Carousel Container */}
+            <div className="relative mt-12 px-4 sm:px-12 max-w-6xl mx-auto group">
+              {filteredTestimonialsList.length > 0 ? (
+                <>
+                  {/* Slider/Carousel Container (Desktop/Tablet) */}
+                  <div className="hidden sm:block">
+                    {/* Slider Window */}
+                    <div className="overflow-hidden">
+                      <div
+                        className="flex transition-transform duration-500 ease-out"
+                        style={{
+                          transform: `translateX(-${testimonialIndex * (100 / visibleTestimonialCount)}%)`,
+                        }}
+                      >
+                        {filteredTestimonialsList.map((t, i) => (
+                          <div
+                            key={`${t.name}-${i}`}
+                            className="shrink-0 px-3 flex"
+                            style={{ width: `${100 / visibleTestimonialCount}%` }}
+                          >
+                            <div className="flex flex-col rounded-2xl border border-zinc-200/80 dark:border-zinc-700 bg-zinc-50/60 dark:bg-zinc-900 p-6 shadow-sm w-full hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-600 transition-all duration-300">
+                              <div className="flex items-center gap-1 mb-4">
+                                {[...Array(5)].map((_, j) => (
+                                  <Star
+                                    key={j}
+                                    className={`h-3.5 w-3.5 ${
+                                      j < (t.rating || 5)
+                                        ? "fill-amber-400 text-amber-400"
+                                        : "fill-zinc-200 text-zinc-200 dark:fill-zinc-700 dark:text-zinc-700"
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-300 flex-1 italic">"{t.content}"</p>
+                              <div className="mt-5 flex items-center gap-3 border-t border-zinc-200/60 dark:border-zinc-800 pt-4">
+                                {t.avatar ? (
+                                  <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-850">
+                                    <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="lazy" />
+                                  </div>
+                                ) : (
+                                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-xs font-bold shadow-sm">
+                                    {t.name.split(" ").slice(-1)[0][0]}
+                                  </div>
+                                )}
+                                <div>
+                                  <p className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">{t.name}</p>
+                                  <p className="text-xs text-zinc-400">{t.role ? `${t.role} · ` : ""}{t.company}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Navigation Arrows */}
+                    {filteredTestimonialsList.length > visibleTestimonialCount && (
+                      <>
+                        {/* Left Arrow */}
+                        <button
+                          onClick={() => setTestimonialIndex((prev) => Math.max(0, prev - 1))}
+                          disabled={testimonialIndex === 0}
+                          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 sm:-translate-x-6 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-850 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all ${
+                            testimonialIndex === 0 ? "opacity-30 cursor-not-allowed" : "opacity-100"
+                          }`}
+                          aria-label="Previous slide"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+
+                        {/* Right Arrow */}
+                        <button
+                          onClick={() => setTestimonialIndex((prev) => Math.min(filteredTestimonialsList.length - visibleTestimonialCount, prev + 1))}
+                          disabled={testimonialIndex >= filteredTestimonialsList.length - visibleTestimonialCount}
+                          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 sm:translate-x-6 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-850 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 shadow-md hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all ${
+                            testimonialIndex >= filteredTestimonialsList.length - visibleTestimonialCount ? "opacity-30 cursor-not-allowed" : "opacity-100"
+                          }`}
+                          aria-label="Next slide"
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </button>
+                      </>
+                    )}
+
+                    {/* Dots indicator */}
+                    {filteredTestimonialsList.length > visibleTestimonialCount && (
+                      <div className="mt-8 flex justify-center gap-1.5">
+                        {[...Array(filteredTestimonialsList.length - visibleTestimonialCount + 1)].map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setTestimonialIndex(idx)}
+                            className={`rounded-full transition-all duration-300 ${
+                              testimonialIndex === idx
+                                ? "h-2.5 w-7 bg-primary"
+                                : "h-2.5 w-2.5 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600"
+                            }`}
+                            aria-label={`Halaman ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Mobile Testimonials Stack (up to 3 items) */}
+                  <div className="block sm:hidden mt-8 space-y-3">
+                    {filteredTestimonialsList.slice(0, 3).map((t, i) => (
+                      <div
+                        key={`${t.name}-${i}`}
+                        className="flex flex-col rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900 p-4 shadow-sm"
+                      >
+                        {/* Rating */}
+                        <div className="flex items-center gap-0.5 mb-2.5">
+                          {[...Array(5)].map((_, j) => (
+                            <Star
+                              key={j}
+                              className={`h-3 w-3 ${
+                                j < (t.rating || 5)
+                                  ? "fill-amber-400 text-amber-400"
+                                  : "fill-zinc-200 text-zinc-200 dark:fill-zinc-700 dark:text-zinc-700"
+                              }`}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Content */}
+                        <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 italic">
+                          "{t.content}"
+                        </p>
+
+                        {/* User Info */}
+                        <div className="mt-3 flex items-center gap-2.5 border-t border-zinc-200/60 dark:border-zinc-800 pt-2.5">
+                          {t.avatar ? (
+                            <div className="h-7 w-7 shrink-0 overflow-hidden rounded-full border border-zinc-200 dark:border-zinc-800">
+                              <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="lazy" />
+                            </div>
+                          ) : (
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-[10px] font-bold shadow-sm">
+                              {t.name.split(" ").slice(-1)[0][0]}
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-xs font-bold text-zinc-955 dark:text-zinc-50">{t.name}</p>
+                            <p className="text-[10px] text-zinc-400">{t.role ? `${t.role} · ` : ""}{t.company}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-16 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl">
+                  <Star className="h-8 w-8 text-zinc-300 dark:text-zinc-700 mx-auto mb-3" />
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">Tidak ada testimoni dengan rating ini.</p>
+                  <button
+                    onClick={() => setTestimonialFilter("Semua")}
+                    className="mt-3 text-xs font-semibold text-primary hover:underline"
+                  >
+                    Lihat Semua
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA (Single Merged) */}
+        <section className="px-6 py-12 sm:py-20 lg:px-8">
+          <div className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/60 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 px-5 py-8 sm:px-12 sm:py-20 text-center shadow-xl">
+            <FadeIn>
+              <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
                 {ctaTitle}
               </h2>
             </FadeIn>
             <FadeIn delay={100}>
-              <p className="mt-4 text-base text-zinc-400">
-                {ctaSubtitle}
-              </p>
+              <div
+                className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert mx-auto max-w-lg"
+                dangerouslySetInnerHTML={{ __html: ctaSubtitle }}
+              />
             </FadeIn>
             <FadeIn delay={200}>
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30">
+              <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 max-w-xs sm:max-w-none mx-auto w-full">
+                <Button asChild className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
                   <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
-                    <Phone className="h-4 w-4" /> Chat WhatsApp Sekarang
+                    <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Chat WhatsApp Sekarang
                   </a>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white">
+                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
+                  <Link href="/kalkulator">
+                    <Calculator className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Hitung Estimasi Harga
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
                   <Link href="/lacak-pesanan">
-                    <Truck className="h-4 w-4" /> Lacak Status Pesanan
+                    <Truck className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Lacak Status Pesanan
                   </Link>
                 </Button>
               </div>
             </FadeIn>
           </div>
         </section>
-          {/* Testimonials */}
-          <section className="bg-white dark:bg-zinc-950 px-6 py-24 lg:px-8">
-            <div className="mx-auto max-w-6xl">
-              <FadeIn>
-                <div className="text-center">
-                  <h2 className="text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 sm:text-4xl">Apa Kata Pelanggan Kami</h2>
-                  <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400">Dipercaya oleh ratusan pabrik, bengkel, dan cleaning service di seluruh Jawa</p>
-                </div>
-              </FadeIn>
-              <div className="mt-12 grid gap-6 sm:grid-cols-3">
-                {defaultTestimonials.map((t, i) => (
-                  <FadeIn key={t.name} delay={i * 100}>
-                    <div className="flex flex-col rounded-2xl border border-zinc-200/80 dark:border-zinc-700 bg-zinc-50/60 dark:bg-zinc-900 p-6 shadow-sm h-full">
-                      <div className="flex items-center gap-1 mb-4">
-                        {[...Array(t.rating)].map((_, j) => (
-                          <Star key={j} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                        ))}
-                      </div>
-                      <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-300 flex-1 italic">"{t.content}"</p>
-                      <div className="mt-5 flex items-center gap-3 border-t border-zinc-200/60 dark:border-zinc-800 pt-4">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white text-xs font-bold">
-                          {t.name.split(" ").slice(-1)[0][0]}
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">{t.name}</p>
-                          <p className="text-xs text-zinc-400">{t.role} · {t.company}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* CTA */}
-          <section className="px-6 py-20 lg:px-8">
-            <div className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/60 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 px-8 py-16 text-center shadow-xl sm:px-12 sm:py-20">
-              <FadeIn>
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  {ctaTitle}
-                </h2>
-              </FadeIn>
-              <FadeIn delay={100}>
-                <p className="mt-4 text-base text-zinc-400">
-                  {ctaSubtitle}
-                </p>
-              </FadeIn>
-              <FadeIn delay={200}>
-                <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <Button asChild size="lg" className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30">
-                    <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
-                      <Phone className="h-4 w-4" /> Chat WhatsApp Sekarang
-                    </a>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white">
-                    <Link href="/kalkulator">
-                      <Calculator className="h-4 w-4" /> Hitung Estimasi Harga
-                    </Link>
-                  </Button>
-                </div>
-              </FadeIn>
-            </div>
-          </section>
-        </main>
+      </main>
 
       <SiteFooter
         companyName={companyName}

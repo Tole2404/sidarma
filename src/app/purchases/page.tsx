@@ -145,7 +145,7 @@ export default function PurchasesPage() {
         const userResponse = await fetch("/api/auth/me");
 
         if (!userResponse.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
 
@@ -178,7 +178,7 @@ export default function PurchasesPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -315,12 +315,12 @@ export default function PurchasesPage() {
             title="Pembelian"
             description="Catat pembelian kain majun dari supplier. Setiap pembelian otomatis menambah stok dan menghitung HPP berjalan."
             action={
-              <div className="flex items-center gap-2">
-                <Button variant="outline" className="gap-2" onClick={() => setReportDialogOpen(true)}>
+              <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap w-full sm:w-auto">
+                <Button variant="outline" className="gap-2 flex-1 sm:flex-none text-xs sm:text-sm h-9 px-3" onClick={() => setReportDialogOpen(true)}>
                   <FileText className="h-4 w-4 text-zinc-500" />
                   Rekap Laporan
                 </Button>
-                <Button onClick={openCreateDialog}>
+                <Button onClick={openCreateDialog} className="gap-2 flex-1 sm:flex-none text-xs sm:text-sm h-9 px-3">
                   <Plus className="h-4 w-4" />
                   Tambah pembelian
                 </Button>
@@ -333,8 +333,8 @@ export default function PurchasesPage() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <div>
-                    <CardTitle className="text-base md:text-lg font-bold text-zinc-900">Daftar Pembelian</CardTitle>
-                    <CardDescription className="text-xs md:text-sm text-zinc-500">Riwayat pembelian produk majun dari seluruh supplier.</CardDescription>
+                    <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Daftar Pembelian</CardTitle>
+                    <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Riwayat pembelian produk majun dari seluruh supplier.</CardDescription>
                   </div>
                   <div className="text-sm font-medium text-zinc-600">
                     Total: <span className="text-zinc-950 font-semibold">{formatCurrency(totalPurchases)}</span>

@@ -62,7 +62,7 @@ export default function RegisterPage() {
 
           <Card className="mt-8 max-w-lg">
             <CardHeader className="pb-3">
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-950 text-white">
+              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
                 <UserPlus className="h-5 w-5" />
               </div>
               <CardTitle className="text-base">Langsung aktif</CardTitle>
@@ -75,7 +75,7 @@ export default function RegisterPage() {
 
         <Card className="mx-auto w-full max-w-md">
           <CardHeader className="space-y-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-950 text-white">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-white">
               <Landmark className="h-5 w-5" />
             </div>
             <div>
@@ -139,7 +139,7 @@ export default function RegisterPage() {
 
             <p className="text-center text-sm text-zinc-600">
               Sudah punya akun?{" "}
-              <Link href="/login" className="font-medium text-zinc-950 hover:text-zinc-700">
+              <Link href="/portal-admin" className="font-medium text-primary hover:text-primary-hover">
                 Masuk di sini
               </Link>
             </p>

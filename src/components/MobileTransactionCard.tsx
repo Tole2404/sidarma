@@ -49,22 +49,22 @@ export default function MobileTransactionCard({
     <Card className="p-3">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
+          <p className="text-xs xs:text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
             {title}
           </p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">
+          <p className="text-[10px] xs:text-xs text-zinc-500 dark:text-zinc-400 truncate">
             {subtitle}
           </p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-[10px] xs:text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
             {date}
           </p>
         </div>
         <div className="text-right flex-shrink-0">
-          <p className={cn("text-base font-semibold", config.amountColor)}>
+          <p className={cn("text-xs xs:text-base font-semibold", config.amountColor)}>
             {formatCurrency(amount)}
           </p>
           {status && (
-            <Badge variant={config.badgeVariant} className="mt-1 text-xs">
+            <Badge variant={config.badgeVariant} className="mt-1 text-[10px] xs:text-xs">
               {status}
             </Badge>
           )}

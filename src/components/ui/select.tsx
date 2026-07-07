@@ -113,7 +113,7 @@ const Select = React.forwardRef<HTMLSelectElement, React.ComponentProps<"select"
           disabled={disabled}
           onClick={() => setOpen((current) => !current)}
           className={cn(
-            "flex h-10 w-full items-center justify-between rounded-md border border-zinc-200 bg-white px-3 py-2 text-left text-sm text-zinc-950 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus-visible:ring-zinc-100/15",
+            "flex h-10 w-full items-center justify-between rounded-md border border-zinc-200 bg-white px-3 py-2 text-left text-base md:text-sm text-zinc-950 shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/10 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus-visible:ring-zinc-100/15",
             !selectedOption?.value && "text-zinc-500 dark:text-zinc-400",
             className,
           )}
@@ -136,7 +136,7 @@ const Select = React.forwardRef<HTMLSelectElement, React.ComponentProps<"select"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Cari..."
-                className="h-10 w-full rounded-md border border-zinc-200 bg-white pl-9 pr-3 text-sm text-zinc-950 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus-visible:ring-zinc-100/15"
+                className="h-10 w-full rounded-md border border-zinc-200 bg-white pl-9 pr-3 text-base md:text-sm text-zinc-950 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-zinc-950/10 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus-visible:ring-zinc-100/15"
               />
             </div>
 
@@ -152,7 +152,7 @@ const Select = React.forwardRef<HTMLSelectElement, React.ComponentProps<"select"
                       disabled={option.disabled}
                       onClick={() => handleSelect(option.value)}
                       className={cn(
-                        "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-zinc-200 dark:hover:bg-zinc-800",
+                        "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-base md:text-sm text-zinc-700 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-zinc-200 dark:hover:bg-zinc-800",
                         isSelected && "bg-zinc-100 text-zinc-950 dark:bg-zinc-800 dark:text-zinc-100",
                       )}
                     >

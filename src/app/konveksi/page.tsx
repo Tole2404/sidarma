@@ -59,7 +59,7 @@ export default function KonveksiPage() {
       try {
         const r = await fetch("/api/auth/me");
         if (!r.ok) {
-          router.push("/login");
+          router.push("/portal-admin");
           return;
         }
         const { user } = (await r.json()) as { user: SessionUser };
@@ -73,7 +73,7 @@ export default function KonveksiPage() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
+    router.push("/portal-admin");
     router.refresh();
   };
 
@@ -152,38 +152,38 @@ export default function KonveksiPage() {
             title="Konveksi"
             description="Kelola data konveksi/garment yang menjadi sumber bongkaran kain."
             action={
-              <Button onClick={openCreate} className="gap-2">
+              <Button onClick={openCreate} className="gap-2 w-full sm:w-auto h-9 px-3 text-xs sm:text-sm">
                 <Plus className="h-4 w-4" /> Tambah Konveksi
               </Button>
             }
           />
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Total Konveksi</CardDescription>
-                <CardTitle className="text-2xl">{totals.count}</CardTitle>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total Konveksi</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{totals.count}</CardTitle>
               </CardHeader>
             </Card>
             <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Total Bongkaran Masuk</CardDescription>
-                <CardTitle className="text-2xl">{totals.qty.toLocaleString("id-ID")} kg</CardTitle>
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total Bongkaran Masuk</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{totals.qty.toLocaleString("id-ID")} kg</CardTitle>
               </CardHeader>
             </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>Total Spending</CardDescription>
-                <CardTitle className="text-2xl">{formatCurrency(totals.spending)}</CardTitle>
+            <Card className="col-span-2 sm:col-span-1">
+              <CardHeader className="p-4 pb-2">
+                <CardDescription className="text-[10px] xs:text-xs sm:text-sm font-medium text-zinc-500">Total Spending</CardDescription>
+                <CardTitle className="text-sm xs:text-base sm:text-lg md:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{formatCurrency(totals.spending)}</CardTitle>
               </CardHeader>
             </Card>
           </div>
 
           <Card>
-            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-4 md:p-6">
               <div>
-                <CardTitle>Daftar Konveksi</CardTitle>
-                <CardDescription>Klik baris untuk edit, atau hapus jika belum ada transaksi.</CardDescription>
+                <CardTitle className="text-sm md:text-base font-bold text-zinc-900">Daftar Konveksi</CardTitle>
+                <CardDescription className="text-[10px] xs:text-xs md:text-sm text-zinc-500">Klik baris untuk edit, atau hapus jika belum ada transaksi.</CardDescription>
               </div>
               <div className="relative w-full sm:w-72">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
