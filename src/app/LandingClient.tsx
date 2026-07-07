@@ -444,13 +444,13 @@ export default function LandingClient({ data }: LandingClientProps) {
             <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 sm:items-center lg:gap-20">
               <div>
                 <FadeIn>
-                  <span className="text-[10px] sm:text-xs font-bold tracking-wider text-primary uppercase">
+                  <span className="text-xs sm:text-sm font-bold tracking-wider text-primary uppercase">
                     {heroBadge}
                   </span>
                 </FadeIn>
 
                 <FadeIn delay={100}>
-                  <h1 className="mt-4 text-2xl xs:text-3xl sm:text-4xl lg:text-[3rem] font-bold tracking-tight text-white sm:text-zinc-950 dark:sm:text-zinc-50 sm:leading-[1.1]">
+                  <h1 className="mt-4 text-3xl xs:text-4xl sm:text-5xl lg:text-[3rem] font-bold tracking-tight text-white sm:text-zinc-950 dark:sm:text-zinc-50 sm:leading-[1.1]">
                     {heroTitle}
                     <br />
                     <span className="text-zinc-300 sm:text-zinc-500 dark:sm:text-zinc-400">{heroSubtitle}</span>
@@ -459,14 +459,14 @@ export default function LandingClient({ data }: LandingClientProps) {
 
                 <FadeIn delay={200}>
                   <div
-                    className="mt-4 text-xs sm:text-sm lg:text-base leading-relaxed text-zinc-200 sm:text-zinc-600 dark:sm:text-zinc-400 max-w-md prose prose-invert sm:prose-normal dark:sm:prose-invert"
+                    className="mt-4 text-sm sm:text-base lg:text-lg leading-relaxed text-zinc-200 sm:text-zinc-600 dark:sm:text-zinc-400 max-w-md prose prose-invert sm:prose-normal dark:sm:prose-invert"
                     dangerouslySetInnerHTML={{ __html: heroDesc }}
                   />
                 </FadeIn>
 
                 <FadeIn delay={300}>
                   <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <Button asChild size="sm" className="sm:size-lg gap-2 bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/20 rounded-xl font-bold">
+                    <Button asChild size="default" className="sm:size-lg gap-2 bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/20 rounded-xl font-bold">
                       <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
                         <Phone className="h-4 w-4" /> Chat WhatsApp
                       </a>
@@ -475,7 +475,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                 </FadeIn>
 
                 <FadeIn delay={400}>
-                  <div className="mt-8 flex flex-wrap items-center gap-4 text-xs sm:text-sm">
+                  <div className="mt-8 flex flex-wrap items-center gap-4 text-sm sm:text-base">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                       <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust1}</span>
@@ -543,10 +543,10 @@ export default function LandingClient({ data }: LandingClientProps) {
               {stats.map((s, i) => (
                 <div key={s.label} className="relative flex flex-col items-center text-center">
                   <FadeIn delay={i * 80}>
-                    <p className="text-lg xs:text-xl sm:text-4xl font-extrabold tracking-tight text-primary">
+                    <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-primary">
                       <StatCounter value={s.value} />
                     </p>
-                    <p className="mt-1 text-[8px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                    <p className="mt-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                       {s.label}
                     </p>
                   </FadeIn>
@@ -566,20 +566,20 @@ export default function LandingClient({ data }: LandingClientProps) {
             <div className="grid gap-14 lg:grid-cols-2 lg:gap-16 items-center">
               <div>
                 <FadeIn>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/50 px-3.5 py-1.5 text-xs font-medium text-zinc-400">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/50 px-3.5 py-1.5 text-sm font-medium text-zinc-400">
                     <Handshake className="h-3 w-3" /> {aboutBadge}
                   </div>
                 </FadeIn>
 
                 <FadeIn delay={100}>
-                  <h2 className="mt-4 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                  <h2 className="mt-4 text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
                     {aboutTitle}
                   </h2>
                 </FadeIn>
 
                 <FadeIn delay={200}>
                   <div
-                    className="mt-4 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert"
+                    className="mt-4 text-sm sm:text-base leading-relaxed text-zinc-400 prose prose-invert"
                     dangerouslySetInnerHTML={{ __html: aboutDesc }}
                   />
                 </FadeIn>
@@ -587,7 +587,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                 <FadeIn delay={300}>
                   <ul className="mt-6 space-y-3">
                     {trust.map((t) => (
-                      <li key={t} className="flex items-center gap-2.5 text-xs xs:text-sm text-zinc-300">
+                      <li key={t} className="flex items-center gap-2.5 text-sm sm:text-base text-zinc-300">
                         <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400 sm:mt-0" />
                         {t}
                       </li>
@@ -654,13 +654,13 @@ export default function LandingClient({ data }: LandingClientProps) {
           <div className="mx-auto max-w-6xl">
             <FadeIn>
               <div className="text-center max-w-3xl mx-auto mb-10">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1 text-sm font-semibold text-primary">
                   Katalog Produk
                 </span>
-                <h2 className="mt-3 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-zinc-50">
+                <h2 className="mt-3 text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">
                   Pilihan Kain Majun & APD Industri
                 </h2>
-                <p className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 font-medium">
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-zinc-500 dark:text-zinc-400 font-medium">
                   <strong>Kain Majun (lap perca)</strong> merupakan kain lap pembersih sisa potongan industri garmen berkualitas tinggi. Dirancang khusus untuk menyerap ceceran oli, air, pelumas, zat kimia, serta kotoran mesin berat pada area manufaktur, perkapalan, bengkel, dan pabrik logam.
                 </p>
               </div>
@@ -835,37 +835,37 @@ export default function LandingClient({ data }: LandingClientProps) {
                     return (
                       <div
                         key={p.name}
-                        className="flex items-center gap-3 p-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm"
+                        className="flex items-start gap-4 p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm"
                       >
                         {/* Image Left */}
-                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+                        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
                           <img
                             src={p.image}
                             alt={p.name}
                             className="h-full w-full object-cover"
                             loading="lazy"
                           />
-                          <span className="absolute top-1 left-1 rounded-full bg-emerald-500/90 px-1.5 py-0.5 text-[8px] font-bold text-white shadow-sm">
+                          <span className="absolute top-1 left-1 rounded-full bg-emerald-500/90 px-2 py-0.5 text-[9px] font-bold text-white shadow-sm">
                             Ready
                           </span>
                         </div>
 
                         {/* Content Right */}
-                        <div className="flex-1 min-w-0 flex flex-col justify-between h-20 py-0.5">
+                        <div className="flex-1 min-w-0 flex flex-col justify-between min-h-[96px] py-0.5">
                           <div>
-                            <h3 className="text-xs font-bold text-zinc-955 dark:text-zinc-50 leading-tight line-clamp-1">
+                            <h3 className="text-sm font-bold text-zinc-955 dark:text-zinc-50 leading-tight line-clamp-1">
                               {p.name}
                             </h3>
-                            <p className="mt-0.5 text-[10px] leading-snug text-zinc-500 dark:text-zinc-400 line-clamp-2">
+                            <p className="mt-1 text-xs leading-snug text-zinc-500 dark:text-zinc-400 line-clamp-2">
                               {p.desc}
                             </p>
                           </div>
 
                           {/* Actions */}
-                          <div className="flex gap-2 mt-1.5">
+                          <div className="flex gap-2 mt-2">
                             <Link
                               href={`/produk/${slug}`}
-                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 text-[9px] font-bold text-zinc-750 dark:text-zinc-300 py-1 h-6 hover:bg-zinc-100"
+                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 text-xs font-bold text-zinc-750 dark:text-zinc-300 py-1.5 h-8 hover:bg-zinc-100"
                             >
                               Detail
                             </Link>
@@ -873,7 +873,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                               href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-primary text-white text-[9px] font-bold py-1 h-6 hover:bg-primary-hover shadow-sm"
+                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl bg-primary text-white text-xs font-bold py-1.5 h-8 hover:bg-primary-hover shadow-sm"
                             >
                               Tanya Harga
                             </a>
@@ -920,17 +920,17 @@ export default function LandingClient({ data }: LandingClientProps) {
               
               <div className="relative grid gap-8 lg:grid-cols-3 lg:items-center lg:gap-12">
                 <div className="lg:col-span-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-semibold text-emerald-400 border border-emerald-500/20">
                     <Recycle className="h-3 w-3" /> {bongkaranBadge}
                   </span>
-                  <h2 className="mt-3 text-lg xs:text-xl sm:text-3xl font-extrabold tracking-tight text-white">
+                  <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                     {bongkaranTitle}
                   </h2>
                   <div
-                    className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert"
+                    className="mt-3 text-sm sm:text-base leading-relaxed text-zinc-400 prose prose-invert"
                     dangerouslySetInnerHTML={{ __html: bongkaranDesc }}
                   />
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] xs:text-xs font-medium text-zinc-300">
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs xs:text-sm font-medium text-zinc-300">
                     <span className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-400" /> Layanan Jemput Gratis
                     </span>
@@ -948,7 +948,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                       Jual Sekarang <ArrowRight className="h-4 w-4" />
                     </Link>
                   </Button>
-                  <p className="text-[10px] text-zinc-500 tracking-wider uppercase font-semibold">Mulai dari 100 kg per penjemputan</p>
+                  <p className="text-xs text-zinc-500 tracking-wider uppercase font-semibold">Mulai dari 100 kg per penjemputan</p>
                 </div>
               </div>
             </div>
@@ -960,11 +960,11 @@ export default function LandingClient({ data }: LandingClientProps) {
           <div className="mx-auto max-w-6xl">
             <FadeIn>
               <div className="text-center">
-                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
                   Proses Transaksi
                 </span>
-                <h2 className="mt-3 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Cara Pemesanan</h2>
-                <p className="mt-2 text-xs xs:text-sm text-zinc-500 dark:text-zinc-400">Simpel, cepat, dan transparan dalam 3 tahapan mudah</p>
+                <h2 className="mt-3 text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Cara Pemesanan</h2>
+                <p className="mt-2 text-sm sm:text-base text-zinc-500 dark:text-zinc-400">Simpel, cepat, dan transparan dalam 3 tahapan mudah</p>
               </div>
             </FadeIn>
  
@@ -997,7 +997,7 @@ export default function LandingClient({ data }: LandingClientProps) {
  
                           {/* Header text / status badge */}
                           <div className="flex flex-col items-center gap-1 mt-3 sm:mt-6">
-                            <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[8px] sm:text-[10px] font-extrabold tracking-wider uppercase border ${
+                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] sm:text-[11px] font-extrabold tracking-wider uppercase border ${
                               i === 0 
                                 ? "bg-blue-50/70 text-blue-700 border-blue-200/50 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-800/30" 
                                 : i === 1 
@@ -1006,7 +1006,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                             }`}>
                               {i === 0 ? "Hubungi" : i === 1 ? "Negosiasi" : "Pengiriman"}
                             </span>
-                            <h3 className="text-[10px] xs:text-xs sm:text-base font-extrabold text-zinc-955 dark:text-white tracking-tight leading-snug">
+                            <h3 className="text-xs xs:text-sm sm:text-base font-extrabold text-zinc-955 dark:text-white tracking-tight leading-snug">
                               {s.title}
                             </h3>
                           </div>
@@ -1015,7 +1015,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                         {/* Step Description Box */}
                         <div className="pl-0 mt-1 sm:mt-2 max-w-sm">
                           <div
-                            className="text-[9px] xs:text-[10px] sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 prose dark:prose-invert"
+                            className="text-xs sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 prose dark:prose-invert"
                             dangerouslySetInnerHTML={{ __html: s.desc }}
                           />
                         </div>
@@ -1034,8 +1034,8 @@ export default function LandingClient({ data }: LandingClientProps) {
             <FadeIn>
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
                 <div>
-                  <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Apa Kata Pelanggan Kami</h2>
-                  <p className="mt-2 text-xs xs:text-sm text-zinc-500 dark:text-zinc-400">Dipercaya oleh ratusan pabrik, bengkel, dan cleaning service di seluruh Jawa</p>
+                  <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">Apa Kata Pelanggan Kami</h2>
+                  <p className="mt-2 text-sm sm:text-base text-zinc-500 dark:text-zinc-400">Dipercaya oleh ratusan pabrik, bengkel, dan cleaning service di seluruh Jawa</p>
                 </div>
 
                 {/* Filter Dropdown */}
@@ -1182,7 +1182,7 @@ export default function LandingClient({ data }: LandingClientProps) {
                         </div>
 
                         {/* Content */}
-                        <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-300 italic">
+                        <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 italic">
                           "{t.content}"
                         </p>
 
@@ -1193,13 +1193,13 @@ export default function LandingClient({ data }: LandingClientProps) {
                               <img src={t.avatar} alt={t.name} className="h-full w-full object-cover" loading="lazy" />
                             </div>
                           ) : (
-                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-[10px] font-bold shadow-sm">
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-xs font-bold shadow-sm">
                               {t.name.split(" ").slice(-1)[0][0]}
                             </div>
                           )}
                           <div>
-                            <p className="text-xs font-bold text-zinc-955 dark:text-zinc-50">{t.name}</p>
-                            <p className="text-[10px] text-zinc-400">{t.role ? `${t.role} · ` : ""}{t.company}</p>
+                            <p className="text-sm font-bold text-zinc-955 dark:text-zinc-50">{t.name}</p>
+                            <p className="text-xs text-zinc-400">{t.role ? `${t.role} · ` : ""}{t.company}</p>
                           </div>
                         </div>
                       </div>
@@ -1226,29 +1226,29 @@ export default function LandingClient({ data }: LandingClientProps) {
         <section className="px-6 py-12 sm:py-20 lg:px-8">
           <div className="mx-auto max-w-4xl rounded-3xl border border-zinc-200/60 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 px-5 py-8 sm:px-12 sm:py-20 text-center shadow-xl">
             <FadeIn>
-              <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
                 {ctaTitle}
               </h2>
             </FadeIn>
             <FadeIn delay={100}>
               <div
-                className="mt-3 text-xs xs:text-sm leading-relaxed text-zinc-400 prose prose-invert mx-auto max-w-lg"
+                className="mt-3 text-sm sm:text-base leading-relaxed text-zinc-400 prose prose-invert mx-auto max-w-lg"
                 dangerouslySetInnerHTML={{ __html: ctaSubtitle }}
               />
             </FadeIn>
             <FadeIn delay={200}>
               <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 max-w-xs sm:max-w-none mx-auto w-full">
-                <Button asChild className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
+                <Button asChild className="gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 py-2 sm:py-2.5 text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
                   <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
                     <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Chat WhatsApp Sekarang
                   </a>
                 </Button>
-                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
+                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
                   <Link href="/kalkulator">
                     <Calculator className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Hitung Estimasi Harga
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-xs sm:text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
+                <Button asChild variant="outline" className="gap-2 border-zinc-700/50 bg-white/5 hover:bg-white/10 text-white py-2 sm:py-2.5 text-sm h-9 sm:h-11 rounded-lg sm:rounded-xl">
                   <Link href="/lacak-pesanan">
                     <Truck className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Lacak Status Pesanan
                   </Link>
