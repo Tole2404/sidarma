@@ -1,59 +1,59 @@
 # Color Palette Guidelines — SIDARMA
 
-Panduan sistem warna untuk website SIDARMA. Terinspirasi dari [Color Hunt](https://colorhunt.co/) dengan fokus pada tampilan **profesional**, **modern**, dan **industrial**.
+Panduan sistem warna untuk website SIDARMA dengan fokus pada tampilan **profesional**, **SaaS modern**, dan **high-contrast**.
 
 ---
 
 ## 🎨 Primary Color Palette
 
-Palet utama menggunakan kombinasi **Slate Steel** (industrial) dengan aksen **Amber/Orange** (safety/industrial).
+Palet utama menggunakan kombinasi **Digital Blue** (primary brand) dengan netral **Cool Slate** untuk UI bergaya SaaS premium.
 
 ### Light Mode
 
 | Nama | Hex | Tailwind | Penggunaan |
 |------|-----|----------|------------|
-| **Background** | `#F5F7F8` | `zinc-50` | Latar belakang utama |
+| **Background** | `#F8FAFC` | `zinc-50` | Latar belakang utama |
 | **Surface** | `#FFFFFF` | `white` | Card, modal, sidebar |
-| **Border** | `#E4E4E7` | `zinc-200` | Garis pembatas |
-| **Text Primary** | `#18181B` | `zinc-950` | Judul, teks utama |
-| **Text Secondary** | `#71717A` | `zinc-500` | Teks pendukung |
-| **Text Muted** | `#A1A1AA` | `zinc-400` | Placeholder, hint |
+| **Border** | `#E2E8F0` | `zinc-200` | Garis pembatas |
+| **Text Primary** | `#0F172A` | `zinc-950` | Judul, teks utama |
+| **Text Secondary** | `#475569` | `zinc-600` | Teks pendukung |
+| **Text Muted** | `#94A3B8` | `zinc-400` | Placeholder, hint |
 
 ### Dark Mode
 
 | Nama | Hex | Tailwind | Penggunaan |
 |------|-----|----------|------------|
-| **Background** | `#09090B` | `zinc-950` | Latar belakang utama |
-| **Surface** | `#18181B` | `zinc-900` | Card, modal, sidebar |
-| **Border** | `#3F3F46` | `zinc-700` | Garis pembatas |
+| **Background** | `#090D1F` | `zinc-950` | Latar belakang utama |
+| **Surface** | `#0F172A` | `zinc-900` | Card, modal, sidebar |
+| **Border** | `#1E293B` | `zinc-800` | Garis pembatas |
 | **Text Primary** | `#FAFAFA` | `zinc-50` | Judul, teks utama |
-| **Text Secondary** | `#A1A1AA` | `zinc-400` | Teks pendukung |
-| **Text Muted** | `#71717A` | `zinc-500` | Placeholder, hint |
+| **Text Secondary** | `#94A3B8` | `zinc-400` | Teks pendukung |
+| **Text Muted** | `#64748B` | `zinc-500` | Placeholder, hint |
 
 ---
 
-## 🏭 Industrial Steel Theme (Custom)
+## 🔵 Digital Blue Theme (Custom)
 
-Warna kustom yang sudah didefinisikan di `globals.css`:
+Warna kustom yang didefinisikan di `globals.css`:
 
 ```css
-/* Industrial Steel Works */
---color-zinc-50: #F5F7F8;     /* Off-White Bersih */
---color-zinc-100: #ECF0F1;    /* Silver Mist */
---color-zinc-200: #D8DDE1;    /* Slate Border Terang */
---color-zinc-300: #BDC3C7;    /* Slate Muted */
---color-zinc-400: #95A5A6;    /* Gray-Green Muted */
---color-zinc-500: #7F8C8D;    /* Gray-Green Text */
---color-zinc-600: #34495E;    /* Slate Steel Dark */
---color-zinc-700: #2C3E50;    /* Slate Steel Utama */
---color-zinc-800: #202D3B;    /* Slate Steel Card */
---color-zinc-900: #1A252F;    /* Deep Ink */
---color-zinc-950: #111820;    /* Slate Black */
+/* Brand Primary Colors */
+--color-primary: #3874FF;         /* Digital Blue Utama */
+--color-primary-hover: #1E56E3;   /* Digital Blue Hover */
+--color-primary-active: #0D42C7;  /* Digital Blue Active */
 
-/* Safety Amber/Orange */
---color-amber-500: #F39C12;   /* Amber Utama */
---color-amber-600: #E67E22;   /* Deep Amber / Safety Orange */
---color-amber-700: #D35400;   /* Dark Orange */
+/* Modern Slate SaaS */
+--color-zinc-50: #F8FAFC;     /* Slate-50: Off-White Bersih */
+--color-zinc-100: #F1F5F9;    /* Slate-100: Silver Mist */
+--color-zinc-200: #E2E8F0;    /* Slate-200: Border Terang */
+--color-zinc-300: #CBD5E1;    /* Slate-300: Slate Muted */
+--color-zinc-400: #94A3B8;    /* Slate-400: Gray Muted */
+--color-zinc-500: #64748B;    /* Slate-500: Gray Text */
+--color-zinc-600: #475569;    /* Slate-600: Slate Dark Text */
+--color-zinc-700: #334155;    /* Slate-700: Slate Steel Utama */
+--color-zinc-800: #1E293B;    /* Slate-800: Slate Card Background */
+--color-zinc-900: #0F172A;    /* Slate-900: Deep Ink / Dark Mode Card */
+--color-zinc-950: #090D1F;    /* Slate-950: Slate Black / Dark Mode BG */
 ```
 
 ---

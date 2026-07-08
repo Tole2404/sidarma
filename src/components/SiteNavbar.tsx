@@ -65,18 +65,22 @@ function Dropdown({
     <div ref={ref} className="relative">
       <button
         onClick={onToggle}
-        className={`flex items-center gap-1 px-1 py-1 text-sm font-semibold transition-colors duration-150 ${
-          open || isParentActive ? "text-primary" : "text-zinc-500 hover:text-zinc-950"
+        className={`relative flex items-center gap-1.5 px-3 py-2 text-sm font-semibold transition-all duration-200 hover:text-primary ${
+          open || isParentActive ? "text-primary" : "text-zinc-550 dark:text-zinc-400"
         }`}
       >
-        {item.label}
+        <span>{item.label}</span>
         <ChevronDown
           className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
+        {/* Active Underline Indicator with glow */}
+        {isParentActive && (
+          <span className="absolute bottom-[-16px] left-3 right-3 h-[2px] rounded-full bg-primary shadow-[0_0_8px_rgba(56,116,255,0.6)]" />
+        )}
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2 w-60 rounded-xl border border-zinc-100 bg-white py-2 shadow-lg shadow-zinc-200/60 z-50">
+        <div className="absolute left-0 top-full mt-2.5 w-64 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md py-2.5 shadow-xl shadow-zinc-250/50 dark:shadow-black/40 z-50">
           {item.children?.map((child) => {
             const isChildActive = pathname === child.href;
             return (
@@ -84,17 +88,17 @@ function Dropdown({
                 key={child.href}
                 href={child.href}
                 onClick={onToggle}
-                className={`block px-4 py-2.5 hover:bg-zinc-50 transition-colors group ${
-                  isChildActive ? "bg-zinc-50/50" : ""
+                className={`block px-4.5 py-2.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 rounded-xl mx-1.5 transition-colors group ${
+                  isChildActive ? "bg-primary/5 dark:bg-primary/10" : ""
                 }`}
               >
-                <p className={`text-sm font-semibold transition-colors ${
-                  isChildActive ? "text-primary" : "text-zinc-800 group-hover:text-zinc-950"
+                <p className={`text-sm font-bold transition-colors ${
+                  isChildActive ? "text-primary" : "text-zinc-700 dark:text-zinc-350 group-hover:text-zinc-950 dark:group-hover:text-zinc-50"
                 }`}>
                   {child.label}
                 </p>
                 {child.desc && (
-                  <p className="mt-0.5 text-xs text-zinc-400">{child.desc}</p>
+                  <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 leading-normal">{child.desc}</p>
                 )}
               </Link>
             );
@@ -150,17 +154,21 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 shadow-sm">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-100/80 dark:border-zinc-900/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm transition-all duration-300">
+      {/* Dynamic bottom gradient accent line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
+
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8 relative z-10">
 
         {/* ── Logo ── */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          {/* Icon badge */}
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white text-xs font-bold tracking-tight select-none">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+          {/* Icon badge with gradient and shadow */}
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-hover text-white text-xs font-black tracking-tight select-none shadow-sm shadow-primary/25 transition-transform duration-300 group-hover:scale-105 active:scale-95">
             SM
           </div>
-          <span className="text-base font-bold tracking-tight text-zinc-950 dark:text-zinc-50">
-            {companyName.replace("CV. ", "")}
+          <span className="text-lg tracking-tight select-none">
+            <span className="font-extrabold text-zinc-950 dark:text-zinc-50 transition-colors group-hover:text-primary">SIDARMA</span>
+            <span className="font-medium text-primary ml-1">MAJUN</span>
           </span>
         </Link>
 
@@ -183,11 +191,15 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
               <Link
                 key={item.label}
                 href={item.href!}
-                className={`px-3 py-1 text-sm font-semibold transition-colors duration-150 ${
-                  active ? "text-primary" : "text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-zinc-50"
+                className={`relative px-3 py-2 text-sm font-semibold transition-all duration-200 hover:text-primary ${
+                  active ? "text-primary" : "text-zinc-550 dark:text-zinc-400"
                 }`}
               >
                 {item.label}
+                {/* Active Underline Indicator with glow */}
+                {active && (
+                  <span className="absolute bottom-[-16px] left-3 right-3 h-[2px] rounded-full bg-primary shadow-[0_0_8px_rgba(56,116,255,0.6)]" />
+                )}
               </Link>
             );
           })}
@@ -198,13 +210,17 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
           {themeReady && (
             <button
               onClick={toggleTheme}
-              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-colors"
+              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-150 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 hover:scale-105 active:scale-95 group"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun className="h-4 w-4 text-amber-500 fill-amber-500" /> : <Moon className="h-4 w-4 text-zinc-650" />}
+              {theme === "dark" ? (
+                <Sun className="h-4.5 w-4.5 text-amber-500 fill-amber-500 transition-transform duration-500 group-hover:rotate-45" />
+              ) : (
+                <Moon className="h-4.5 w-4.5 text-zinc-650 transition-transform duration-500 group-hover:-rotate-12" />
+              )}
             </button>
           )}
-          <Button asChild size="sm" className="gap-1.5 bg-primary text-white hover:bg-primary-hover rounded-lg px-4">
+          <Button asChild size="sm" className="gap-1.5 bg-primary text-white hover:bg-primary-hover rounded-xl px-4 shadow-sm shadow-primary/15 transition-transform duration-200 active:scale-95">
             <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
               Pesan Sekarang
               <ArrowRight className="h-3.5 w-3.5" />
@@ -217,33 +233,45 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
           {themeReady && (
             <button
               onClick={toggleTheme}
-              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-colors"
+              className="rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun className="h-4.5 w-4.5 text-amber-500 fill-amber-500" /> : <Moon className="h-4.5 w-4.5 text-zinc-650" />}
+              {theme === "dark" ? (
+                <Sun className="h-4.5 w-4.5 text-amber-500 fill-amber-500 transition-transform duration-500 group-hover:rotate-45" />
+              ) : (
+                <Moon className="h-4.5 w-4.5 text-zinc-650 transition-transform duration-500 group-hover:-rotate-12" />
+              )}
             </button>
           )}
           <button
-            className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-colors"
+            className="rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5 text-zinc-650 dark:text-zinc-350 transition-transform duration-300 rotate-90 group-hover:rotate-180" />
+            ) : (
+              <Menu className="h-5 w-5 text-zinc-650 dark:text-zinc-350 transition-transform duration-300 group-hover:scale-110" />
+            )}
           </button>
         </div>
       </div>
 
       {/* ── Mobile drawer ── */}
-      {mobileOpen && (
-        <div className="border-t border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 md:hidden">
-          <nav className="flex flex-col gap-0.5 p-3">
-            {NAV_ITEMS.map((item) => {
-              if (item.children) {
-                return (
-                  <div key={item.label} className="pb-1">
-                    <p className="px-2.5 pt-2 pb-0.5 text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-                      {item.label}
-                    </p>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden border-t border-zinc-100 dark:border-zinc-900 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md ${
+          mobileOpen ? "max-h-[600px] opacity-100 py-3" : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+      >
+        <nav className="flex flex-col gap-1 px-4">
+          {NAV_ITEMS.map((item) => {
+            if (item.children) {
+              return (
+                <div key={item.label} className="pb-1.5">
+                  <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                    {item.label}
+                  </p>
+                  <div className="flex flex-col gap-0.5">
                     {item.children.map((child) => {
                       const active = pathname === child.href;
                       return (
@@ -251,41 +279,47 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
                           key={child.href}
                           href={child.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`block rounded-lg px-2.5 py-1.5 text-xs xs:text-sm transition-colors ${
-                            active ? "text-primary font-bold bg-zinc-50 dark:bg-zinc-900" : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                          className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-200 ${
+                            active
+                              ? "text-primary bg-primary/5 dark:bg-primary/10 pl-5 font-bold"
+                              : "text-zinc-650 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 hover:pl-5 hover:text-primary"
                           }`}
                         >
-                          {child.label}
+                          <span>{child.label}</span>
+                          {active && <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />}
                         </Link>
                       );
                     })}
                   </div>
-                );
-              }
-              const active = isActive(item.href!);
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href!}
-                  onClick={() => setMobileOpen(false)}
-                  className={`rounded-lg px-2.5 py-1.5 text-xs xs:text-sm transition-colors ${
-                    active ? "text-primary font-bold bg-zinc-50 dark:bg-zinc-900" : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                </div>
               );
-            })}
-            <div className="mt-2 border-t border-zinc-100 dark:border-zinc-900 pt-2.5">
-              <Button asChild className="w-full gap-2 bg-primary text-white hover:bg-primary-hover h-8 text-xs py-1.5 rounded-lg font-bold">
-                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-                  Pesan via WhatsApp <ArrowRight className="h-3.5 w-3.5" />
-                </a>
-              </Button>
-            </div>
-          </nav>
-        </div>
-      )}
+            }
+            const active = isActive(item.href!);
+            return (
+              <Link
+                key={item.label}
+                href={item.href!}
+                onClick={() => setMobileOpen(false)}
+                className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-200 ${
+                  active
+                    ? "text-primary bg-primary/5 dark:bg-primary/10 pl-5 font-bold"
+                    : "text-zinc-650 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 hover:pl-5 hover:text-primary"
+                }`}
+              >
+                <span>{item.label}</span>
+                {active && <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />}
+              </Link>
+            );
+          })}
+          <div className="mt-3 border-t border-zinc-100 dark:border-zinc-900 pt-3 pb-1">
+            <Button asChild className="w-full gap-2 bg-primary text-white hover:bg-primary-hover h-11 text-sm py-2.5 rounded-xl font-bold shadow-md shadow-primary/10 transition-transform duration-200 active:scale-[0.98]">
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                Pesan via WhatsApp <ArrowRight className="h-4 w-4" />
+              </a>
+            </Button>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

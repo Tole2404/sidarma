@@ -135,54 +135,66 @@ export default function KatalogClient({ products, waNumber, banner }: KatalogCli
                 const slug = p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
                 return (
                   <div key={p.name} className="flex w-full">
-                    {/* Desktop/Tablet Card Layout */}
-                    <div className="hidden sm:flex flex-col w-full overflow-hidden rounded-2xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-700 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-zinc-300/80 dark:hover:border-zinc-650 hover:-translate-y-1">
-                      {/* Image Frame */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-850">
+                    {/* Unified responsive card with top spotlight image */}
+                    <div className="flex flex-col w-full overflow-hidden rounded-3xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-800 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-1 group">
+                      {/* Image Frame (Spotlight) */}
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-950">
                         <img
                           src={p.image}
                           alt={p.name}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
-                        <div className="absolute top-4 right-4">
-                          <span className="rounded-full bg-emerald-500/90 backdrop-blur-sm px-3.5 py-1 text-xs font-semibold text-white shadow-sm border border-emerald-400/20">
+                        <div className="absolute top-3.5 right-3.5">
+                          <span className="rounded-full bg-emerald-500/90 backdrop-blur-sm px-3.5 py-1 text-[10px] sm:text-xs font-semibold text-white shadow-sm border border-emerald-400/20">
                             Ready Stock
                           </span>
                         </div>
                       </div>
 
                       {/* Metadata Content */}
-                      <div className="flex flex-col flex-1 p-6">
+                      <div className="flex flex-col flex-1 p-5 sm:p-6">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-flex items-center gap-1 rounded bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold text-primary">
+                          <span className="inline-flex items-center gap-1 rounded bg-primary/10 px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-primary">
                             {p.category}
                           </span>
                         </div>
-                        <h3 className="text-lg font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover/card:text-primary transition-colors line-clamp-1">
+                        <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover:text-primary transition-colors line-clamp-1">
                           {p.name}
                         </h3>
-                        <p className="mt-2.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 flex-1 line-clamp-3">
-                          {p.desc}
+                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 flex-1">
+                          {p.desc.length > 90 ? (
+                            <>
+                              {p.desc.substring(0, 90)}...{" "}
+                              <Link
+                                href={`/produk/${slug}`}
+                                className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5"
+                              >
+                                Baca selengkapnya
+                              </Link>
+                            </>
+                          ) : (
+                            p.desc
+                          )}
                         </p>
                         
                         {/* Uses Tag List */}
-                        <div className="mt-5 pt-4 border-t border-zinc-100 dark:border-zinc-800/85">
-                          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2 font-mono">
+                        <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/85">
+                          <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2 font-mono">
                             Cocok untuk:
                           </p>
                           <div className="flex flex-wrap gap-1">
                             {p.uses.slice(0, 3).map((use) => (
                               <span
                                 key={use}
-                                className="inline-flex items-center gap-1 rounded-full bg-zinc-50 dark:bg-zinc-800 px-2 py-0.5 text-[10px] text-zinc-655 dark:text-zinc-350 border border-zinc-200/50 dark:border-zinc-700/60"
+                                className="inline-flex items-center gap-1 rounded-full bg-zinc-50 dark:bg-zinc-800 px-2 py-0.5 text-[9px] sm:text-[10px] text-zinc-650 dark:text-zinc-350 border border-zinc-200/50 dark:border-zinc-700/60"
                               >
                                 <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500" />
                                 {use}
                               </span>
                             ))}
                             {p.uses.length > 3 && (
-                              <span className="inline-flex items-center rounded-full bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 text-[10px] text-zinc-500 dark:text-zinc-400 font-medium">
+                              <span className="inline-flex items-center rounded-full bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400 font-medium">
                                 +{p.uses.length - 3} lainnya
                               </span>
                             )}
@@ -190,68 +202,17 @@ export default function KatalogClient({ products, waNumber, banner }: KatalogCli
                         </div>
 
                         {/* Card Button Panel */}
-                        <div className="mt-6 flex items-center gap-3 border-t border-zinc-100 dark:border-zinc-800/85 pt-4">
-                          <Button asChild size="sm" variant="outline" className="flex-1 gap-1.5 rounded-xl border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-xs py-1.5 h-8 font-bold">
+                        <div className="mt-5 flex items-center gap-2.5 border-t border-zinc-100 dark:border-zinc-800/85 pt-3.5">
+                          <Button asChild size="sm" variant="outline" className="flex-1 gap-1.5 rounded-xl border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-xs py-1.5 h-9 font-bold">
                             <Link href={`/produk/${slug}`}>
                               Detail <ArrowRight className="h-3 w-3" />
                             </Link>
                           </Button>
-                          <Button asChild size="sm" className="flex-1 gap-1.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs py-1.5 h-8 font-bold">
+                          <Button asChild size="sm" className="flex-1 gap-1.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs py-1.5 h-9 font-bold shadow-sm shadow-primary/10">
                             <a href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`} target="_blank" rel="noopener noreferrer">
                               Tanya Harga
                             </a>
                           </Button>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Mobile Card Layout */}
-                    <div className="flex sm:hidden items-center gap-3 p-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm w-full">
-                      {/* Image Left */}
-                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
-                        <img
-                          src={p.image}
-                          alt={p.name}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                        />
-                        <span className="absolute top-1 left-1 rounded-full bg-emerald-500/90 px-1.5 py-0.5 text-[8px] font-bold text-white shadow-sm">
-                          Ready
-                        </span>
-                      </div>
-
-                      {/* Content Right */}
-                      <div className="flex-1 min-w-0 flex flex-col justify-between h-20 py-0.5">
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="inline-flex items-center rounded bg-primary/10 px-1.5 py-0.5 text-[8px] font-semibold text-primary">
-                              {p.category}
-                            </span>
-                          </div>
-                          <h3 className="text-xs font-bold text-zinc-950 dark:text-zinc-50 leading-tight line-clamp-1 mt-1">
-                            {p.name}
-                          </h3>
-                          <p className="mt-0.5 text-[10px] leading-snug text-zinc-550 dark:text-zinc-400 line-clamp-1">
-                            {p.desc}
-                          </p>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex gap-2 mt-1.5">
-                          <Link
-                            href={`/produk/${slug}`}
-                            className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 text-[9px] font-bold text-zinc-700 dark:text-zinc-300 py-1 h-6 hover:bg-zinc-100"
-                          >
-                            Detail
-                          </Link>
-                          <a
-                            href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 inline-flex items-center justify-center gap-1 rounded-lg bg-primary text-white text-[9px] font-bold py-1 h-6 hover:bg-primary-hover shadow-sm"
-                          >
-                            Tanya Harga
-                          </a>
                         </div>
                       </div>
                     </div>

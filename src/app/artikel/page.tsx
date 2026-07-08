@@ -102,10 +102,10 @@ export default function ArtikelPage() {
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {CATEGORIES.map((cat) => (
               <button key={cat} onClick={() => setActiveCategory(cat)}
-                className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors border shrink-0 ${
+                className={`rounded-full px-3 py-1 text-xs font-bold transition-all border shrink-0 shadow-sm ${
                   activeCategory === cat 
-                    ? "bg-zinc-950 text-white border-zinc-950 dark:bg-zinc-50 dark:text-zinc-955 dark:border-zinc-50" 
-                    : "border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700"
+                    ? "bg-primary text-white border-primary shadow-primary/15" 
+                    : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                 }`}>
                 {cat}
               </button>
@@ -116,22 +116,36 @@ export default function ArtikelPage() {
         {/* Date Filter Bar */}
         <div className="mb-6 sm:mb-8 flex flex-row flex-wrap items-center gap-3 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-2.5 rounded-xl sm:rounded-2xl shadow-sm text-xs max-w-2xl">
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className="font-semibold text-zinc-500 shrink-0">Dari:</span>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="px-2 py-1 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white"
-            />
+            <span className="font-semibold text-zinc-550 dark:text-zinc-400 shrink-0">Dari:</span>
+            <div className="relative flex items-center min-w-0">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="px-2 py-1 bg-zinc-50 dark:bg-zinc-955 border border-zinc-250 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white min-w-[130px]"
+              />
+              {!startDate && (
+                <span className="absolute left-2.5 pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
+                  Pilih tanggal
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className="font-semibold text-zinc-500 shrink-0">Sampai:</span>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="px-2 py-1 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white"
-            />
+            <span className="font-semibold text-zinc-550 dark:text-zinc-400 shrink-0">Sampai:</span>
+            <div className="relative flex items-center min-w-0">
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="px-2 py-1 bg-zinc-50 dark:bg-zinc-955 border border-zinc-250 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white min-w-[130px]"
+              />
+              {!endDate && (
+                <span className="absolute left-2.5 pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
+                  Pilih tanggal
+                </span>
+              )}
+            </div>
           </div>
           {(startDate || endDate) && (
             <button
@@ -139,7 +153,7 @@ export default function ArtikelPage() {
                 setStartDate("");
                 setEndDate("");
               }}
-              className="text-[10px] font-bold text-red-500 dark:text-red-455 hover:underline ml-auto shrink-0"
+              className="text-[10px] font-bold text-red-500 dark:text-red-400 hover:underline ml-auto shrink-0"
             >
               Hapus Filter Tanggal
             </button>

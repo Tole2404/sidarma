@@ -412,8 +412,8 @@ export default function LandingClient({ data }: LandingClientProps) {
       <SiteNavbar companyName={companyName} />
 
       <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden px-6 pt-12 pb-14 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-32 lg:px-8 bg-zinc-950 sm:bg-transparent">
+        {/* Mobile Full-Page Wrapper */}
+        <div className="relative flex flex-col justify-between min-h-[calc(100dvh-4rem)] sm:min-h-0 bg-zinc-950 sm:bg-transparent overflow-hidden">
           {/* Mobile Full Background Image Cover */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat block sm:hidden z-0"
@@ -422,143 +422,146 @@ export default function LandingClient({ data }: LandingClientProps) {
           {/* Mobile Dark Overlay Mask */}
           <div className="absolute inset-0 bg-zinc-950/80 block sm:hidden z-0" />
 
-          {/* Grid points background (only for sm+) */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-0 opacity-60 hidden sm:block"
-            style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0)`,
-              backgroundSize: "32px 32px",
-            }}
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-zinc-200/40 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-amber-100/30 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
-          />
+          {/* Hero */}
+          <section className="relative overflow-hidden px-6 pt-8 pb-4 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-32 lg:px-8 z-10 flex-1 flex flex-col justify-center">
+            {/* Grid points background (only for sm+) */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 z-0 opacity-60 hidden sm:block"
+              style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0)`,
+                backgroundSize: "32px 32px",
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-zinc-200/40 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-amber-100/30 via-zinc-100/20 to-transparent blur-3xl hidden sm:block"
+            />
 
-          <div className="relative z-10 mx-auto max-w-6xl">
-            <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 sm:items-center lg:gap-20">
-              <div>
-                <FadeIn>
-                  <span className="text-xs sm:text-sm font-bold tracking-wider text-primary uppercase">
-                    {heroBadge}
-                  </span>
-                </FadeIn>
+            <div className="relative z-10 mx-auto max-w-6xl w-full">
+              <div className="grid gap-6 sm:grid-cols-2 sm:gap-10 sm:items-center lg:gap-20">
+                <div>
+                  <FadeIn>
+                    <span className="text-xs sm:text-sm font-bold tracking-wider text-primary uppercase">
+                      {heroBadge}
+                    </span>
+                  </FadeIn>
 
-                <FadeIn delay={100}>
-                  <h1 className="mt-4 text-3xl xs:text-4xl sm:text-5xl lg:text-[3rem] font-bold tracking-tight text-white sm:text-zinc-950 dark:sm:text-zinc-50 sm:leading-[1.1]">
-                    {heroTitle}
-                    <br />
-                    <span className="text-zinc-300 sm:text-zinc-500 dark:sm:text-zinc-400">{heroSubtitle}</span>
-                  </h1>
-                </FadeIn>
+                  <FadeIn delay={100}>
+                    <h1 className="mt-2 sm:mt-4 text-4xl xs:text-5xl sm:text-5xl lg:text-[3rem] font-bold tracking-tight text-white sm:text-zinc-950 dark:sm:text-zinc-50 sm:leading-[1.1]">
+                      {heroTitle}
+                      <br />
+                      <span className="text-zinc-300 sm:text-zinc-500 dark:sm:text-zinc-400">{heroSubtitle}</span>
+                    </h1>
+                  </FadeIn>
 
-                <FadeIn delay={200}>
-                  <div
-                    className="mt-4 text-sm sm:text-base lg:text-lg leading-relaxed text-zinc-200 sm:text-zinc-600 dark:sm:text-zinc-400 max-w-md prose prose-invert sm:prose-normal dark:sm:prose-invert"
-                    dangerouslySetInnerHTML={{ __html: heroDesc }}
-                  />
-                </FadeIn>
+                  <FadeIn delay={200}>
+                    <div
+                      className="mt-3 sm:mt-4 text-sm xs:text-base sm:text-base lg:text-lg leading-relaxed text-zinc-200 sm:text-zinc-600 dark:sm:text-zinc-400 max-w-md prose prose-invert sm:prose-normal dark:sm:prose-invert animate-fade-in"
+                      dangerouslySetInnerHTML={{ __html: heroDesc }}
+                    />
+                  </FadeIn>
 
-                <FadeIn delay={300}>
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <Button asChild size="default" className="sm:size-lg gap-2 bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/20 rounded-xl font-bold">
-                      <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
-                        <Phone className="h-4 w-4" /> Chat WhatsApp
-                      </a>
-                    </Button>
-                  </div>
-                </FadeIn>
-
-                <FadeIn delay={400}>
-                  <div className="mt-8 flex flex-wrap items-center gap-4 text-sm sm:text-base">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust1}</span>
+                  <FadeIn delay={300}>
+                    <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-3">
+                      <Button asChild size="lg" className="h-12 w-full xs:w-auto gap-2 bg-primary hover:bg-primary-hover text-white shadow-lg shadow-primary/20 rounded-xl font-bold">
+                        <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
+                          <Phone className="h-4 w-4" /> Chat WhatsApp
+                        </a>
+                      </Button>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust2}</span>
+                  </FadeIn>
+
+                  <FadeIn delay={400}>
+                    <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:text-base">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                        <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust1}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                        <span className="text-zinc-300 sm:text-zinc-600 dark:sm:text-zinc-400">{heroTrust2}</span>
+                      </div>
+                    </div>
+                  </FadeIn>
+                </div>
+
+                {/* Tablet/Desktop Side-by-side Image (shown from sm screens) */}
+                <FadeIn delay={200} className="hidden sm:block">
+                  <div className="relative">
+                    {/* Decorative background blur shapes */}
+                    <div className="absolute -top-12 -left-12 h-72 w-72 rounded-full bg-gradient-to-tr from-primary/10 to-amber-100/10 blur-3xl opacity-60" />
+                    <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-gradient-to-br from-zinc-200 to-amber-100/15 blur-3xl opacity-50" />
+
+                    {/* Main Image Frame */}
+                    <div className="relative rounded-3xl border border-zinc-200/50 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+                        <img
+                          src={heroImage}
+                          alt="Kain Majun Premium"
+                          className="h-full w-full object-cover"
+                          {...{ fetchPriority: "high" }}
+                        />
+                        {/* Dark overlay on bottom of the image for contrast */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                      </div>
+
+                      {/* Floating Glass Badge 1: Stock Capacity */}
+                      <div className="absolute -top-4 -right-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <Truck className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Kapasitas Stok</p>
+                          <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">± 10 Ton Ready</p>
+                        </div>
+                      </div>
+
+                      {/* Floating Glass Badge 2: Quality trust */}
+                      <div className="absolute -bottom-4 -left-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                          <CheckCircle2 className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Garansi Mutu</p>
+                          <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">100% Serat Katun</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </FadeIn>
               </div>
+            </div>
+          </section>
 
-              {/* Tablet/Desktop Side-by-side Image (shown from sm screens) */}
-              <FadeIn delay={200} className="hidden sm:block">
-                <div className="relative">
-                  {/* Decorative background blur shapes */}
-                  <div className="absolute -top-12 -left-12 h-72 w-72 rounded-full bg-gradient-to-tr from-primary/10 to-amber-100/10 blur-3xl opacity-60" />
-                  <div className="absolute -bottom-12 -right-12 h-64 w-64 rounded-full bg-gradient-to-br from-zinc-200 to-amber-100/15 blur-3xl opacity-50" />
-
-                  {/* Main Image Frame */}
-                  <div className="relative rounded-3xl border border-zinc-200/50 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.08)]">
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
-                      <img
-                        src={heroImage}
-                        alt="Kain Majun Premium"
-                        className="h-full w-full object-cover"
-                        {...{ fetchPriority: "high" }}
-                      />
-                      {/* Dark overlay on bottom of the image for contrast */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                    </div>
-
-                    {/* Floating Glass Badge 1: Stock Capacity */}
-                    <div className="absolute -top-4 -right-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <Truck className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Kapasitas Stok</p>
-                        <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">± 10 Ton Ready</p>
-                      </div>
-                    </div>
-
-                    {/* Floating Glass Badge 2: Quality trust */}
-                    <div className="absolute -bottom-4 -left-4 backdrop-blur-md bg-white/90 dark:bg-zinc-950/85 border border-zinc-200/60 dark:border-zinc-800/80 p-2 sm:p-3.5 rounded-2xl shadow-xl flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                        <CheckCircle2 className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Garansi Mutu</p>
-                        <p className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-white">100% Serat Katun</p>
-                      </div>
-                    </div>
+          {/* Stats band */}
+          <section className="relative px-4 pb-6 pt-0 sm:px-6 sm:py-6 lg:px-8 z-10 bg-transparent transition-colors">
+            <div className="mx-auto max-w-6xl bg-zinc-900/50 border border-zinc-800/80 text-white sm:bg-white sm:dark:bg-zinc-900 sm:border-zinc-200/80 sm:dark:border-zinc-800 sm:text-zinc-950 sm:dark:text-zinc-50 rounded-3xl p-4 sm:p-8 shadow-sm transition-colors">
+              <div className="grid grid-cols-4 gap-2 sm:gap-4 items-center">
+                {stats.map((s, i) => (
+                  <div key={s.label} className="relative flex flex-col items-center text-center">
+                    <FadeIn delay={i * 80}>
+                      <p className="text-xl sm:text-4xl font-extrabold tracking-tight text-primary">
+                        <StatCounter value={s.value} />
+                      </p>
+                      <p className="mt-0.5 text-[9px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                        {s.label}
+                      </p>
+                    </FadeIn>
+                    {/* Vertical dividers for desktop and mobile */}
+                    {i < stats.length - 1 && (
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 h-5 sm:h-10 w-px bg-zinc-800 sm:bg-zinc-200 sm:dark:bg-zinc-800" />
+                    )}
                   </div>
-                </div>
-              </FadeIn>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* Stats band */}
-        <section className="px-4 py-3 sm:px-6 sm:py-6 lg:px-8 bg-zinc-950 sm:bg-transparent transition-colors">
-          <div className="mx-auto max-w-6xl bg-zinc-900/50 border border-zinc-800/80 text-white sm:bg-white sm:dark:bg-zinc-900 sm:border-zinc-200/80 sm:dark:border-zinc-800 sm:text-zinc-950 sm:dark:text-zinc-50 rounded-3xl p-4 sm:p-8 shadow-sm transition-colors">
-            <div className="grid grid-cols-4 gap-2 sm:gap-4 items-center">
-              {stats.map((s, i) => (
-                <div key={s.label} className="relative flex flex-col items-center text-center">
-                  <FadeIn delay={i * 80}>
-                    <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-primary">
-                      <StatCounter value={s.value} />
-                    </p>
-                    <p className="mt-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-                      {s.label}
-                    </p>
-                  </FadeIn>
-                  {/* Vertical dividers for desktop and mobile */}
-                  {i < stats.length - 1 && (
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 h-6 sm:h-10 w-px bg-zinc-800 sm:bg-zinc-200 sm:dark:bg-zinc-800" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* About */}
         <section id="tentang" className="bg-zinc-950 px-6 py-12 sm:py-20 lg:py-24 lg:px-8 scroll-mt-20">
@@ -736,8 +739,20 @@ export default function LandingClient({ data }: LandingClientProps) {
                               <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover/card:text-primary transition-colors line-clamp-1">
                                 {p.name}
                               </h3>
-                              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-555 dark:text-zinc-400 flex-1 line-clamp-3">
-                                {p.desc}
+                              <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-555 dark:text-zinc-400 flex-1">
+                                {p.desc.length > 90 ? (
+                                  <>
+                                    {p.desc.substring(0, 90)}...{" "}
+                                    <Link
+                                      href={`/produk/${p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-")}`}
+                                      className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5"
+                                    >
+                                      Baca selengkapnya
+                                    </Link>
+                                  </>
+                                ) : (
+                                  p.desc
+                                )}
                               </p>
                               
                               <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
@@ -829,54 +844,62 @@ export default function LandingClient({ data }: LandingClientProps) {
                 </div>
 
                 {/* Mobile Compact Vertical Stack (up to 3 items) */}
-                <div className="block sm:hidden mt-8 space-y-3">
+                <div className="block sm:hidden mt-8 space-y-4">
                   {filteredProducts.slice(0, 3).map((p) => {
                     const slug = p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
                     return (
                       <div
                         key={p.name}
-                        className="flex items-start gap-4 p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm"
+                        className="flex flex-col w-full overflow-hidden rounded-3xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-800 shadow-sm transition-all duration-300 group"
                       >
-                        {/* Image Left */}
-                        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+                        {/* Image Frame (Spotlight) */}
+                        <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-950">
                           <img
                             src={p.image}
                             alt={p.name}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                           />
-                          <span className="absolute top-1 left-1 rounded-full bg-emerald-500/90 px-2 py-0.5 text-[9px] font-bold text-white shadow-sm">
-                            Ready
-                          </span>
+                          <div className="absolute top-3.5 right-3.5">
+                            <span className="rounded-full bg-emerald-500/90 backdrop-blur-sm px-3.5 py-1 text-[10px] font-semibold text-white shadow-sm border border-emerald-400/20">
+                              Ready Stock
+                            </span>
+                          </div>
                         </div>
 
-                        {/* Content Right */}
-                        <div className="flex-1 min-w-0 flex flex-col justify-between min-h-[96px] py-0.5">
-                          <div>
-                            <h3 className="text-sm font-bold text-zinc-955 dark:text-zinc-50 leading-tight line-clamp-1">
-                              {p.name}
-                            </h3>
-                            <p className="mt-1 text-xs leading-snug text-zinc-500 dark:text-zinc-400 line-clamp-2">
-                              {p.desc}
-                            </p>
-                          </div>
+                        {/* Content */}
+                        <div className="flex flex-col p-5">
+                          <h3 className="text-base font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover:text-primary transition-colors line-clamp-1">
+                            {p.name}
+                          </h3>
+                          <p className="mt-2 text-xs leading-relaxed text-zinc-555 dark:text-zinc-400">
+                            {p.desc.length > 90 ? (
+                              <>
+                                {p.desc.substring(0, 90)}...{" "}
+                                <Link
+                                  href={`/produk/${slug}`}
+                                  className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5"
+                                >
+                                  Baca selengkapnya
+                                </Link>
+                              </>
+                            ) : (
+                              p.desc
+                            )}
+                          </p>
 
                           {/* Actions */}
-                          <div className="flex gap-2 mt-2">
-                            <Link
-                              href={`/produk/${slug}`}
-                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/40 text-xs font-bold text-zinc-750 dark:text-zinc-300 py-1.5 h-8 hover:bg-zinc-100"
-                            >
-                              Detail
-                            </Link>
-                            <a
-                              href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 inline-flex items-center justify-center gap-1 rounded-xl bg-primary text-white text-xs font-bold py-1.5 h-8 hover:bg-primary-hover shadow-sm"
-                            >
-                              Tanya Harga
-                            </a>
+                          <div className="mt-4 flex items-center gap-2.5 border-t border-zinc-100 dark:border-zinc-800/85 pt-3.5">
+                            <Button asChild size="sm" variant="outline" className="flex-1 gap-1.5 rounded-xl border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-xs py-1.5 h-9 font-bold">
+                              <Link href={`/produk/${slug}`}>
+                                Detail <ArrowRight className="h-3 w-3" />
+                              </Link>
+                            </Button>
+                            <Button asChild size="sm" className="flex-1 gap-1.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs py-1.5 h-9 font-bold shadow-sm shadow-primary/10">
+                              <a href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`} target="_blank" rel="noopener noreferrer">
+                                Tanya Harga
+                              </a>
+                            </Button>
                           </div>
                         </div>
                       </div>
