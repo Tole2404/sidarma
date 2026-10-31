@@ -1,68 +1,28 @@
-# Majun Admin
+# CV. DARMIN MAJUN - Sistem Informasi Distribusi & Company Profile
 
-Sistem administrasi usaha kain majun berbasis Next.js, Prisma, PostgreSQL, dan shadcn-style UI. Fase pertama mencakup dashboard, pembelian, penjualan, pengeluaran, stok, customer, dan supplier.
+Platform resmi pengadaan kain majun katun industri dan sarung tangan kerja, serta manajemen operasional rantai pasok daur ulang tekstil CV. DARMIN MAJUN (Bandung, Jawa Barat).
 
-## Stack
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- Prisma ORM
-- PostgreSQL
-- iron-session untuk auth admin
+---
 
-## Environment
-Gunakan file `.env` berikut:
+## Tentang Proyek
 
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/majun_admin?schema=public"
-LEGACY_DATABASE_URL="mysql://root:password@localhost:3306/simadar"
-SESSION_SECRET="complex_password_at_least_32_characters_long"
-```
+Sistem ini menggabungkan dua fungsi utama dalam satu ekosistem:
 
-`LEGACY_DATABASE_URL` bersifat opsional. Jika tersedia saat seeding, user admin lama dari MySQL akan di-upsert ke PostgreSQL.
+1. **Layanan B2B Publik**:
+   - **Katalog Produk Material**: Menyajikan spesifikasi teknis kain majun lembaran tanpa jahit, jahit sambung, jahit tumpuk, dan sarung tangan industri.
+   - **Kalkulator Pengadaan & Logistik**: Simulasi proforma kebutuhan bal press (kemasan 25 kg & 50 kg) dan estimasi ongkos kirim armada truk se-Pulau Jawa.
+   - **Kemitraan Jual Sisa Kain Konveksi**: Layanan penjemputan armada gratis untuk limbah perca sisa pola cutting garment dan konveksi.
+   - **Pelacakan Surat Jalan**: Cek status muat dan pengiriman faktur real-time secara mandiri oleh tim purchasing pembeli.
 
-## Menjalankan Lokal
-1. Install dependency:
-   ```bash
-   npm install
-   ```
-2. Jalankan PostgreSQL lokal atau gunakan Docker Compose.
-3. Generate Prisma client:
-   ```bash
-   npx prisma generate
-   ```
-4. Buat schema database:
-   ```bash
-   npx prisma migrate dev
-   ```
-5. Seed data awal:
-   ```bash
-   npx prisma db seed
-   ```
-6. Jalankan aplikasi:
-   ```bash
-   npm run dev
-   ```
+2. **Administrasi & Manajemen Internal (ERP Pergudangan)**:
+   - Pencatatan transaksi pembelian bahan baku kain sisa dari mitra konveksi.
+   - Manajemen inventaris stok kain majun hasil sortir dan press bal di gudang utama.
+   - Pencatatan faktur penjualan resmi, penerbitan Surat Penawaran Harga (SPH), dan rekapitulasi keuangan operasional.
 
-## Menjalankan Dengan Docker
-1. Jalankan database dan app:
-   ```bash
-   docker compose up -d --build
-   ```
-2. Jika hanya ingin menyalakan database:
-   ```bash
-   docker compose up -d db
-   ```
-3. Setup Prisma di container app:
-   ```bash
-   docker compose exec app sh
-   npx prisma migrate deploy
-   npx prisma db seed
-   exit
-   ```
+---
 
-## Default Admin
-- Email fallback: `admin@majun.local`
-- Password: `admin123`
+## Hak Cipta & Kepemilikan
 
-Jika `LEGACY_DATABASE_URL` aktif dan database MySQL lama tersedia, akun user lama akan ikut dimigrasikan saat seeding.
+Seluruh kode sumber, basis data, dan aset grafis pada repositori ini merupakan properti internal **CV. DARMIN MAJUN**. 
+
+Hak Cipta Dilindungi Undang-Undang. Penggandaan, distribusi, atau pemanfaatan tanpa izin tertulis dari manajemen perusahaan tidak diperkenankan.
