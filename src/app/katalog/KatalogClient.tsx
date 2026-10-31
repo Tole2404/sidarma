@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ChevronDown, CheckCircle2, ChevronRight, ArrowRight, BookOpen, Layers } from "lucide-react";
+import { Search, ChevronDown, CheckCircle2, ArrowRight, ShieldCheck, Truck, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SiteNavbar from "@/components/SiteNavbar";
 import SiteFooter from "@/components/SiteFooter";
@@ -30,19 +30,18 @@ interface KatalogClientProps {
 function parseStyleString(styleStr: string): React.CSSProperties {
   const styleObj: Record<string, string> = {};
   if (!styleStr) return styleObj;
-  
+
   styleStr.split(";").forEach((declaration) => {
     const colonIndex = declaration.indexOf(":");
     if (colonIndex === -1) return;
     const property = declaration.slice(0, colonIndex).trim();
     const value = declaration.slice(colonIndex + 1).trim();
     if (property && value) {
-      // Convert CSS kebab-case properties to camelCase (e.g. font-size -> fontSize)
       const camelProperty = property.replace(/-./g, (c) => c[1].toUpperCase());
       styleObj[camelProperty] = value;
     }
   });
-  
+
   return styleObj;
 }
 
@@ -64,59 +63,60 @@ export default function KatalogClient({ products, waNumber, banner }: KatalogCli
   const customTitleStyle = parseStyleString(banner.titleStyle);
 
   return (
-    <div className="min-h-screen bg-zinc-55/40 dark:bg-zinc-950 flex flex-col">
+    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased selection:bg-amber-500 selection:text-zinc-950 flex flex-col">
       <SiteNavbar />
 
-      {/* Hero Header */}
-      <section className="relative overflow-hidden bg-zinc-900 py-10 sm:py-16 lg:py-20 text-white dark:bg-zinc-950">
+      {/* Header Banner: Clean Industrial Layout */}
+      <section className="relative border-b border-zinc-200/90 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 py-12 sm:py-16 lg:py-20 text-zinc-950 dark:text-white">
         {banner.bgImage && (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10 dark:opacity-20"
             style={{ backgroundImage: `url(${banner.bgImage})` }}
           />
         )}
-        <div className={`absolute inset-0 ${banner.bgImage ? "bg-zinc-950/80" : "bg-gradient-to-tr from-primary/10 via-transparent to-transparent opacity-60"}`} />
-        
-        <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8 text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-0.5 text-[10px] sm:text-xs font-semibold text-primary backdrop-blur-sm">
-            {banner.badge}
-          </span>
+        <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8 text-center space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-500 uppercase">
+            {banner.badge || "KATALOG RESMI DISTRIBUTOR"}
+          </div>
           <h1
-            className="mt-3 text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight sm:leading-none"
+            className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-zinc-950 dark:text-white"
             style={customTitleStyle}
-            dangerouslySetInnerHTML={{ __html: banner.title }}
+            dangerouslySetInnerHTML={{ __html: banner.title || "Katalog Produk Kain Majun & APD Industri" }}
           />
           <p
-            className="mt-3 text-xs xs:text-sm sm:text-base text-zinc-300 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: banner.description }}
+            className="text-xs xs:text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html:
+                banner.description ||
+                "Pasokan kain lap majun katun lembaran tanpa jahit, jahit sambung, jahit tumpuk, dan sarung tangan kerja untuk kebutuhan pabrik manufaktur, perkapalan, dan bengkel.",
+            }}
           />
         </div>
       </section>
 
-      {/* Catalog Search & Filter Controls */}
-      <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-          
+      {/* Main Catalog Body */}
+      <main className="flex-1 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl space-y-8">
           {/* Controls Bar */}
-          <div className="mt-2 flex flex-row items-center gap-2 max-w-4xl mx-auto bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-2 sm:p-3.5 rounded-xl sm:rounded-2xl shadow-sm mb-6 sm:mb-10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 shadow-sm">
             {/* Search Input */}
-            <div className="relative flex-[1.6] sm:flex-1">
-              <Search className="absolute left-2.5 sm:left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-400 dark:text-zinc-500" />
+            <div className="relative flex-1 w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
               <input
                 type="text"
-                placeholder="Cari kain majun, APD, atau kegunaan..."
+                placeholder="Cari kain majun, sarung tangan, atau aplikasi mesin..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg sm:rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-all dark:text-white"
+                className="w-full min-h-[44px] pl-10 pr-4 py-2 text-xs sm:text-sm bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-amber-500 transition-colors"
               />
             </div>
 
             {/* Category Dropdown */}
-            <div className="relative flex-1 sm:min-w-[200px] max-w-[140px] sm:max-w-none">
+            <div className="relative w-full sm:w-48">
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full pl-3 pr-7 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg sm:rounded-xl focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer dark:text-white"
+                className="w-full min-h-[44px] pl-3.5 pr-8 py-2 text-xs sm:text-sm bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-200 appearance-none cursor-pointer focus:outline-none focus:border-amber-500"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -124,96 +124,97 @@ export default function KatalogClient({ products, waNumber, banner }: KatalogCli
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-2 sm:right-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-400 pointer-events-none" />
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Dynamic Grid Results */}
+          {/* Results Summary */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono text-zinc-500 dark:text-zinc-400 px-1">
+            <span>Ditemukan {filteredProducts.length} item material</span>
+            <span>Kemasan: Bal Press 25 kg & 50 kg</span>
+          </div>
+
+          {/* Product Grid */}
           {filteredProducts.length > 0 ? (
-            <div className="grid gap-3 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.map((p) => {
                 const slug = p.name.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
                 return (
-                  <div key={p.name} className="flex w-full">
-                    {/* Unified responsive card with top spotlight image */}
-                    <div className="flex flex-col w-full overflow-hidden rounded-3xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-800 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-1 group">
-                      {/* Image Frame (Spotlight) */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-950">
+                  <div
+                    key={p.name}
+                    className="flex flex-col justify-between rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/70 overflow-hidden shadow-sm hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
+                  >
+                    <div>
+                      {/* Product Image */}
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-200 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
                         <img
                           src={p.image}
                           alt={p.name}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="h-full w-full object-cover"
                           loading="lazy"
                         />
-                        <div className="absolute top-3.5 right-3.5">
-                          <span className="rounded-full bg-emerald-500/90 backdrop-blur-sm px-3.5 py-1 text-[10px] sm:text-xs font-semibold text-white shadow-sm border border-emerald-400/20">
-                            Ready Stock
-                          </span>
+                        <div className="absolute top-3 right-3 bg-zinc-900/90 dark:bg-zinc-950/90 border border-zinc-700 dark:border-zinc-800 px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold text-emerald-400">
+                          Stok Ready
                         </div>
                       </div>
 
-                      {/* Metadata Content */}
-                      <div className="flex flex-col flex-1 p-5 sm:p-6">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-flex items-center gap-1 rounded bg-primary/10 px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-primary">
-                            {p.category}
-                          </span>
-                        </div>
-                        <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-zinc-50 leading-snug group-hover:text-primary transition-colors line-clamp-1">
+                      {/* Content */}
+                      <div className="p-5 space-y-3">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500">
+                          {p.category}
+                        </span>
+                        <h2 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white line-clamp-1">
                           {p.name}
-                        </h3>
-                        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 flex-1">
-                          {p.desc.length > 90 ? (
-                            <>
-                              {p.desc.substring(0, 90)}...{" "}
-                              <Link
-                                href={`/produk/${slug}`}
-                                className="text-primary hover:underline font-semibold inline-flex items-center gap-0.5"
-                              >
-                                Baca selengkapnya
-                              </Link>
-                            </>
-                          ) : (
-                            p.desc
-                          )}
+                        </h2>
+                        <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-3">
+                          {p.desc}
                         </p>
-                        
-                        {/* Uses Tag List */}
-                        <div className="mt-4 pt-3.5 border-t border-zinc-100 dark:border-zinc-800/85">
-                          <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2 font-mono">
-                            Cocok untuk:
+
+                        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+                          <p className="text-[10px] font-mono font-semibold uppercase tracking-wider text-zinc-500 mb-1.5">
+                            Cocok untuk Sektor:
                           </p>
-                          <div className="flex flex-wrap gap-1">
+                          <div className="flex flex-wrap gap-1.5">
                             {p.uses.slice(0, 3).map((use) => (
                               <span
                                 key={use}
-                                className="inline-flex items-center gap-1 rounded-full bg-zinc-50 dark:bg-zinc-800 px-2 py-0.5 text-[9px] sm:text-[10px] text-zinc-650 dark:text-zinc-350 border border-zinc-200/50 dark:border-zinc-700/60"
+                                className="inline-flex items-center gap-1 rounded bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 text-[10px] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/50"
                               >
-                                <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500" />
+                                <CheckCircle2 className="h-2.5 w-2.5 text-emerald-500 dark:text-emerald-400" />
                                 {use}
                               </span>
                             ))}
-                            {p.uses.length > 3 && (
-                              <span className="inline-flex items-center rounded-full bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400 font-medium">
-                                +{p.uses.length - 3} lainnya
-                              </span>
-                            )}
                           </div>
                         </div>
+                      </div>
+                    </div>
 
-                        {/* Card Button Panel */}
-                        <div className="mt-5 flex items-center gap-2.5 border-t border-zinc-100 dark:border-zinc-800/85 pt-3.5">
-                          <Button asChild size="sm" variant="outline" className="flex-1 gap-1.5 rounded-xl border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-850 text-xs py-1.5 h-9 font-bold">
-                            <Link href={`/produk/${slug}`}>
-                              Detail <ArrowRight className="h-3 w-3" />
-                            </Link>
-                          </Button>
-                          <Button asChild size="sm" className="flex-1 gap-1.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs py-1.5 h-9 font-bold shadow-sm shadow-primary/10">
-                            <a href={`https://wa.me/${waNumber}?text=Halo, saya mau tanya soal ${p.name}`} target="_blank" rel="noopener noreferrer">
-                              Tanya Harga
-                            </a>
-                          </Button>
-                        </div>
+                    {/* Actions */}
+                    <div className="p-5 pt-0">
+                      <div className="flex items-center gap-2 pt-3 border-t border-zinc-200 dark:border-zinc-800">
+                        <Button
+                          asChild
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 min-h-[44px] text-xs border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-semibold rounded-xl"
+                        >
+                          <Link href={`/produk/${slug}`}>
+                            Detail Spek <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        </Button>
+                        <Button
+                          asChild
+                          size="sm"
+                          className="flex-1 min-h-[44px] text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl"
+                        >
+                          <a
+                            href={`https://wa.me/${waNumber}?text=Halo,%20kami%20ingin%20tanya%20harga%20dan%20stok%20untuk%20${encodeURIComponent(p.name)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Tanya Harga
+                          </a>
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -221,16 +222,16 @@ export default function KatalogClient({ products, waNumber, banner }: KatalogCli
               })}
             </div>
           ) : (
-            <div className="text-center py-20 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl bg-white dark:bg-zinc-900 shadow-sm">
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium">Tidak ada produk yang cocok dengan pencarian Anda.</p>
+            <div className="text-center py-16 border border-dashed border-zinc-300 dark:border-zinc-800 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">Tidak ada produk yang cocok dengan pencarian Anda.</p>
               <button
                 onClick={() => {
                   setSelectedCategory("Semua");
                   setSearchQuery("");
                 }}
-                className="mt-3 text-xs font-bold text-primary hover:underline font-mono"
+                className="mt-3 text-xs font-mono text-amber-600 dark:text-amber-500 hover:underline"
               >
-                Reset Pencarian & Filter
+                Reset Filter & Pencarian
               </button>
             </div>
           )}

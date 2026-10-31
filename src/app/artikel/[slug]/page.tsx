@@ -38,13 +38,13 @@ const PLACEHOLDER_ARTICLES: Record<string, { title: string; category: string; pu
     publishedAt: "2025-01-15T00:00:00Z",
     excerpt: "Katun memiliki daya serap 25x lebih tinggi dari serat sintetis.",
     content: `<h2>Mengapa Katun Unggul untuk Menyerap Oli?</h2>
-<p>Serat katun (kapas) memiliki struktur mikro yang sangat porous — penuh dengan rongga kecil yang mampu menyerap cairan 25 kali lebih efektif dibandingkan serat sintetis seperti polyester atau nilon.</p>
+<p>Serat katun (kapas) memiliki struktur mikro yang sangat porous, penuh dengan rongga kecil yang mampu menyerap cairan 25 kali lebih efektif dibandingkan serat sintetis seperti polyester atau nilon.</p>
 <p>Ketika majun katun digunakan untuk membersihkan oli atau pelumas mesin, serat-seratnya secara aktif menarik dan menjebak cairan di dalam strukturnya. Hasilnya, permukaan yang dibersihkan menjadi benar-benar kering tanpa smearing (noda sisa).</p>
 <h2>Perbandingan Daya Serap</h2>
 <ul>
-<li><strong>Katun (Cotton)</strong>: Daya serap 800–1200% dari beratnya sendiri</li>
-<li><strong>Polyester</strong>: Daya serap 100–200% dari beratnya sendiri</li>
-<li><strong>Rayon/Viscose</strong>: Daya serap 400–600%, tapi mudah sobek saat basah</li>
+<li><strong>Katun (Cotton)</strong>: Daya serap 800 sampai 1200% dari beratnya sendiri</li>
+<li><strong>Polyester</strong>: Daya serap 100 sampai 200% dari beratnya sendiri</li>
+<li><strong>Rayon/Viscose</strong>: Daya serap 400 sampai 600%, tapi mudah sobek saat basah</li>
 </ul>
 <h2>Cocok untuk Industri Apa?</h2>
 <p>Majun katun putih atau warna sangat direkomendasikan untuk bengkel otomotif, pabrik manufaktur, perawatan mesin kapal, dan fasilitas produksi yang berurusan dengan oli, pelumas, dan cairan mesin.</p>`,
@@ -73,8 +73,8 @@ export default async function ArticleDetailPage({ params }: Props) {
     "@type": "Article",
     headline: title,
     datePublished: publishedAt,
-    author: { "@type": "Organization", name: "CV. SIDARMA MAJUN" },
-    publisher: { "@type": "Organization", name: "CV. SIDARMA MAJUN" },
+    author: { "@type": "Organization", name: "CV. DARMIN MAJUN" },
+    publisher: { "@type": "Organization", name: "CV. DARMIN MAJUN" },
   };
 
   return (
@@ -109,7 +109,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         <div className="mt-5 flex items-center gap-3 border border-zinc-200/50 dark:border-zinc-800 rounded-2xl bg-zinc-50/50 dark:bg-zinc-900/35 px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-white text-xs sm:text-sm font-extrabold shadow-sm">SD</div>
           <div>
-            <p className="text-xs sm:text-sm font-bold text-zinc-955 dark:text-zinc-50">CV. SIDARMA MAJUN</p>
+            <p className="text-xs sm:text-sm font-bold text-zinc-955 dark:text-zinc-50">CV. DARMIN MAJUN</p>
             <p className="text-[10px] sm:text-xs text-zinc-400 font-medium">Distributor Kain Majun Terpercaya</p>
           </div>
         </div>

@@ -1,0 +1,2 @@
+bash
+  npm test -- --coverage

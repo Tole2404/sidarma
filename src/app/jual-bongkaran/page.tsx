@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { csvToArray, getSeoSettings } from "@/lib/site-settings";
 import JualBongkaranClient from "./JualBongkaranClient";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sidarmamajun.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://darminmajun.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoSettings("jualBongkaran");

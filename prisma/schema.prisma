@@ -364,3 +364,20 @@ model CareerApplication {
 
   @@index([postId])
 }
+
+model AgentLog {
+  id          String   @id @default(cuid())
+  agentId     String
+  agentName   String
+  division    String
+  action      String
+  input       String?  @db.Text
+  output      String?  @db.Text
+  status      String   @default("SUCCESS") // SUCCESS, WARNING, FAILED
+  latencyMs   Int?     @default(0)
+  metadata    String?  @db.Text
+  createdAt   DateTime @default(now())
+
+  @@index([agentId])
+  @@index([createdAt])
+}

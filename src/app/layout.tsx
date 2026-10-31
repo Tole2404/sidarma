@@ -7,7 +7,7 @@ import {
   getThemeSettings,
 } from "@/lib/site-settings";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sidarmamajun.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://darminmajun.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getGlobalSeo();
@@ -20,20 +20,20 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(BASE_URL),
     title: {
       default: seo.title,
-      template: seo.titleTemplate || "%s | CV. SIDARMA MAJUN",
+      template: seo.titleTemplate || "%s | CV. DARMIN MAJUN",
     },
     description: seo.description,
     keywords,
-    authors: [{ name: "CV. SIDARMA MAJUN" }],
-    creator: "CV. SIDARMA MAJUN",
+    authors: [{ name: "CV. DARMIN MAJUN" }],
+    creator: "CV. DARMIN MAJUN",
     openGraph: {
       type: "website",
       locale: "id_ID",
       url: BASE_URL,
-      siteName: "CV. SIDARMA MAJUN",
+      siteName: "CV. DARMIN MAJUN",
       title: seo.ogTitle || seo.title,
       description: seo.ogDescription || seo.description,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: "CV. SIDARMA MAJUN" }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: "CV. DARMIN MAJUN" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -63,7 +63,7 @@ export default async function RootLayout({
         {themeColor ? <meta name="theme-color" content={themeColor} /> : null}
       </head>
       <body suppressHydrationWarning className="min-h-screen font-sans flex flex-col">
-        {/* Dynamic theme tokens — override Tailwind v4 CSS variables.
+        {/* Dynamic theme tokens: override Tailwind v4 CSS variables.
             Diletakkan di awal <body> dengan suppressHydrationWarning agar
             tidak konflik dengan browser extension yang menyuntikkan style ke <head>. */}
         <style

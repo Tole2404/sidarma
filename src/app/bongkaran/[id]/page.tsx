@@ -263,7 +263,7 @@ export default function BongkaranDetailPage() {
                     <Layers className="h-4 w-4" /> Riwayat Sortir
                   </CardTitle>
                   <CardDescription>
-                    {bongkaran.sorts?.length ?? 0} batch — total{" "}
+                    {bongkaran.sorts?.length ?? 0} batch - total{" "}
                     <span className="font-medium text-zinc-700 dark:text-zinc-200">
                       {bongkaran.sortedQuantityKg.toLocaleString("id-ID")} kg
                     </span>{" "}
@@ -294,7 +294,7 @@ export default function BongkaranDetailPage() {
                                 {formatDate(s.sortDate)}
                               </p>
                               <p className="mt-0.5 text-xs text-zinc-400">
-                                Yield {s.yieldPercent.toFixed(1)}% — Total cost {formatCurrency(s.totalCost)}
+                                Yield {s.yieldPercent.toFixed(1)}% - Total cost {formatCurrency(s.totalCost)}
                               </p>
                             </div>
                             <Button
@@ -368,7 +368,7 @@ export default function BongkaranDetailPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="inputKg">Input (kg) — sisa {bongkaran?.remainingKg.toLocaleString("id-ID")} kg</Label>
+                <Label htmlFor="inputKg">Input (kg) - sisa {bongkaran?.remainingKg.toLocaleString("id-ID")} kg</Label>
                 <Input
                   id="inputKg"
                   type="number"

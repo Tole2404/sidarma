@@ -16,7 +16,7 @@ type FooterField = {
 };
 
 const COMPANY_FIELDS: FooterField[] = [
-  { key: "company_name", label: "Nama Perusahaan", placeholder: "CV. SIDARMA MAJUN" },
+  { key: "company_name", label: "Nama Perusahaan", placeholder: "CV. DARMIN MAJUN" },
   {
     key: "description",
     label: "Deskripsi Singkat",
@@ -35,8 +35,8 @@ const CONTACT_FIELDS: FooterField[] = [
 ];
 
 const HOURS_FIELDS: FooterField[] = [
-  { key: "hours_weekday", label: "Jam Senin–Jumat", placeholder: "Senin — Jumat: 08.00 — 17.00" },
-  { key: "hours_saturday", label: "Jam Sabtu", placeholder: "Sabtu: 08.00 — 14.00" },
+  { key: "hours_weekday", label: "Jam Senin–Jumat", placeholder: "Senin - Jumat: 08.00 - 17.00" },
+  { key: "hours_saturday", label: "Jam Sabtu", placeholder: "Sabtu: 08.00 - 14.00" },
   { key: "hours_sunday", label: "Jam Minggu", placeholder: "Minggu: Tutup" },
 ];
 
@@ -44,7 +44,7 @@ const COPYRIGHT_FIELDS: FooterField[] = [
   {
     key: "copyright",
     label: "Teks Copyright",
-    placeholder: "© 2026 CV. SIDARMA MAJUN. Seluruh hak cipta dilindungi.",
+    placeholder: "© 2026 CV. DARMIN MAJUN. Seluruh hak cipta dilindungi.",
     help: "Kosongkan untuk pakai default otomatis (tahun + nama perusahaan).",
   },
 ];

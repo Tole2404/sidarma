@@ -321,7 +321,7 @@ export default function ThemeAdminPage() {
                         <div className="mt-2 flex items-center justify-between text-[11px] text-zinc-400">
                           <span>
                             Default:{" "}
-                            <span className="font-mono">{data?.defaults[key] || "—"}</span>
+                            <span className="font-mono">{data?.defaults[key] || "-"}</span>
                           </span>
                           {isDirty && data?.defaults[key] ? (
                             <button

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "CV. SIDARMA MAJUN",
-    short_name: "SIDARMA",
+    name: "CV. DARMIN MAJUN",
+    short_name: "DARMIN",
     description: "Sistem Administrasi Usaha Kain Majun",
     start_url: "/",
     display: "standalone",

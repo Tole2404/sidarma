@@ -46,14 +46,14 @@ const PAGE_LABELS: Record<string, { label: string; hint: string; preview: string
 
 const FIELDS: { key: keyof SeoTokens; label: string; placeholder?: string; multiline?: boolean; help?: string; mono?: boolean }[] = [
   { key: "title", label: "Title", placeholder: "Judul tab browser & SERP", help: "Idealnya 50–60 karakter." },
-  { key: "titleTemplate", label: "Title Template", placeholder: "%s | CV. SIDARMA MAJUN", help: "Hanya untuk root. Gunakan %s sebagai placeholder.", mono: true },
+  { key: "titleTemplate", label: "Title Template", placeholder: "%s | CV. DARMIN MAJUN", help: "Hanya untuk root. Gunakan %s sebagai placeholder.", mono: true },
   { key: "description", label: "Meta Description", placeholder: "Deskripsi singkat untuk SERP", multiline: true, help: "Idealnya 140–160 karakter." },
   { key: "keywords", label: "Keywords (CSV)", placeholder: "kain majun, distributor, ...", help: "Pisahkan dengan koma." },
   { key: "ogTitle", label: "Open Graph Title", placeholder: "Untuk preview share di sosial media" },
   { key: "ogDescription", label: "Open Graph Description", placeholder: "Deskripsi untuk preview share", multiline: true },
   { key: "ogImage", label: "Open Graph Image URL", placeholder: "/og-image.png atau https://...", mono: true, help: "Rasio 1200×630, format PNG/JPG." },
   { key: "twitterHandle", label: "Twitter Site Handle", placeholder: "@username" },
-  { key: "canonical", label: "Canonical URL", placeholder: "https://sidarmamajun.com/...", mono: true, help: "Kosongkan untuk auto." },
+  { key: "canonical", label: "Canonical URL", placeholder: "https://darminmajun.com/...", mono: true, help: "Kosongkan untuk auto." },
   { key: "themeColor", label: "Theme Color (browser)", placeholder: "#0d9488", mono: true, help: "Hanya untuk root. Warna address bar mobile." },
 ];
 

@@ -7,9 +7,9 @@ import { unstable_cache, revalidateTag, revalidatePath } from "next/cache";
  */
 export const DEFAULT_THEME: Record<string, string> = {
   // Netral / Slate (background, border, surface, text)
-  "zinc-50": "#F8FAFC",
-  "zinc-100": "#F1F5F9",
-  "zinc-200": "#E2E8F0",
+  "zinc-50": "#F4F5F7",
+  "zinc-100": "#EAECEF",
+  "zinc-200": "#D8DCE2",
   "zinc-300": "#CBD5E1",
   "zinc-400": "#94A3B8",
   "zinc-500": "#64748B",
@@ -45,12 +45,12 @@ export const THEME_TOKEN_KEYS = Object.keys(DEFAULT_THEME);
 export const THEME_PRESETS: Record<string, { label: string; description: string; tokens: Partial<Record<string, string>> }> = {
   industrial: {
     label: "Industrial Steel (Default)",
-    description: "Tema asli SIDARMA — Slate + Safety Amber.",
+    description: "Tema asli DARMIN: Slate + Safety Amber.",
     tokens: { ...DEFAULT_THEME },
   },
   professionalDark: {
     label: "Professional Dark",
-    description: "Latar gelap, aksen teal — cocok untuk dashboard.",
+    description: "Latar gelap, aksen teal: cocok untuk dashboard.",
     tokens: {
       "zinc-50": "#EEEEEE",
       "zinc-100": "#E5E7EB",
@@ -113,7 +113,7 @@ export const THEME_PRESETS: Record<string, { label: string; description: string;
 };
 
 /**
- * Default SEO tokens — fallback ke metadata yang ada di layout/page sebelumnya.
+ * Default SEO tokens: fallback ke metadata yang ada di layout/page sebelumnya.
  */
 export type SeoTokens = {
   title: string;
@@ -130,14 +130,14 @@ export type SeoTokens = {
 
 export const DEFAULT_SEO: Record<string, SeoTokens> = {
   default: {
-    title: "CV. SIDARMA MAJUN — Distributor Kain Majun Terpercaya",
-    titleTemplate: "%s | CV. SIDARMA MAJUN",
+    title: "CV. DARMIN MAJUN | Distributor Kain Majun Terpercaya",
+    titleTemplate: "%s | CV. DARMIN MAJUN",
     description:
       "Distributor & supplier kain majun putih dan warna berkualitas. Harga langsung dari distributor, stok 10 ton, pengiriman cepat ke seluruh Jawa.",
     keywords:
       "kain majun, kain majun murah, distributor kain majun, jual kain majun, kain lap industri, kain majun putih, kain majun warna, majun jahit sambung, majun lembaran, kain perca",
     ogImage: "/og-image.png",
-    ogTitle: "CV. SIDARMA MAJUN — Distributor Kain Majun Terpercaya",
+    ogTitle: "CV. DARMIN MAJUN | Distributor Kain Majun Terpercaya",
     ogDescription:
       "Distributor kain majun putih & warna. Harga distributor, stok siap kirim.",
     twitterHandle: "",
@@ -145,7 +145,7 @@ export const DEFAULT_SEO: Record<string, SeoTokens> = {
     themeColor: "#0d9488",
   },
   home: {
-    title: "CV. SIDARMA MAJUN — Distributor Kain Majun Putih & Warna Terpercaya",
+    title: "CV. DARMIN MAJUN | Distributor Kain Majun Putih & Warna Terpercaya",
     titleTemplate: "",
     description:
       "Distributor kain majun putih dan warna. Harga langsung dari pabrik, stok 10 ton, pengiriman cepat ke seluruh Jawa. Majun lembaran, jahit sambung, jahit tumpuk, sarung tangan industri.",
@@ -158,7 +158,7 @@ export const DEFAULT_SEO: Record<string, SeoTokens> = {
     themeColor: "",
   },
   artikel: {
-    title: "Artikel & Blog — Pusat Edukasi Kain Majun",
+    title: "Artikel & Blog | Pusat Edukasi Kain Majun",
     titleTemplate: "",
     description:
       "Tips, panduan, dan wawasan seputar industri kain majun, cleaning service, dan kebutuhan tekstil industri.",
@@ -171,11 +171,11 @@ export const DEFAULT_SEO: Record<string, SeoTokens> = {
     themeColor: "",
   },
   karir: {
-    title: "Karir — Bergabung dengan CV. SIDARMA MAJUN",
+    title: "Karir | Bergabung dengan CV. DARMIN MAJUN",
     titleTemplate: "",
     description:
-      "Lowongan kerja terbuka di CV. SIDARMA MAJUN. Bergabunglah bersama kami untuk membangun bisnis distribusi kain majun terpercaya.",
-    keywords: "lowongan kerja, karir, sidarma majun",
+      "Lowongan kerja terbuka di CV. DARMIN MAJUN. Bergabunglah bersama kami untuk membangun bisnis distribusi kain majun terpercaya.",
+    keywords: "lowongan kerja, karir, darmin majun",
     ogImage: "",
     ogTitle: "",
     ogDescription: "",
@@ -197,7 +197,7 @@ export const DEFAULT_SEO: Record<string, SeoTokens> = {
     themeColor: "",
   },
   jualBongkaran: {
-    title: "Jual Kain Bongkaran Konveksi — CV. SIDARMA MAJUN",
+    title: "Jual Kain Bongkaran Konveksi | CV. DARMIN MAJUN",
     titleTemplate: "",
     description:
       "Kami beli kain bongkaran konveksi: sisa potongan, kain reject, sample, dan stok gudang. Harga terbaik, jemput gratis, bayar tunai di tempat.",
@@ -210,7 +210,7 @@ export const DEFAULT_SEO: Record<string, SeoTokens> = {
     themeColor: "",
   },
   lacak: {
-    title: "Lacak Pesanan — CV. SIDARMA MAJUN",
+    title: "Lacak Pesanan | CV. DARMIN MAJUN",
     titleTemplate: "",
     description: "Lacak status pesanan kain majun Anda secara real-time.",
     keywords: "lacak pesanan, tracking",

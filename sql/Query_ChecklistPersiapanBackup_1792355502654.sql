@@ -1,0 +1,5 @@
+CREATE USER pg_backup WITH PASSWORD 'password_kuat';
+   GRANT CONNECT ON DATABASE sidarma_db TO pg_backup;
+   GRANT USAGE ON SCHEMA public TO pg_backup;
+   GRANT SELECT ON ALL TABLES IN SCHEMA public TO pg_backup;
+   ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO pg_backup;

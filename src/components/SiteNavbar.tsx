@@ -29,7 +29,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: "Info",
     children: [
-      { label: "Tentang Kami", href: "/#tentang", desc: "Kenali CV. SIDARMA MAJUN" },
+      { label: "Tentang Kami", href: "/#tentang", desc: "Kenali CV. DARMIN MAJUN" },
       { label: "Kontak", href: "/#kontak", desc: "Hubungi tim kami" },
     ],
   },
@@ -80,7 +80,7 @@ function Dropdown({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full mt-2.5 w-64 rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md py-2.5 shadow-xl shadow-zinc-250/50 dark:shadow-black/40 z-50">
+        <div className="absolute left-0 top-full mt-2.5 w-64 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/95 dark:bg-zinc-900/95 backdrop-blur-md py-2.5 shadow-xl shadow-zinc-300/40 dark:shadow-black/40 z-50">
           {item.children?.map((child) => {
             const isChildActive = pathname === child.href;
             return (
@@ -88,7 +88,7 @@ function Dropdown({
                 key={child.href}
                 href={child.href}
                 onClick={onToggle}
-                className={`block px-4.5 py-2.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 rounded-xl mx-1.5 transition-colors group ${
+                className={`block px-4.5 py-2.5 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/40 rounded-xl mx-1.5 transition-colors group ${
                   isChildActive ? "bg-primary/5 dark:bg-primary/10" : ""
                 }`}
               >
@@ -114,7 +114,7 @@ interface SiteNavbarProps {
   companyName?: string;
 }
 
-export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNavbarProps) {
+export default function SiteNavbar({ companyName = "CV. DARMIN MAJUN" }: SiteNavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -154,7 +154,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-100/80 dark:border-zinc-900/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md shadow-sm transition-all duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200/90 dark:border-zinc-800/80 bg-zinc-50/90 dark:bg-zinc-950/90 backdrop-blur-md shadow-sm transition-all duration-300">
       {/* Dynamic bottom gradient accent line */}
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
@@ -164,10 +164,10 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
           {/* Icon badge with gradient and shadow */}
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-primary-hover text-white text-xs font-black tracking-tight select-none shadow-sm shadow-primary/25 transition-transform duration-300 group-hover:scale-105 active:scale-95">
-            SM
+            DM
           </div>
           <span className="text-lg tracking-tight select-none">
-            <span className="font-extrabold text-zinc-950 dark:text-zinc-50 transition-colors group-hover:text-primary">SIDARMA</span>
+            <span className="font-extrabold text-zinc-950 dark:text-zinc-50 transition-colors group-hover:text-primary">DARMIN</span>
             <span className="font-medium text-primary ml-1">MAJUN</span>
           </span>
         </Link>
@@ -210,7 +210,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
           {themeReady && (
             <button
               onClick={toggleTheme}
-              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-150 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 hover:scale-105 active:scale-95 group"
+              className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 hover:scale-105 active:scale-95 group"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? (
@@ -233,7 +233,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
           {themeReady && (
             <button
               onClick={toggleTheme}
-              className="rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? (
@@ -244,7 +244,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
             </button>
           )}
           <button
-            className="rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl p-2.5 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-50 transition-all duration-300 active:scale-90 group"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -259,7 +259,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
 
       {/* ── Mobile drawer ── */}
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden border-t border-zinc-100 dark:border-zinc-900 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md ${
+        className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden border-t border-zinc-200 dark:border-zinc-900 bg-zinc-50/95 dark:bg-zinc-950/95 backdrop-blur-md ${
           mobileOpen ? "max-h-[600px] opacity-100 py-3" : "max-h-0 opacity-0 pointer-events-none"
         }`}
       >
@@ -279,7 +279,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
                           key={child.href}
                           href={child.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-200 ${
+                          className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 min-h-[44px] text-sm font-semibold transition-all duration-200 ${
                             active
                               ? "text-primary bg-primary/5 dark:bg-primary/10 pl-5 font-bold"
                               : "text-zinc-650 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 hover:pl-5 hover:text-primary"
@@ -300,7 +300,7 @@ export default function SiteNavbar({ companyName = "CV. SIDARMA MAJUN" }: SiteNa
                 key={item.label}
                 href={item.href!}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-200 ${
+                className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 min-h-[44px] text-sm font-semibold transition-all duration-200 ${
                   active
                     ? "text-primary bg-primary/5 dark:bg-primary/10 pl-5 font-bold"
                     : "text-zinc-650 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-900/40 hover:pl-5 hover:text-primary"

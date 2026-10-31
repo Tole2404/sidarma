@@ -185,7 +185,7 @@ export default function LandingCMS() {
             name: "Bapak Hendra",
             company: "CV. Maju Jaya Bengkel",
             role: "Owner",
-            content: "Sudah 3 tahun langganan SIDARMA. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.",
+            content: "Sudah 3 tahun langganan DARMIN. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.",
             rating: 5,
             avatar: "",
           },
@@ -193,7 +193,7 @@ export default function LandingCMS() {
             name: "Ibu Sari",
             company: "PT. Bersih Semesta",
             role: "Purchasing Manager",
-            content: "Sebagai cleaning service yang butuh stok rutin, SIDARMA jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.",
+            content: "Sebagai cleaning service yang butuh stok rutin, DARMIN jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.",
             rating: 5,
             avatar: "",
           },
@@ -551,7 +551,7 @@ export default function LandingCMS() {
                       name: "Bapak Hendra",
                       company: "CV. Maju Jaya Bengkel",
                       role: "Owner",
-                      content: "Sudah 3 tahun langganan SIDARMA. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.",
+                      content: "Sudah 3 tahun langganan DARMIN. Kualitas majun putihnya konsisten, tidak pernah mengecewakan. Stok selalu tersedia dan pengiriman cepat.",
                       rating: 5,
                       avatar: "",
                     },
@@ -559,7 +559,7 @@ export default function LandingCMS() {
                       name: "Ibu Sari",
                       company: "PT. Bersih Semesta",
                       role: "Purchasing Manager",
-                      content: "Sebagai cleaning service yang butuh stok rutin, SIDARMA jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.",
+                      content: "Sebagai cleaning service yang butuh stok rutin, DARMIN jadi mitra terpercaya kami. Harga distributor jauh lebih kompetitif dari pasar.",
                       rating: 5,
                       avatar: "",
                     },
@@ -1144,8 +1144,8 @@ export default function LandingCMS() {
                   // Apply fallback jika kosong
                   if (!Array.isArray(parsedTestimonials) || parsedTestimonials.length === 0) {
                     parsedTestimonials = [
-                      { name: "Bapak Hendra", company: "CV. Maju Jaya Bengkel", role: "Owner", content: "Sudah 3 tahun langganan SIDARMA. Kualitas majun putihnya konsisten, tidak pernah mengecewakan.", rating: 5, avatar: "" },
-                      { name: "Ibu Sari", company: "PT. Bersih Semesta", role: "Purchasing Manager", content: "Sebagai cleaning service yang butuh stok rutin, SIDARMA jadi mitra terpercaya kami.", rating: 5, avatar: "" },
+                      { name: "Bapak Hendra", company: "CV. Maju Jaya Bengkel", role: "Owner", content: "Sudah 3 tahun langganan DARMIN. Kualitas majun putihnya konsisten, tidak pernah mengecewakan.", rating: 5, avatar: "" },
+                      { name: "Ibu Sari", company: "PT. Bersih Semesta", role: "Purchasing Manager", content: "Sebagai cleaning service yang butuh stok rutin, DARMIN jadi mitra terpercaya kami.", rating: 5, avatar: "" },
                       { name: "Pak Doni", company: "Galangan Kapal Nusantara", role: "Site Manager", content: "Majun jahit tumpuknya sangat kuat dan tahan lama. Kami pakai untuk pembersihan mesin kapal.", rating: 5, avatar: "" },
                     ];
                   }

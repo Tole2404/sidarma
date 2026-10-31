@@ -6,8 +6,8 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Katalog Produk Kain Majun & APD | CV. SIDARMA MAJUN",
-  description: "Lihat katalog lengkap kain majun lembaran, jahit sambung, jahit tumpuk, dan alat pelindung diri (APD) industri berkualitas tinggi dari CV. SIDARMA MAJUN.",
+  title: "Katalog Produk Kain Majun & APD | CV. DARMIN MAJUN",
+  description: "Lihat katalog lengkap kain majun lembaran, jahit sambung, jahit tumpuk, dan alat pelindung diri (APD) industri berkualitas tinggi dari CV. DARMIN MAJUN.",
 };
 
 const DEFAULT_PRODUCTS = [

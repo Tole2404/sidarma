@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LandingClient from "./LandingClient";
 import { csvToArray, getSeoSettings, getAllSettings } from "@/lib/site-settings";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://sidarmamajun.com";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://darminmajun.com";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoSettings("home");
@@ -26,12 +26,12 @@ export async function generateMetadata(): Promise<Metadata> {
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "CV. SIDARMA MAJUN",
+  name: "CV. DARMIN MAJUN",
   description:
     "Distributor dan supplier kain majun putih dan warna berkualitas untuk kebutuhan industri, bengkel, dan cleaning service.",
   url: BASE_URL,
   telephone: "+6281234567890",
-  email: "sidarmamajun@gmail.com",
+  email: "darminmajun@gmail.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Jl. Industri Maju No. 18",
@@ -51,8 +51,8 @@ const localBusinessSchema = {
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], opens: "00:00", closes: "00:00" },
   ],
   sameAs: [
-    "https://instagram.com/sidarmamajun",
-    "https://facebook.com/sidarmamajun",
+    "https://instagram.com/darminmajun",
+    "https://facebook.com/darminmajun",
     "https://wa.me/6281234567890",
   ],
   hasOfferCatalog: {

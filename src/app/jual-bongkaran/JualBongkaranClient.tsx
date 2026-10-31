@@ -17,8 +17,6 @@ import {
   Truck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import SiteNavbar from "@/components/SiteNavbar";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -33,176 +31,211 @@ function getVal(data: LandingData, section: string, key: string, fallback = ""):
 const benefits = [
   {
     icon: Banknote,
-    title: "Harga Terbaik di Pasaran",
-    desc: "Kami beli kain bongkaran konveksi dengan harga kompetitif. Stok kecil maupun ton-an, semua dihargai layak.",
+    title: "Harga Pembelian Kompetitif",
+    desc: "Kami membeli kain bongkaran dan perca konveksi dengan valuasi harga yang adil per kilogram. Mulai dari skala karungan hingga pasokan tonase rutin.",
   },
   {
     icon: Truck,
-    title: "Penjemputan Gratis",
-    desc: "Tim kami yang datang ambil ke lokasi konveksi. Tidak perlu repot mengantar — cukup jadwalkan via WhatsApp.",
+    title: "Penjemputan Armada Gratis",
+    desc: "Tim logistik DARMIN datang langsung mengambil ke lokasi gudang atau konveksi Anda. Tanpa biaya transportasi tambahan untuk minimal 100 kg.",
   },
   {
     icon: Clock,
-    title: "Bayar Cash di Tempat",
-    desc: "Begitu barang ditimbang dan dicek, pembayaran langsung tunai. Tidak ada drama hutang atau tunda bayar.",
+    title: "Pembayaran Tunai di Lokasi",
+    desc: "Setelah barang ditimbang dan disortir bersama, pembayaran langsung diselesaikan secara tunai atau transfer saat itu juga di tempat.",
   },
   {
     icon: Recycle,
-    title: "Mendukung Sirkular Ekonomi",
-    desc: "Bongkaran konveksi yang biasanya dibuang, kami olah jadi kain majun bermanfaat. Reduce textile waste.",
+    title: "Pemanfaatan Daur Ulang Tekstil",
+    desc: "Limbah kain perca sisa pola cutting yang tidak terpakai kami olah menjadi kain majun bermanfaat untuk kebutuhan industri manufaktur nasional.",
   },
   {
     icon: Scale,
-    title: "Timbangan Adil",
-    desc: "Pakai timbangan digital terkalibrasi. Anda boleh saksikan langsung saat penimbangan.",
+    title: "Timbangan Digital Terbuka",
+    desc: "Menggunakan timbangan digital gantung dan lantai yang terkalibrasi akurat. Anda dapat menyaksikan dan memverifikasi langsung setiap proses timbang.",
   },
   {
     icon: Shield,
-    title: "Kerja Sama Jangka Panjang",
-    desc: "Konveksi tetap kami prioritaskan. Frekuensi pickup teratur, harga lebih baik, dan pembayaran lebih cepat.",
+    title: "Kemitraan Rutin Berkelanjutan",
+    desc: "Kami memprioritaskan mitra konveksi dan garment untuk jadwal pengambilan berkala mingguan atau bulanan agar gudang produksi Anda selalu rapi.",
   },
 ];
 
 const acceptedItems = [
-  { title: "Sisa potongan kain", desc: "Perca cutting room dari semua jenis garmen" },
-  { title: "Kain reject produksi", desc: "Defect, salah size, salah warna — kami terima semua" },
-  { title: "Sisa rol kain", desc: "Ujung rol, sisa lay yang tidak terpakai produksi" },
-  { title: "Sample & afkir", desc: "Sample lama, sisa development, kain afkiran" },
-  { title: "Bongkaran gudang", desc: "Stock dead yang sudah lama tidak terpakai" },
-  { title: "Mix campuran", desc: "Tidak harus sortir dulu — kami sortir di gudang kami" },
+  {
+    title: "Sisa Potongan Kain (Perca Cutting)",
+    desc: "Sisa kain potongan pola meja potong dari bahan katun kaos, fleece, baby terry, dan bahan industri garmen.",
+  },
+  {
+    title: "Kain Reject Produksi & Cacat Pabrik",
+    desc: "Produk gagal jahit, salah potong, salah sablon, atau belang warna kain yang tidak lolos QC garment.",
+  },
+  {
+    title: "Sisa Ujung Rol Kain",
+    desc: "Sisa gulungan rol kain, sisa gelaran meja potong, dan sisa kain stok sisa produksi lama.",
+  },
+  {
+    title: "Sampel Pengembangan & Afkiran",
+    desc: "Koleksi kain sampel musim lalu, sisa development produk, dan kain afkiran stok konveksi.",
+  },
+  {
+    title: "Dead Stock Bongkaran Gudang",
+    desc: "Stok kain rol atau lembaran mati yang sudah bertahun-tahun menumpuk di gudang garmen Anda.",
+  },
+  {
+    title: "Campuran Warna & Jenis Perca",
+    desc: "Tidak perlu Anda sortir terlebih dahulu di pabrik Anda. Tim kami yang akan memilah dan mengklasifikasikan di fasilitas gudang kami.",
+  },
 ];
 
 const flowSteps = [
   {
     n: "01",
-    title: "Hubungi via WhatsApp",
-    desc: "Kirim foto stok bongkaran dan estimasi quantity (kg). Kami akan respon dalam 30 menit.",
+    title: "Kontak WhatsApp & Kirim Foto",
+    subtitle: "Estimasi Jenis & Tonase",
+    desc: "Kirimkan foto tumpukan kain bongkaran beserta perkiraan berat kotor (kg) melalui chat WhatsApp admin kami.",
   },
   {
     n: "02",
-    title: "Penawaran Harga",
-    desc: "Tim kami review foto dan kasih penawaran harga per kg sesuai jenis & kondisi bahan.",
+    title: "Penawaran Harga Resmi",
+    subtitle: "Valuasi Berdasarkan Kualitas Bahan",
+    desc: "Tim kami mengevaluasi spesifikasi jenis bahan (katun combed, carded, polycotton, atau campuran) dan memberikan harga beli per kg.",
   },
   {
     n: "03",
-    title: "Penjemputan & Penimbangan",
-    desc: "Kami jadwalkan ambil ke lokasi konveksi. Timbang di tempat, transparan, disaksikan langsung.",
+    title: "Penjemputan & Timbang di Lokasi",
+    subtitle: "Armada Mobil DARMIN",
+    desc: "Armada kami menjadwalkan kunjungan ke lokasi konveksi Anda, melakukan penimbangan digital terbuka yang disaksikan bersama.",
   },
   {
     n: "04",
-    title: "Pembayaran Tunai",
-    desc: "Begitu cocok jumlahnya, dibayar cash di tempat. Selesai. Mudah dan cepat.",
+    title: "Penyelesaian Pembayaran Langsung",
+    subtitle: "Tunai / Transfer di Tempat",
+    desc: "Total timbangan dikalikan harga sepakat, lalu langsung dibayarkan tunai atau transfer seketika sebelum armada meninggalkan lokasi.",
   },
 ];
 
 export default function JualBongkaranClient({ data }: { data: LandingData }) {
-  const waNumber = getVal(data, "hero", "wa_number", "6281234567890");
-  const companyName = getVal(data, "footer", "company_name", "CV. SIDARMA MAJUN");
+  const waNumber = getVal(data, "hero", "wa_number", "6281234567890").replace(/[^0-9+]/g, "");
+  const companyName = getVal(data, "footer", "company_name", "CV. DARMIN MAJUN");
   const address = getVal(data, "about", "address", "Jl. Industri Maju No. 18, Bandung");
   const phone = getVal(data, "about", "phone", "0812-3456-7890");
 
-  // CMS-driven (with sane defaults)
-  const heroBadge = getVal(data, "jual_bongkaran", "badge", "Untuk Konveksi & Garment");
-  const heroTitle = getVal(data, "jual_bongkaran", "title", "Jual Kain Bongkaran Konveksi Anda");
-  const heroSubtitle = getVal(data, "jual_bongkaran", "subtitle", "Kami beli, kami jemput, kami bayar tunai");
+  const heroBadge = getVal(data, "jual_bongkaran", "badge", "Kemitraan Konveksi & Garment");
+  const heroTitle = getVal(data, "jual_bongkaran", "title", "Jual Sisa Kain & Bongkaran Gudang Konveksi Anda");
+  const heroSubtitle = getVal(data, "jual_bongkaran", "subtitle", "Kami Jemput ke Lokasi, Timbang Akurat, dan Bayar Tunai di Tempat");
   const heroDesc = getVal(
     data,
     "jual_bongkaran",
     "description",
-    "Sisa potongan kain, kain reject, sample lama, dan stok bongkaran gudang konveksi Anda — semuanya kami beli dengan harga terbaik. Jadikan limbah produksi sebagai pemasukan tambahan.",
+    "Sisa potongan kain perca, kain reject hasil cutting, dan stok kain mati di gudang konveksi Anda kami beli dengan harga terbaik. Ubah tumpukan limbah kain menjadi arus kas tambahan tanpa repot mengantar.",
   );
   const ctaWaText = getVal(
     data,
     "jual_bongkaran",
     "wa_text",
-    `Halo ${companyName}, saya konveksi yang mau jual kain bongkaran. Mohon info harga & cara penjemputan.`,
+    `Halo ${companyName}, kami dari pihak konveksi ingin menjual sisa kain bongkaran. Mohon informasi harga beli per kg dan jadwal penjemputan armada.`,
   );
 
   const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(ctaWaText)}`;
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-950 antialiased dark:bg-zinc-950 dark:text-zinc-50">
+    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased selection:bg-amber-500 selection:text-zinc-950 flex flex-col">
       <SiteNavbar companyName={companyName} />
 
-      <main>
-        {/* Hero */}
-        <section className="relative overflow-hidden px-6 py-12 sm:py-20 lg:py-24 lg:px-8">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-emerald-200/40 via-zinc-100/20 to-transparent blur-3xl dark:from-emerald-900/30"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-amber-100/30 via-zinc-100/20 to-transparent blur-3xl dark:from-amber-900/20"
-          />
- 
-          <div className="relative mx-auto max-w-6xl">
-            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-emerald-50/80 px-3 py-1.5 text-[10px] sm:text-xs font-medium text-emerald-700 shadow-sm backdrop-blur-sm dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
-                  <Recycle className="h-3 w-3" />
-                  {heroBadge}
+      <main className="flex-1 overflow-x-hidden">
+        {/* HERO SECTION: High-Craft Industrial B2B Header */}
+        <section className="relative border-b border-zinc-200/90 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 px-6 pt-12 pb-14 sm:pt-20 sm:pb-24 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase">
+                    <Recycle className="h-3.5 w-3.5" />
+                    {heroBadge}
+                  </div>
+                  <h1 className="mt-3 text-3xl xs:text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight text-zinc-950 dark:text-white leading-[1.12]">
+                    {heroTitle}
+                  </h1>
+                  <p className="mt-3 text-base sm:text-lg font-bold text-zinc-700 dark:text-zinc-300">
+                    {heroSubtitle}
+                  </p>
                 </div>
-                <h1 className="mt-4 text-2xl xs:text-3xl sm:text-5xl lg:text-[3rem] font-extrabold leading-[1.1] tracking-tight text-zinc-955 dark:text-zinc-50">
-                  {heroTitle}
-                </h1>
-                <p className="mt-3 text-sm sm:text-lg font-medium text-zinc-700 dark:text-zinc-200">
-                  {heroSubtitle}
-                </p>
-                <div 
-                  className="mt-4 max-w-md text-xs sm:text-base leading-relaxed text-zinc-500 dark:text-zinc-400 prose dark:prose-invert"
+
+                <div
+                  className="text-xs sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-400 max-w-xl prose dark:prose-invert"
                   dangerouslySetInnerHTML={{ __html: heroDesc }}
                 />
-                <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <Button asChild className="gap-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 py-2 sm:py-3 text-xs sm:text-sm h-9 sm:h-12 rounded-lg sm:rounded-xl">
+
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="min-h-[48px] h-12 px-6 gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md transition-colors"
+                  >
                     <a href={waLink} target="_blank" rel="noopener noreferrer">
-                      <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Chat WhatsApp Sekarang
+                      <Phone className="h-4 w-4" /> Hubungi Admin Penjemputan
                     </a>
                   </Button>
-                  <Button asChild variant="outline" className="gap-2 py-2 sm:py-3 text-xs sm:text-sm h-9 sm:h-12 rounded-lg sm:rounded-xl">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="min-h-[48px] h-12 px-6 gap-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-850 text-zinc-800 dark:text-zinc-200 font-semibold rounded-xl"
+                  >
                     <a href="#alur">
-                      Lihat Cara Kerjanya <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      Alur Kerja & Syarat <ArrowRight className="h-4 w-4 text-zinc-500" />
                     </a>
                   </Button>
                 </div>
-                <div className="mt-6 flex flex-row flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-zinc-500">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span className="dark:text-zinc-400">Bayar tunai</span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-900">
+                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Bayar Tunai di Tempat</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span className="dark:text-zinc-400">Jemput gratis</span>
+                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Jemput Gratis Minimal 100 kg</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span className="dark:text-zinc-400">Respon &lt; 30 mnt</span>
+                  <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Timbangan Digital Terbuka</span>
                   </div>
                 </div>
               </div>
- 
-              <div className="hidden lg:block">
-                <div className="relative">
-                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-emerald-200 via-zinc-100 to-amber-50 opacity-70 blur-2xl dark:from-emerald-900 dark:via-zinc-900 dark:to-zinc-800" />
-                  <div className="relative rounded-2xl border border-zinc-200/60 bg-white/90 p-7 shadow-xl shadow-zinc-200/50 backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-900/90 dark:shadow-zinc-950/50">
-                    <p className="text-xs font-medium uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                      Yang Kami Beli
-                    </p>
-                    <div className="mt-4 space-y-3">
-                      {acceptedItems.slice(0, 4).map((item) => (
-                        <div key={item.title} className="flex items-start gap-3">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                          <div>
-                            <p className="text-sm font-medium text-zinc-955 dark:text-zinc-100">{item.title}</p>
-                            <p className="text-xs text-zinc-500 dark:text-zinc-400">{item.desc}</p>
-                          </div>
+
+              {/* Right: Quick Checklist Card */}
+              <div className="lg:col-span-5">
+                <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 p-6 space-y-4 shadow-sm">
+                  <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                    <span className="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold">
+                      Material yang Diterima
+                    </span>
+                    <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                      Semua Kondisi Kain
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {acceptedItems.slice(0, 4).map((item) => (
+                      <div key={item.title} className="flex items-start gap-3">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500 dark:text-emerald-400" />
+                        <div>
+                          <p className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-white">{item.title}</p>
+                          <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">{item.desc}</p>
                         </div>
-                      ))}
-                    </div>
-                    <div className="mt-5 rounded-xl bg-emerald-600 px-4 py-3 text-center text-white">
-                      <p className="text-xs opacity-80">Mulai dari</p>
-                      <p className="mt-0.5 text-sm font-semibold">100 kg / pickup</p>
-                    </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 rounded-xl border border-emerald-500/20 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/20 p-3 text-center">
+                    <p className="text-[11px] font-mono text-emerald-700 dark:text-emerald-400 font-semibold">
+                      Kapasitas Penjemputan Armada
+                    </p>
+                    <p className="text-xs text-zinc-700 dark:text-zinc-300 mt-0.5">
+                      Mulai 100 kg hingga 5 Ton per penjemputan
+                    </p>
                   </div>
                 </div>
               </div>
@@ -210,30 +243,40 @@ export default function JualBongkaranClient({ data }: { data: LandingData }) {
           </div>
         </section>
 
-        {/* Benefits */}
-        <section className="border-y border-zinc-200/80 bg-white/60 px-6 py-10 sm:py-20 dark:border-zinc-800 dark:bg-zinc-900/40 lg:px-8">
+        {/* BENEFITS SECTION: 6 Clear Structured Value Props */}
+        <section className="border-b border-zinc-200/90 dark:border-zinc-900 bg-zinc-100/70 dark:bg-zinc-900/30 px-6 py-14 sm:py-20 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">
-                Kenapa Konveksi Memilih Kami?
+            <div className="space-y-2 text-center max-w-2xl mx-auto mb-10">
+              <div className="text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-500 uppercase">
+                KEUNGGULAN KEMITRAAN
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                Mengapa Konveksi Memilih Menjual ke DARMIN?
               </h2>
-              <p className="mt-2 text-xs sm:text-base text-zinc-500 dark:text-zinc-400">
-                Sudah ratusan konveksi di Bandung dan sekitarnya yang jadi mitra rutin.
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Ratusan pemilik konveksi dan garment di Bandung, Cimahi, dan Jabodetabek telah menjadi mitra pasokan rutin kami karena transparansi dan kepastian transaksi.
               </p>
             </div>
-            <div className="mt-8 grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-3">
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {benefits.map((b) => {
                 const Icon = b.icon;
                 return (
                   <div
                     key={b.title}
-                    className="rounded-2xl border border-zinc-200/80 bg-white p-3 sm:p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+                    className="flex flex-col justify-between rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5 space-y-3 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors shadow-sm"
                   >
-                    <div className="flex h-8 w-8 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400">
-                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <div className="space-y-3">
+                      <div className="flex h-10 w-10 min-h-[40px] min-w-[40px] items-center justify-center rounded-xl bg-zinc-200 dark:bg-zinc-800 text-emerald-600 dark:text-emerald-400">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-sm sm:text-base font-bold text-zinc-950 dark:text-white">
+                        {b.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+                        {b.desc}
+                      </p>
                     </div>
-                    <h3 className="mt-2.5 sm:mt-4 text-xs sm:text-base font-bold text-zinc-955 dark:text-zinc-100">{b.title}</h3>
-                    <p className="mt-1 text-[10px] sm:text-sm leading-relaxed sm:leading-6 text-zinc-500 dark:text-zinc-400">{b.desc}</p>
                   </div>
                 );
               })}
@@ -241,37 +284,39 @@ export default function JualBongkaranClient({ data }: { data: LandingData }) {
           </div>
         </section>
 
-        {/* Yang kami terima */}
-        <section className="px-6 py-10 sm:py-20 lg:px-8">
+        {/* ACCEPTED ITEMS DETAIL */}
+        <section className="border-b border-zinc-200/90 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 px-6 py-14 sm:py-20 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white px-3 py-1 text-[10px] sm:text-xs font-medium text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
-                  <Layers className="h-3 w-3" /> Yang Kami Terima
+            <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-5 space-y-4">
+                <div className="text-xs font-mono font-bold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase">
+                  JENIS LIMBAH KAIN
                 </div>
-                <h2 className="mt-4 text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">
-                  Semua jenis kain bongkaran konveksi
+                <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                  Semua Jenis Kain Perca & Stok Gudang Kami Beli
                 </h2>
-                <p className="mt-3 text-xs sm:text-base leading-relaxed text-zinc-500 dark:text-zinc-400">
-                  Tidak perlu pilah-pilah dulu. Semua kondisi kami terima — yang penting masih kain. Kami yang sortir di gudang kami.
+                <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+                  Anda tidak perlu meluangkan waktu tenaga kerja untuk memilah atau mensortir kain. Bawa langsung seluruh tumpukan sisa produksi Anda, tim kami yang akan menyortir di gudang kami.
                 </p>
-                <p className="mt-2 text-xs text-zinc-400 dark:text-zinc-500">
-                  Khusus untuk konveksi/garment skala kecil-menengah-besar di area Jawa Barat, Banten, dan Jakarta.
-                </p>
+                <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900 p-4 text-xs text-zinc-700 dark:text-zinc-300 space-y-1">
+                  <p className="font-semibold text-zinc-900 dark:text-white">Cakupan Wilayah Penjemputan:</p>
+                  <p className="text-zinc-600 dark:text-zinc-400">Bandung Raya, Cimahi, Garut, Tasikmalaya, Purwakarta, Karawang, dan Jabodetabek.</p>
+                </div>
               </div>
-              <div className="grid gap-2.5 sm:gap-3 sm:grid-cols-2">
+
+              <div className="lg:col-span-7 grid gap-3 sm:grid-cols-2">
                 {acceptedItems.map((item) => (
                   <div
                     key={item.title}
-                    className="rounded-xl border border-zinc-200/80 bg-white p-3.5 dark:border-zinc-800 dark:bg-zinc-900"
+                    className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900/60 p-4 space-y-1.5"
                   >
-                    <div className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                      <div>
-                        <p className="text-xs sm:text-sm font-semibold text-zinc-955 dark:text-zinc-100">{item.title}</p>
-                        <p className="mt-0.5 text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400">{item.desc}</p>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                      <h3 className="text-xs sm:text-sm font-bold text-zinc-950 dark:text-white">{item.title}</h3>
                     </div>
+                    <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400 pl-6">
+                      {item.desc}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -279,74 +324,88 @@ export default function JualBongkaranClient({ data }: { data: LandingData }) {
           </div>
         </section>
 
-        {/* Alur kerja */}
-        <section id="alur" className="scroll-mt-20 bg-zinc-950 px-6 py-10 text-white lg:px-8">
+        {/* ALUR KERJA: 4 Clear Procurement Stages */}
+        <section id="alur" className="border-b border-zinc-200/90 dark:border-zinc-900 bg-zinc-100/70 dark:bg-zinc-900/40 px-6 py-14 sm:py-20 lg:px-8 scroll-mt-20">
           <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight">Cara Kerjanya — Mudah & Cepat</h2>
-              <p className="mt-2 text-xs sm:text-base text-zinc-400">
-                Dari kontak pertama sampai uang di tangan, biasanya selesai dalam 1–2 hari kerja.
+            <div className="space-y-2 text-center max-w-2xl mx-auto mb-10">
+              <div className="text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-500 uppercase">
+                PROSES TRANSAKSI
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                Alur Penjualan Cepat & Transparan
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Mulai dari kirim foto hingga pembayaran tunai di tempat diselesaikan secara efisien dalam 1 hingga 2 hari kerja.
               </p>
             </div>
-            <div className="mt-8 sm:mt-12 relative">
-              {/* Horizontal Line behind circles */}
-              <div className="absolute top-5 sm:top-6 left-[12%] right-[12%] h-0.5 border-t border-dashed border-zinc-800 -z-0" />
- 
-              <div className="grid grid-cols-4 gap-2 relative z-10">
-                {flowSteps.map((s, i) => (
-                  <div key={s.n} className="flex flex-col items-center text-center">
-                    {/* Circle Node */}
-                    <div className="relative flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-zinc-900 border-2 border-zinc-800 text-emerald-450 font-extrabold text-xs sm:text-sm shadow-md">
-                      <span className="font-mono tracking-tighter">{s.n}</span>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {flowSteps.map((step) => (
+                <div
+                  key={step.n}
+                  className="flex flex-col justify-between rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/70 p-5 space-y-3 shadow-sm"
+                >
+                  <div>
+                    <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
+                      <span className="text-2xl font-black font-mono text-zinc-400 dark:text-zinc-600">
+                        {step.n}
+                      </span>
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                        Tahap {step.n}
+                      </span>
                     </div>
-                    {/* Content */}
-                    <h3 className="mt-3 text-[10px] xs:text-xs sm:text-base font-semibold leading-tight">{s.title}</h3>
-                    <p className="mt-1 text-[9px] xs:text-[10px] sm:text-sm leading-relaxed text-zinc-450 hidden xs:block">{s.desc}</p>
+
+                    <h3 className="mt-3 text-sm font-bold text-zinc-950 dark:text-white">
+                      {step.title}
+                    </h3>
+                    <p className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5">
+                      {step.subtitle}
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-300">
+                      {step.desc}
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Lokasi & kontak */}
-        <section className="px-6 py-8 sm:py-20 lg:px-8">
-          <div className="mx-auto max-w-4xl">
-            <div className="rounded-2xl border border-zinc-200/80 bg-white p-6 sm:p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-zinc-555">
-                    <MapPin className="h-3.5 w-3.5" /> Gudang Kami
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-zinc-955 dark:text-zinc-100">{companyName}</p>
-                  <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">{address}</p>
-                </div>
-                <div>
-                  <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-zinc-555">
-                    <Phone className="h-3.5 w-3.5" /> Kontak
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-zinc-955 dark:text-zinc-100">{phone}</p>
-                  <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">Senin–Sabtu, 08.00–17.00 WIB</p>
-                </div>
+        {/* FINAL CTA */}
+        <section className="bg-zinc-50 dark:bg-zinc-950 px-6 py-14 sm:py-20 lg:px-8">
+          <div className="mx-auto max-w-4xl rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100/90 dark:bg-zinc-900/80 p-6 sm:p-12 text-center space-y-6 shadow-xl">
+            <div>
+              <div className="text-xs font-mono font-bold tracking-wider text-emerald-600 dark:text-emerald-400 uppercase">
+                PUSAT PENERIMAAN KAIN BONGKARAN
               </div>
+              <h2 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                Siap Menjual Limbah Kain Konveksi Anda?
+              </h2>
             </div>
-          </div>
-        </section>
 
-        {/* CTA bawah */}
-        <section className="px-6 py-10 sm:py-20 lg:px-8">
-          <div className="mx-auto max-w-4xl rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6 sm:p-10 text-center dark:border-emerald-900/60 dark:from-emerald-950/40 dark:to-zinc-955">
-            <h2 className="text-xl xs:text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-955 dark:text-zinc-50">
-              Siap menjual bongkaran Anda?
-            </h2>
-            <p className="mt-2 text-xs sm:text-base text-zinc-600 dark:text-zinc-350 leading-relaxed">
-              Chat WhatsApp sekarang, kirim foto stok, dan dapatkan penawaran harga dalam 30 menit.
+            <p className="text-xs sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-300 max-w-xl mx-auto">
+              Hubungi tim penjemputan DARMIN sekarang via WhatsApp. Kirimkan foto tumpukan kain dan dapatkan penawaran harga beli per kilogram dalam 30 menit.
             </p>
-            <Button asChild className="mt-6 gap-2 bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 py-2 sm:py-3 text-xs sm:text-sm h-9 sm:h-12 rounded-lg sm:rounded-xl">
-              <a href={waLink} target="_blank" rel="noopener noreferrer">
-                <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Chat WhatsApp
-              </a>
-            </Button>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+              <Button
+                asChild
+                className="w-full sm:w-auto min-h-[48px] px-6 gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md"
+              >
+                <a href={waLink} target="_blank" rel="noopener noreferrer">
+                  <Phone className="h-4 w-4" /> Hubungi Admin via WhatsApp
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full sm:w-auto min-h-[48px] px-6 gap-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-semibold rounded-xl"
+              >
+                <Link href="/katalog">
+                  Lihat Hasil Olahan Kain Majun <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </section>
       </main>

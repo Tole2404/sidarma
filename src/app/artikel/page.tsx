@@ -21,7 +21,7 @@ interface Article {
 const PLACEHOLDER_ARTICLES: Article[] = [
   { id: "1", title: "Mengapa Kain Majun Katun Paling Baik untuk Lap Oli?", slug: "kain-majun-katun-lap-oli", excerpt: "Katun memiliki daya serap 25x lebih tinggi dari serat sintetis. Pelajari mengapa majun katun menjadi pilihan utama industri otomotif dan manufaktur.", category: "Tips Industri", thumbnail: null, publishedAt: "2025-01-15T00:00:00Z" },
   { id: "2", title: "Perbedaan Majun Jahit Sambung vs Majun Lembaran", slug: "majun-jahit-sambung-vs-lembaran", excerpt: "Bingung memilih antara majun jahit sambung atau lembaran? Kami uraikan perbedaan daya serap, harga, dan kecocokan penggunaan untuk kebutuhan bisnis Anda.", category: "Panduan Produk", thumbnail: null, publishedAt: "2025-01-10T00:00:00Z" },
-  { id: "3", title: "Cara Merawat dan Mendaur Ulang Kain Majun Bekas Pakai", slug: "cara-daur-ulang-kain-majun", excerpt: "Kain majun bekas tidak harus langsung dibuang. Dengan teknik pencucian yang benar, majun bisa digunakan kembali hingga 5–8 kali dan mengurangi limbah tekstil.", category: "Lingkungan & ESG", thumbnail: null, publishedAt: "2025-01-05T00:00:00Z" },
+  { id: "3", title: "Cara Merawat dan Mendaur Ulang Kain Majun Bekas Pakai", slug: "cara-daur-ulang-kain-majun", excerpt: "Kain majun bekas tidak harus langsung dibuang. Dengan teknik pencucian yang benar, majun bisa digunakan kembali hingga 5 sampai 8 kali dan mengurangi limbah tekstil.", category: "Lingkungan & ESG", thumbnail: null, publishedAt: "2025-01-05T00:00:00Z" },
 ];
  
 const CATEGORIES = ["Semua", "Tips Industri", "Panduan Produk", "Lingkungan & ESG", "Blog"];
@@ -81,13 +81,13 @@ export default function ArtikelPage() {
       <main className="mx-auto max-w-6xl px-4 py-10 sm:py-16">
         {/* Hero */}
         <div className="mb-8 sm:mb-12 text-center">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-655 dark:text-zinc-300">
-            <BookOpen className="h-3 w-3" /> Artikel & Blog
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+            <BookOpen className="h-3 w-3 text-amber-500" /> Artikel & Blog
           </div>
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
             Pusat Edukasi Kain Majun
           </h1>
-          <p className="mt-3 text-xs sm:text-base text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
+          <p className="mt-3 text-xs sm:text-base text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed">
             Tips, panduan, dan wawasan seputar industri kain majun, cleaning service, dan kebutuhan tekstil industri.
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function ArtikelPage() {
         <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative w-full sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
-            <Input className="pl-9 dark:bg-zinc-900 dark:border-zinc-800 dark:text-white" placeholder="Cari artikel..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            <Input className="pl-9 bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white rounded-xl" placeholder="Cari artikel..." value={query} onChange={(e) => setQuery(e.target.value)} />
           </div>
           {/* Wrap category chips naturally instead of scroll slider */}
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -104,8 +104,8 @@ export default function ArtikelPage() {
               <button key={cat} onClick={() => setActiveCategory(cat)}
                 className={`rounded-full px-3 py-1 text-xs font-bold transition-all border shrink-0 shadow-sm ${
                   activeCategory === cat 
-                    ? "bg-primary text-white border-primary shadow-primary/15" 
-                    : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
+                    ? "bg-amber-500 text-zinc-950 border-amber-500 shadow-amber-500/20" 
+                    : "border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                 }`}>
                 {cat}
               </button>
@@ -114,15 +114,15 @@ export default function ArtikelPage() {
         </div>
  
         {/* Date Filter Bar */}
-        <div className="mb-6 sm:mb-8 flex flex-row flex-wrap items-center gap-3 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-2.5 rounded-xl sm:rounded-2xl shadow-sm text-xs max-w-2xl">
+        <div className="mb-6 sm:mb-8 flex flex-row flex-wrap items-center gap-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/90 dark:border-zinc-800 p-2.5 rounded-xl sm:rounded-2xl shadow-sm text-xs max-w-2xl">
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className="font-semibold text-zinc-550 dark:text-zinc-400 shrink-0">Dari:</span>
+            <span className="font-semibold text-zinc-600 dark:text-zinc-400 shrink-0">Dari:</span>
             <div className="relative flex items-center min-w-0">
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="px-2 py-1 bg-zinc-50 dark:bg-zinc-955 border border-zinc-250 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white min-w-[130px]"
+                className="px-2 py-1 bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs focus:border-amber-500 focus:outline-none dark:text-white min-w-[130px]"
               />
               {!startDate && (
                 <span className="absolute left-2.5 pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
@@ -132,13 +132,13 @@ export default function ArtikelPage() {
             </div>
           </div>
           <div className="flex items-center gap-1.5 min-w-0">
-            <span className="font-semibold text-zinc-550 dark:text-zinc-400 shrink-0">Sampai:</span>
+            <span className="font-semibold text-zinc-600 dark:text-zinc-400 shrink-0">Sampai:</span>
             <div className="relative flex items-center min-w-0">
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="px-2 py-1 bg-zinc-50 dark:bg-zinc-955 border border-zinc-250 dark:border-zinc-800 rounded-lg text-xs focus:border-primary focus:outline-none dark:text-white min-w-[130px]"
+                className="px-2 py-1 bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs focus:border-amber-500 focus:outline-none dark:text-white min-w-[130px]"
               />
               {!endDate && (
                 <span className="absolute left-2.5 pointer-events-none text-zinc-400 dark:text-zinc-500 text-xs">
@@ -186,51 +186,51 @@ export default function ArtikelPage() {
                 <div key={a.id} className="flex w-full">
                   {/* Desktop/Tablet Card Layout */}
                   <Link href={`/artikel/${a.slug}`}
-                    className="hidden sm:flex flex-col w-full rounded-2xl border border-zinc-200/80 bg-white dark:bg-zinc-900 dark:border-zinc-800 p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 group">
-                    <div className="mb-4 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-750">
+                    className="hidden sm:flex flex-col w-full rounded-2xl border border-zinc-200/90 bg-zinc-50 dark:bg-zinc-900 dark:border-zinc-800 p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 group">
+                    <div className="mb-4 flex h-40 items-center justify-center overflow-hidden rounded-xl bg-zinc-200/60 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-750">
                       {a.thumbnail ? (
                         <img src={a.thumbnail} alt={a.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                       ) : (
-                        <BookOpen className="h-10 w-10 text-zinc-300 dark:text-zinc-750" />
+                        <BookOpen className="h-10 w-10 text-zinc-400 dark:text-zinc-750" />
                       )}
                     </div>
                     <div className="flex items-center gap-2 mb-3">
-                      <Badge variant="secondary" className="text-xs rounded-full dark:bg-zinc-800 dark:text-zinc-355">{a.category}</Badge>
+                      <Badge variant="secondary" className="text-xs rounded-full bg-zinc-200/80 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-355">{a.category}</Badge>
                       {a.publishedAt && (
-                        <span className="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-550"><Clock className="h-3 w-3" />{formatDate(a.publishedAt)}</span>
+                        <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-550"><Clock className="h-3 w-3" />{formatDate(a.publishedAt)}</span>
                       )}
                     </div>
-                    <h2 className="text-base font-extrabold text-zinc-955 dark:text-zinc-50 group-hover:text-primary transition-colors line-clamp-2 leading-snug">{a.title}</h2>
-                    <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 flex-1">{a.excerpt}</p>
-                    <div className="mt-4 flex items-center gap-1 text-sm font-bold text-zinc-700 dark:text-zinc-300 group-hover:text-primary transition-colors">
+                    <h2 className="text-base font-extrabold text-zinc-950 dark:text-zinc-50 group-hover:text-amber-600 dark:group-hover:text-amber-500 transition-colors line-clamp-2 leading-snug">{a.title}</h2>
+                    <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 flex-1">{a.excerpt}</p>
+                    <div className="mt-4 flex items-center gap-1 text-sm font-bold text-zinc-800 dark:text-zinc-300 group-hover:text-amber-600 dark:group-hover:text-amber-500 transition-colors">
                       Baca selengkapnya <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </Link>
  
                   {/* Mobile Card Layout */}
                   <Link href={`/artikel/${a.slug}`}
-                    className="flex sm:hidden items-center gap-3 p-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm w-full group">
+                    className="flex sm:hidden items-center gap-3 p-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shadow-sm w-full group">
                     {/* Left: Thumbnail */}
-                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-750 flex items-center justify-center">
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-zinc-200/60 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-750 flex items-center justify-center">
                       {a.thumbnail ? (
                         <img src={a.thumbnail} alt={a.title} className="h-full w-full object-cover" />
                       ) : (
-                        <BookOpen className="h-6 w-6 text-zinc-300 dark:text-zinc-700" />
+                        <BookOpen className="h-6 w-6 text-zinc-400 dark:text-zinc-700" />
                       )}
                     </div>
                     {/* Right: Info */}
                     <div className="flex-1 min-w-0 flex flex-col justify-between h-20 py-0.5">
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <Badge variant="secondary" className="text-[8px] px-1.5 py-0.5 rounded-full dark:bg-zinc-850 dark:text-zinc-450">{a.category}</Badge>
+                          <Badge variant="secondary" className="text-[8px] px-1.5 py-0.5 rounded-full bg-zinc-200/80 text-zinc-800 dark:bg-zinc-850 dark:text-zinc-450">{a.category}</Badge>
                           {a.publishedAt && (
-                            <span className="text-[8px] text-zinc-400 dark:text-zinc-500 font-mono">{formatDate(a.publishedAt)}</span>
+                            <span className="text-[8px] text-zinc-500 dark:text-zinc-500 font-mono">{formatDate(a.publishedAt)}</span>
                           )}
                         </div>
-                        <h2 className="text-xs font-bold text-zinc-955 dark:text-zinc-50 leading-snug line-clamp-2 mt-1 group-hover:text-primary transition-colors">{a.title}</h2>
-                        <p className="mt-0.5 text-[10px] text-zinc-500 dark:text-zinc-455 line-clamp-1">{a.excerpt}</p>
+                        <h2 className="text-xs font-bold text-zinc-950 dark:text-zinc-50 leading-snug line-clamp-2 mt-1 group-hover:text-amber-600 dark:group-hover:text-amber-500 transition-colors">{a.title}</h2>
+                        <p className="mt-0.5 text-[10px] text-zinc-600 dark:text-zinc-455 line-clamp-1">{a.excerpt}</p>
                       </div>
-                      <div className="flex items-center gap-1 text-[10px] font-bold text-zinc-700 dark:text-zinc-300 group-hover:text-primary">
+                      <div className="flex items-center gap-1 text-[10px] font-bold text-zinc-800 dark:text-zinc-300 group-hover:text-amber-600 dark:group-hover:text-amber-500">
                         Baca selengkapnya <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                       </div>
                     </div>
@@ -241,21 +241,21 @@ export default function ArtikelPage() {
  
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="mt-10 flex items-center justify-center gap-4 border-t border-zinc-100 dark:border-zinc-800 pt-6">
+              <div className="mt-10 flex items-center justify-center gap-4 border-t border-zinc-200 dark:border-zinc-800 pt-6">
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
-                  className="px-3.5 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-bold text-zinc-700 dark:text-zinc-300 disabled:opacity-40 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors disabled:cursor-not-allowed shadow-sm"
+                  className="px-3.5 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-xs font-bold text-zinc-700 dark:text-zinc-300 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors disabled:cursor-not-allowed shadow-sm"
                 >
                   Sebelumnya
                 </button>
-                <span className="text-xs font-extrabold text-zinc-500 dark:text-zinc-450">
+                <span className="text-xs font-extrabold text-zinc-600 dark:text-zinc-450">
                   Halaman {currentPage} dari {totalPages}
                 </span>
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="px-3.5 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs font-bold text-zinc-700 dark:text-zinc-300 disabled:opacity-40 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors disabled:cursor-not-allowed shadow-sm"
+                  className="px-3.5 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-xs font-bold text-zinc-700 dark:text-zinc-300 disabled:opacity-40 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors disabled:cursor-not-allowed shadow-sm"
                 >
                   Berikutnya
                 </button>

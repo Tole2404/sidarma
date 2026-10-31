@@ -1,0 +1,19 @@
+{
+  "reportTitle": "Audit Efisiensi Rendemen & Toleransi Susut Perca",
+  "generatedBy": "SORT-12 (SortMaster-Yield)",
+  "period": "Oktober 2026",
+  "thresholdMaxWastePercent": 12.0,
+  "actualWastePercent": 9.4,
+  "status": "COMPLIANT_OPTIMAL",
+  "summary": {
+    "totalBahanMentahDiterimaKg": 14500,
+    "totalMajunPutihSiapJualKg": 6450,
+    "totalMajunWarnaSiapJualKg": 6680,
+    "totalPercaAfkirLimbahKg": 1370,
+    "efisiensiProduksiPercent": 90.6
+  },
+  "recommendations": [
+    "Pertahankan supplier konveksi Pekalongan karena susut stabil di 9.2%",
+    "Reorder majun putih katun 100% diprioritaskan untuk minggu ke-4"
+  ]
+}

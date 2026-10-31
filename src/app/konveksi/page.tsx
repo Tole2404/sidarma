@@ -231,8 +231,8 @@ export default function KonveksiPage() {
                               <div className="text-xs text-zinc-500">{k.address}</div>
                             ) : null}
                           </TableCell>
-                          <TableCell className="text-sm text-zinc-600 dark:text-zinc-300">{k.picName ?? "—"}</TableCell>
-                          <TableCell className="text-sm text-zinc-600 dark:text-zinc-300">{k.phone ?? "—"}</TableCell>
+                          <TableCell className="text-sm text-zinc-600 dark:text-zinc-300">{k.picName ?? "-"}</TableCell>
+                          <TableCell className="text-sm text-zinc-600 dark:text-zinc-300">{k.phone ?? "-"}</TableCell>
                           <TableCell className="text-right">{k.bongkaranCount}</TableCell>
                           <TableCell className="text-right">{k.totalQuantityKg.toLocaleString("id-ID")}</TableCell>
                           <TableCell className="text-right">{formatCurrency(k.totalSpending)}</TableCell>

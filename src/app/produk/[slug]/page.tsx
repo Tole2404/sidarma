@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, MessageSquare, ShieldCheck, Truck, HelpCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, MessageSquare, ShieldCheck, Truck, HelpCircle, Phone, PackageCheck } from "lucide-react";
 import SiteNavbar from "@/components/SiteNavbar";
 import SiteFooter from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
@@ -16,36 +16,36 @@ const DEFAULT_PRODUCTS = [
   {
     name: "Majun Lembaran (Tanpa Jahit)",
     category: "Kain Majun",
-    desc: "Kain potongan utuh tanpa sambungan. Daya serap tinggi, tidak meninggalkan serat. Ideal untuk mesin presisi & permukaan kaca.",
-    uses: ["Mesin presisi & optik", "Lab & farmasi", "Elektronik & semikonduktor", "Kaca & cermin"],
+    desc: "Kain katun potongan utuh tanpa sambungan jahitan. Daya serap cairan dan pelarut tinggi, tidak meninggalkan serpihan debu perca. Standar wajib untuk perakitan blok mesin presisi, komponen silinder, bearing, optik, dan kaca.",
+    uses: ["Mesin presisi & bearing", "Perakitan blok mesin otomotif", "Elektronik & optik", "Laboratorium & kaca"],
     image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Majun Jahit Sambung",
     category: "Kain Majun",
-    desc: "Potongan perca dijahit menyambung memanjang. Ekonomis, berdaya serap optimal. Pilihan hemat untuk kebutuhan volume tinggi.",
-    uses: ["Pabrik & gudang", "Bengkel otomotif", "Cleaning service", "Pertanian & perikanan"],
+    desc: "Potongan perca katun kaos dijahit menyambung memanjang dengan jahitan rapi. Pilihan pasokan paling ekonomis dengan daya serap optimal untuk pembersihan rutin di workshop manufaktur dan gudang.",
+    uses: ["Pabrik manufaktur", "Bengkel otomotif", "Workshop perbaikan mesin", "Perawatan lantai gudang"],
     image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Majun Jahit Tumpuk",
     category: "Kain Majun",
-    desc: "Beberapa lapis kain perca dijahit bertumpuk. Tebal, kuat, dan sangat efektif untuk membersihkan oli dan kotoran berat.",
-    uses: ["Bengkel berat & kapal", "Industri minyak & gas", "Pabrik baja & logam", "Konstruksi"],
+    desc: "3 hingga 5 lapis kain perca katun dijahit silang padat. Sangat tebal, tahan robek saat mengusap pelat baja tajam, dan memiliki kapasitas tampung cairan tinggi untuk oli kental SAE 40/90, gemuk (grease), dan residu solar.",
+    uses: ["Bengkel alat berat", "Galangan kapal & marine", "Pabrik baja & stamping", "Mesin bubut & CNC milling"],
     image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Sarung Tangan Industri",
     category: "Alat Pelindung",
-    desc: "Sarung tangan benang katun untuk perlindungan tangan pekerja. Nyaman dipakai seharian, daya cengkeram optimal.",
-    uses: ["Pabrik manufaktur", "Gudang & logistik", "Konstruksi", "Pertanian"],
+    desc: "Sarung tangan rajut katun tebal untuk proteksi tangan teknisi dan operator. Memberikan daya cengkeram optimal pada perkakas licin dan melindungi kulit dari gesekan permukaan kasar.",
+    uses: ["Operator mesin pabrik", "Gudang & logistik kargo", "Konstruksi baja & fabrikasi", "Pertanian & perikanan"],
     image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Alat Pelindung Diri (APD)",
     category: "Alat Pelindung",
-    desc: "Masker, kacamata safety, dan perlengkapan APD standar industri sebagai pelengkap keamanan kerja.",
-    uses: ["Semua sektor industri", "Rumah sakit & klinik", "Laboratorium", "Pabrik kimia"],
+    desc: "Kacamata safety standar industri, masker pelindung partikel debu, dan perlengkapan keselamatan kerja K3 sebagai pendukung operasional tenaga kerja pabrik.",
+    uses: ["Semua lini manufaktur", "Bengkel bubut & las", "Area berdebu & kimia", "Warehouse"],
     image: "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&w=800&q=80",
   },
 ];
@@ -68,7 +68,7 @@ async function getProducts() {
       }
     }
   } catch (e) {
-    console.error("Failed to fetch products:", e);
+    console.error("Gagal mengambil data produk:", e);
   }
   return DEFAULT_PRODUCTS;
 }
@@ -91,7 +91,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = products.find((p: any) => slugify(p.name) === slug);
   if (!product) return { title: "Produk Tidak Ditemukan" };
   return {
-    title: `${product.name} | CV. SIDARMA MAJUN`,
+    title: `${product.name} | CV. DARMIN MAJUN`,
     description: product.desc,
   };
 }
@@ -104,103 +104,110 @@ export default async function ProductDetailPage({ params }: Props) {
   if (!product) notFound();
 
   const waNumber = await getWaNumber();
-  const waLink = `https://wa.me/${waNumber}?text=Halo%20CV.%20SIDARMA%20MAJUN,%20saya%20tertarik%20dengan%20produk%20*${encodeURIComponent(product.name)}*`;
+  const waLink = `https://wa.me/${waNumber}?text=Halo%20CV.%20DARMIN%20MAJUN,%20kami%20ingin%20minta%20penawaran%20harga%20dan%20stok%20untuk%20produk%20*${encodeURIComponent(product.name)}*`;
+  const sampleLink = `https://wa.me/${waNumber}?text=Halo,%20kami%20dari%20pihak%20perusahaan%20ingin%20meminta%20sampel%20fisik%20uji%20mutu%20untuk%20*${encodeURIComponent(product.name)}*`;
 
   return (
-    <div className="min-h-screen bg-zinc-55/40 dark:bg-zinc-950 flex flex-col relative overflow-hidden">
-      {/* Dynamic ambient blur decorations */}
-      <div className="absolute top-1/4 -left-40 h-96 w-96 rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-40 h-96 w-96 rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none" />
-
+    <div className="min-h-screen bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased selection:bg-amber-500 selection:text-zinc-950 flex flex-col">
       <SiteNavbar />
 
-      <main className="relative z-10 flex-1 py-20 px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          {/* Back button pill */}
-          <div className="mb-8">
+      <main className="flex-1 py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl space-y-8">
+          {/* Back button */}
+          <div>
             <Link
               href="/katalog"
-              className="group inline-flex items-center gap-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 px-4.5 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-300 shadow-sm backdrop-blur-md transition-all duration-200 hover:bg-zinc-50 dark:hover:bg-zinc-850 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-950 dark:hover:text-white active:scale-95"
+              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors py-2"
             >
-              <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1 text-primary" /> Kembali ke Katalog
+              <ArrowLeft className="h-4 w-4 text-amber-500" />
+              Kembali ke Katalog Produk
             </Link>
           </div>
 
-          {/* Product Detail Container */}
-          <div className="grid gap-6 md:grid-cols-2 bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-4 sm:p-8 shadow-sm">
-            {/* Left side: Product Image */}
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-55/30 dark:bg-zinc-950 flex items-center justify-center">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-102"
-              />
-              <div className="absolute top-4 right-4">
-                <span className="rounded-full bg-emerald-500/90 backdrop-blur-sm px-3.5 py-1 text-xs font-semibold text-white shadow-sm border border-emerald-400/20">
-                  Ready Stock
-                </span>
-              </div>
-            </div>
-
-            {/* Right side: Product Metadata (Clean natural spacing) */}
-            <div className="flex flex-col gap-5 justify-start py-1">
-              <div>
-                {/* Category Badge */}
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
-                  {product.category}
+          {/* Product Detail Layout */}
+          <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 p-6 sm:p-10 shadow-sm">
+            <div className="grid gap-10 lg:grid-cols-12 items-start">
+              {/* Product Photo: 5 cols */}
+              <div className="lg:col-span-5 space-y-4">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-200 dark:bg-zinc-900">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-3 left-3 bg-zinc-900/90 dark:bg-zinc-950/90 border border-zinc-700 dark:border-zinc-800 px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold text-emerald-400">
+                    Stok Gudang Siap Muat
+                  </div>
                 </div>
 
-                {/* Product Name */}
-                <h1 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-tight">
-                  {product.name}
-                </h1>
+                <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-950 p-4 space-y-2 text-xs">
+                  <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                    <ShieldCheck className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Sortir Ketat Manual Bebas Logam</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                    <Truck className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Kemasan Bal Press 25 kg & 50 kg</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                    <PackageCheck className="h-4 w-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                    <span>Faktur Resmi & Surat Penawaran (SPH)</span>
+                  </div>
+                </div>
+              </div>
 
-                {/* Product Description */}
-                <p className="mt-4 text-xs sm:text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+              {/* Product Info: 7 cols */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <div className="text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-500 uppercase">
+                    {product.category}
+                  </div>
+                  <h1 className="mt-2 text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-950 dark:text-white leading-tight">
+                    {product.name}
+                  </h1>
+                </div>
+
+                <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                   {product.desc}
                 </p>
 
-                {/* Uses List as Micro-Cards */}
-                <div className="mt-5 pt-5 border-t border-zinc-100 dark:border-zinc-800/80">
-                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2.5 font-mono">
-                    Sangat Cocok Untuk:
+                {/* Uses List */}
+                <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2.5">
+                  <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    Aplikasi Rekomendasi Sektor:
                   </h3>
                   <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">
                     {product.uses.map((use: string) => (
                       <div
                         key={use}
-                        className="flex items-center gap-2.5 p-2.5 rounded-xl bg-zinc-50/50 dark:bg-zinc-950/20 border border-zinc-200/40 dark:border-zinc-800/50 transition-colors hover:bg-zinc-100/40 dark:hover:bg-zinc-900/20"
+                        className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/80 text-xs text-zinc-700 dark:text-zinc-300"
                       >
-                        <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
-                          <CheckCircle2 className="h-3 w-3" />
-                        </div>
-                        <span className="text-[11px] font-semibold text-zinc-700 dark:text-zinc-300">{use}</span>
+                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400 shrink-0" />
+                        <span>{use}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
 
-              {/* Action Section */}
-              <div className="mt-1 pt-5 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-col gap-3">
-                <div className="flex items-center gap-2.5 text-[11px] text-zinc-400 dark:text-zinc-500">
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-                  <span>Garansi kualitas potongan & daya serap optimal</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-[11px] text-zinc-500 dark:text-zinc-500 -mt-1">
-                  <Truck className="h-3.5 w-3.5 text-primary" />
-                  <span>Mendukung pengiriman tonase besar ke seluruh wilayah</span>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2.5 mt-1">
-                  <Button asChild size="lg" className="flex-1 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl gap-2 shadow-lg shadow-primary/20 h-11">
+                {/* CTA Action Buttons */}
+                <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row gap-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex-1 min-h-[48px] bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md"
+                  >
                     <a href={waLink} target="_blank" rel="noopener noreferrer">
-                      <MessageSquare className="h-4.5 w-4.5" /> Tanya Harga via WhatsApp
+                      <Phone className="h-4 w-4" /> Minta Penawaran Harga
                     </a>
                   </Button>
-                  <Button asChild size="lg" variant="outline" className="rounded-xl gap-2 font-bold text-xs h-11">
-                    <a href={`https://wa.me/${waNumber}?text=Halo,%20saya%20ingin%20meminta%20sampel%20produk%20*${encodeURIComponent(product.name)}*`} target="_blank" rel="noopener noreferrer">
-                      <HelpCircle className="h-4.5 w-4.5" /> Minta Sampel
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="flex-1 min-h-[48px] border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-850 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 font-semibold rounded-xl text-xs sm:text-sm"
+                  >
+                    <a href={sampleLink} target="_blank" rel="noopener noreferrer">
+                      <HelpCircle className="h-4 w-4 text-zinc-400" /> Minta Sampel Fisik Uji Mutu
                     </a>
                   </Button>
                 </div>

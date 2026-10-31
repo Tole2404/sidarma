@@ -29,6 +29,8 @@ import {
   BookOpen,
   Briefcase,
   FileText,
+  Bot,
+  Radar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -41,6 +43,7 @@ interface SidebarProps {
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Agentic AI", href: "/dashboard/agentic-ai", icon: Bot },
   { name: "Pembelian", href: "/purchases", icon: ShoppingBag },
   { name: "Bongkaran", href: "/bongkaran", icon: PackageOpen },
   { name: "Penjualan", href: "/sales", icon: HandCoins },
@@ -48,6 +51,7 @@ const links = [
   { name: "Stok", href: "/stock", icon: Package },
   { name: "Harga Bal", href: "/bale-prices", icon: Tags },
   { name: "Customer", href: "/customers", icon: Users },
+  { name: "Radar Prospek B2B", href: "/prospects", icon: Radar },
   { name: "Supplier", href: "/suppliers", icon: Truck },
   { name: "Konveksi", href: "/konveksi", icon: Building2 },
 ];

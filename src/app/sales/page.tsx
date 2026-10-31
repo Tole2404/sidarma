@@ -919,10 +919,10 @@ export default function SalesPage() {
                   {/* Kop Surat / Business Info */}
                   <div className="flex justify-between items-start gap-4 border-b-2 border-zinc-900 pb-4 mb-6">
                     <div>
-                      <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. SIDARMA MAJUN</h1>
+                      <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. DARMIN MAJUN</h1>
                       <p className="text-xs text-zinc-600 mt-1">Kavling Industri & Pergudangan Majun</p>
                       <p className="text-xs text-zinc-600">Jl. Industri Maju No. 18, Bandung</p>
-                      <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: sidarmamajun@gmail.com</p>
+                      <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: darminmajun@gmail.com</p>
                     </div>
                     <div className="text-right">
                       <h2 className="text-lg font-bold tracking-wider text-zinc-900 uppercase">NOTA PENJUALAN</h2>
@@ -1013,7 +1013,7 @@ export default function SalesPage() {
                       <p className="text-zinc-500">Hormat Kami,</p>
                       <div className="h-16"></div>
                       <p className="font-semibold text-zinc-900 border-b border-zinc-400 w-32 mx-auto">Bagian Gudang</p>
-                      <p className="text-[10px] text-zinc-500 mt-1">CV. SIDARMA MAJUN</p>
+                      <p className="text-[10px] text-zinc-500 mt-1">CV. DARMIN MAJUN</p>
                     </div>
                   </div>
                 </div>
@@ -1026,10 +1026,10 @@ export default function SalesPage() {
                   {/* Kop Surat / Business Info */}
                   <div className="flex justify-between items-start gap-4 border-b-2 border-zinc-900 pb-4 mb-6">
                     <div>
-                      <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. SIDARMA MAJUN</h1>
+                      <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. DARMIN MAJUN</h1>
                       <p className="text-xs text-zinc-600 mt-1">Kavling Industri & Pergudangan Majun</p>
                       <p className="text-xs text-zinc-600">Jl. Industri Maju No. 18, Bandung</p>
-                      <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: sidarmamajun@gmail.com</p>
+                      <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: darminmajun@gmail.com</p>
                     </div>
                     <div className="text-right">
                       <h2 className="text-lg font-bold tracking-wider text-zinc-900 uppercase">KUITANSI</h2>
@@ -1068,7 +1068,7 @@ export default function SalesPage() {
                     <div className="text-center w-48 sm:w-64">
                       <p className="text-zinc-500 text-[10px] sm:text-xs mb-12 sm:mb-16">Bandung, {formatDate(previewSale.saleDate)}</p>
                       <p className="font-bold text-zinc-900 border-b border-zinc-400 w-36 sm:w-48 mx-auto pb-1"></p>
-                      <p className="text-[10px] text-zinc-500 mt-1">CV. SIDARMA MAJUN</p>
+                      <p className="text-[10px] text-zinc-500 mt-1">CV. DARMIN MAJUN</p>
                     </div>
                   </div>
                 </div>
@@ -1113,10 +1113,10 @@ export default function SalesPage() {
               {/* Kop Surat / Business Info */}
               <div className="flex justify-between items-start gap-4 border-b-2 border-zinc-900 pb-4 mb-6">
                 <div>
-                  <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. SIDARMA MAJUN</h1>
+                  <h1 className="text-xl font-bold tracking-tight text-zinc-950">CV. DARMIN MAJUN</h1>
                   <p className="text-xs text-zinc-600 mt-1">Kavling Industri & Pergudangan Majun</p>
                   <p className="text-xs text-zinc-600">Jl. Industri Maju No. 18, Bandung</p>
-                  <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: sidarmamajun@gmail.com</p>
+                  <p className="text-xs text-zinc-600">Telp: 0812-3456-7890 | Email: darminmajun@gmail.com</p>
                 </div>
                 <div className="text-right">
                   <h2 className="text-lg font-bold tracking-wider text-zinc-900 uppercase">LAPORAN REKAPITULASI PENJUALAN</h2>
@@ -1196,7 +1196,7 @@ export default function SalesPage() {
                   <p className="text-zinc-500">Dibuat Oleh Admin,</p>
                   <div className="h-16"></div>
                   <p className="font-semibold text-zinc-900 border-b border-zinc-400 w-32 mx-auto">Bagian Keuangan</p>
-                  <p className="text-[10px] text-zinc-500 mt-1">CV. SIDARMA MAJUN</p>
+                  <p className="text-[10px] text-zinc-500 mt-1">CV. DARMIN MAJUN</p>
                 </div>
               </div>
             </div>

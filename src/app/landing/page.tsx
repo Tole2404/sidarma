@@ -83,7 +83,7 @@ export default function LandingPage() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-950 text-white">
               <Factory className="h-4 w-4" />
             </div>
-            <span className="text-base font-semibold tracking-tight">CV. SIDARMA MAJUN</span>
+            <span className="text-base font-semibold tracking-tight">CV. DARMIN MAJUN</span>
           </div>
 
           {/* Desktop nav */}
@@ -201,7 +201,7 @@ export default function LandingPage() {
                     </div>
                     <div className="mt-5 rounded-xl bg-zinc-950 px-4 py-3 text-center">
                       <p className="text-sm text-zinc-400">Rekomendasi untuk pertama kali</p>
-                      <p className="mt-1 text-base font-bold text-white">Majun Putih Grade A — 50 kg</p>
+                      <p className="mt-1 text-base font-bold text-white">Majun Putih Grade A - 50 kg</p>
                     </div>
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function LandingPage() {
                   Distributor langsung, harga lebih hemat
                 </h2>
                 <p className="mt-4 text-base leading-7 text-zinc-400">
-                  CV. SIDARMA MAJUN hadir sebagai solusi 공급 kain majun berkualitas dengan harga langsung dari sumber. Dengan pengalaman lebih dari 5 tahun, kami melayani ratusan toko dan pabrik di Pulau Jawa.
+                  CV. DARMIN MAJUN hadir sebagai solusi 공급 kain majun berkualitas dengan harga langsung dari sumber. Dengan pengalaman lebih dari 5 tahun, kami melayani ratusan toko dan pabrik di Pulau Jawa.
                 </p>
                 <ul className="mt-8 space-y-3">
                   {trust.map((t) => (
@@ -314,7 +314,7 @@ export default function LandingPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-zinc-500">Jam Operasional</span>
-                    <span className="text-zinc-300">08.00 — 17.00 WIB</span>
+                    <span className="text-zinc-300">08.00 - 17.00 WIB</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-zinc-500">Kontak</span>
@@ -401,7 +401,7 @@ export default function LandingPage() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-950 text-white">
                   <Factory className="h-4 w-4" />
                 </div>
-                <span className="text-base font-semibold tracking-tight">CV. SIDARMA MAJUN</span>
+                <span className="text-base font-semibold tracking-tight">CV. DARMIN MAJUN</span>
               </div>
               <p className="mt-4 text-sm leading-6 text-zinc-600 max-w-sm">
                 Penyedia kain majun putih dan warna berkualitas untuk kebutuhan industri, bengkel, rumah sakit, dan cleaning service.
@@ -409,7 +409,7 @@ export default function LandingPage() {
               <div className="mt-5 flex gap-4">
                 {[
                   { label: "WhatsApp", val: "0812-3456-7890" },
-                  { label: "Email", val: "sidarmamajun@gmail.com" },
+                  { label: "Email", val: "darminmajun@gmail.com" },
                 ].map((c) => (
                   <div key={c.label}>
                     <p className="text-xs font-medium text-zinc-400">{c.label}</p>
@@ -431,8 +431,8 @@ export default function LandingPage() {
             <div>
               <h4 className="text-sm font-semibold text-zinc-950">Jam Operasional</h4>
               <ul className="mt-4 space-y-2 text-sm text-zinc-500">
-                <li>Senin — Jumat: 08.00 — 17.00</li>
-                <li>Sabtu: 08.00 — 14.00</li>
+                <li>Senin - Jumat: 08.00 - 17.00</li>
+                <li>Sabtu: 08.00 - 14.00</li>
                 <li>Minggu: Tutup</li>
               </ul>
               <div className="mt-5 rounded-lg bg-zinc-50 border border-zinc-200 px-3 py-2">
@@ -442,7 +442,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-10 border-t border-zinc-100 pt-6 text-center text-xs text-zinc-400">
-            &copy; {new Date().getFullYear()} CV. SIDARMA MAJUN. Seluruh hak cipta dilindungi.
+            &copy; {new Date().getFullYear()} CV. DARMIN MAJUN. Seluruh hak cipta dilindungi.
           </div>
         </div>
       </footer>
